@@ -22,11 +22,6 @@
         </activity>
 
         <activity
-            android:name=".activities.CouponActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/NoTitleDialog"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity
             android:name=".activities.UseActivity"
             android:screenOrientation="landscape"
             android:theme="@style/NoTitleDialog"
@@ -36,22 +31,6 @@
             android:screenOrientation="landscape"
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity
-            android:name=".activities.MessageManageActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/NoTitleDialog"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity
-            android:name=".activities.PointListActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/NoTitleDialog"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity
-            android:name=".activities.UservisitActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/NoTitleDialog"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-
 
 
     </application>
