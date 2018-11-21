@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.base.RootActivity
+import kotlinx.android.synthetic.main.activity_coupon_use.*
 
 class UseActivity : RootActivity() {
 
@@ -19,7 +20,9 @@ class UseActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
+        phonET.setOnClickListener {
 
+        }
 
 
 

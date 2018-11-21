@@ -273,7 +273,8 @@
                 android:layout_marginLeft="50dp"
                 android:layout_weight="1"
                 android:lineSpacingExtra="25sp"
-                android:text="키워드를 입력하세요."
+                android:textColorHint="#ffffff"
+                android:hint="키워드를 입력하세요."
                 android:textColor="#ffffff"
                 android:textSize="10sp" />
 

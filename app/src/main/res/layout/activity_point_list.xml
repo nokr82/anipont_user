@@ -214,8 +214,9 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:lineSpacingExtra="25sp"
-                android:text="시간 선택"
-                android:textColor="#99ffffff"
+                android:textColorHint="#99ffffff"
+                android:hint="시간 선택"
+                android:textColor="#ffffff"
                 android:textSize="10sp" />
 
         </LinearLayout>
@@ -244,8 +245,9 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:lineSpacingExtra="25sp"
-                    android:text="시간 선택"
-                    android:textColor="#99ffffff"
+                    android:textColorHint="#99ffffff"
+                    android:hint="시간 선택"
+                    android:textColor="#ffffff"
                     android:textSize="10sp" />
 
             </LinearLayout>

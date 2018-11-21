@@ -111,15 +111,17 @@
             android:background="#90000000">
 
             <EditText
+                android:id="@+id/phonET"
                 android:background="@null"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
+                android:textSize="10dp"
+                android:textColorHint="#ffffff"
                 android:layout_marginLeft="50dp"
                 android:textColor="#ffffff"
                 android:lineSpacingExtra="25sp"
-                android:text="휴대전화번호를 눌러주세요."/>
+                android:hint="휴대전화번호를 눌러주세요."/>
             
             
             <ImageView
