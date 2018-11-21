@@ -27,6 +27,15 @@
                 android:textSize="24dp" />
 
             <LinearLayout
+                android:id="@+id/useroptionLL"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17.5dp"
@@ -160,7 +169,228 @@
 
             </LinearLayout>
 
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/message_op_LL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_marginTop="17.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="-0.03"
+                        android:lineSpacingExtra="1sp"
+                        android:text="메세지관리"
+                        android:textColor="#ffffff"
+                        android:textSize="9sp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#ffff"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="17.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="9sp"
+                        android:textColor="#80ffffff"
+                        android:letterSpacing="-0.03"
+                        android:lineSpacingExtra="1sp"
+                        android:text="쿠폰관리" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#ffff"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/point_op_LL">
+
+                <LinearLayout
+                    android:layout_marginTop="17.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="-0.03"
+                        android:lineSpacingExtra="1sp"
+                        android:text="전체보기"
+                        android:textColor="#ffffff"
+                        android:textSize="9sp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#ffff"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="17.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="9sp"
+                        android:textColor="#80ffffff"
+                        android:letterSpacing="-0.03"
+                        android:lineSpacingExtra="1sp"
+                        android:text="오늘" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#ffff"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="17.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="9sp"
+                        android:textColor="#80ffffff"
+                        android:letterSpacing="-0.03"
+                        android:lineSpacingExtra="1sp"
+                        android:text="일주일" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#ffff"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="17.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="9sp"
+                        android:textColor="#80ffffff"
+                        android:letterSpacing="-0.03"
+                        android:lineSpacingExtra="1sp"
+                        android:text="한달" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#ffff"/>
+
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/uservisit_op_LL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_marginTop="17.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="-0.03"
+                        android:lineSpacingExtra="1sp"
+                        android:text="방문현황"
+                        android:textColor="#ffffff"
+                        android:textSize="9sp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#ffff"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="17.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="9sp"
+                        android:textColor="#80ffffff"
+                        android:letterSpacing="-0.03"
+                        android:lineSpacingExtra="1sp"
+                        android:text="요일별" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#ffff"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="17.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="9sp"
+                        android:textColor="#80ffffff"
+                        android:letterSpacing="-0.03"
+                        android:lineSpacingExtra="1sp"
+                        android:text="시간대별" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#ffff"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="17.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="9sp"
+                        android:textColor="#80ffffff"
+                        android:letterSpacing="-0.03"
+                        android:lineSpacingExtra="1sp"
+                        android:text="인구통계별" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#ffff"/>
+
+
+
+
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
 

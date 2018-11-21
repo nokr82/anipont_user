@@ -19,14 +19,15 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/titleTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="사용/조회"
                 android:textColor="#ffff"
                 android:textSize="24dp" />
 
             <LinearLayout
+                android:id="@+id/use_op_LL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
