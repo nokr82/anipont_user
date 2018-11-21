@@ -14,9 +14,9 @@ class MessageManageActivity : RootActivity() {
     private var progressDialog: ProgressDialog? = null
 
     lateinit var adapter: ArrayAdapter<String>
-
-
     var option_visitday = arrayOf("전체", "5일", "2×4", "4×1", "4×2")
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message_coupon_management)

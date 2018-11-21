@@ -20,8 +20,6 @@ class IntroActivity : RootActivity() {
 
     private var context: Context? = null
 
-    private var posting_id:String = ""
-    private var chatting_member_id:String = ""
     private var is_push:Boolean = false
 
     val SHOW_DLG = 301
@@ -68,10 +66,7 @@ class IntroActivity : RootActivity() {
 
     private fun stopIntro() {
 
-
-
             handler.sendEmptyMessage(0)
-
 
     }
 
