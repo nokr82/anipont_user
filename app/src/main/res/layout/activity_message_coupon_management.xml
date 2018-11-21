@@ -165,10 +165,10 @@
             android:layout_marginBottom="6dp"
             android:orientation="vertical"
             android:background="#ffff"
-           >
+            >
 
             <TextView
-                 android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -190,139 +190,139 @@
                 android:orientation="vertical"
                 android:background="@drawable/background_strock_e7e7e7">
 
-            <LinearLayout
-                android:layout_marginTop="9.5dp"
-                android:layout_width="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/background_strock_e7e7e7"
-                android:layout_height="20dp"
-                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_marginTop="9.5dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/background_strock_e7e7e7"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:background="#0068df">
-
-
-                    <TextView
-                        android:layout_centerInParent="true"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:textSize="9sp"
-                        android:textColor="#ffff"
-                        android:letterSpacing="-0.03"
-                        android:lineSpacingExtra="3sp"
-                        android:gravity="center_horizontal"
-                        android:text="전체"
-                        />
-                    <View
-                        android:layout_alignParentBottom="true"
-                        android:background="#606060"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                        android:background="#0068df">
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="9sp"
+                            android:textColor="#ffff"
+                            android:letterSpacing="-0.03"
+                            android:lineSpacingExtra="3sp"
+                            android:gravity="center_horizontal"
+                            android:text="전체"
+                            />
+                        <View
+                            android:layout_alignParentBottom="true"
+                            android:background="#606060"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center_horizontal"
+                            android:letterSpacing="-0.03"
+                            android:lineSpacingExtra="3sp"
+                            android:text="적립횟수"
+                            android:textColor="#c5c5c5"
+                            android:textSize="9sp" />
+                        <View
+                            android:layout_alignParentBottom="true"
+                            android:background="#606060"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center_horizontal"
+                            android:letterSpacing="-0.03"
+                            android:lineSpacingExtra="3sp"
+                            android:text="미방문"
+                            android:textColor="#c5c5c5"
+                            android:textSize="9sp" />
+                        <View
+                            android:layout_alignParentBottom="true"
+                            android:background="#606060"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center_horizontal"
-                        android:letterSpacing="-0.03"
-                        android:lineSpacingExtra="3sp"
-                        android:text="적립횟수"
-                        android:textColor="#c5c5c5"
-                        android:textSize="9sp" />
-                    <View
-                        android:layout_alignParentBottom="true"
-                        android:background="#606060"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                        android:layout_weight="1">
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center_horizontal"
-                        android:letterSpacing="-0.03"
-                        android:lineSpacingExtra="3sp"
-                        android:text="미방문"
-                        android:textColor="#c5c5c5"
-                        android:textSize="9sp" />
-                    <View
-                        android:layout_alignParentBottom="true"
-                        android:background="#606060"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center_horizontal"
+                            android:letterSpacing="-0.03"
+                            android:lineSpacingExtra="3sp"
+                            android:text="구매금액"
+                            android:textColor="#c5c5c5"
+                            android:textSize="9sp" />
 
-                </RelativeLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="#606060" />
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center_horizontal"
-                        android:letterSpacing="-0.03"
-                        android:lineSpacingExtra="3sp"
-                        android:text="구매금액"
-                        android:textColor="#c5c5c5"
-                        android:textSize="9sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="#606060" />
-
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
 
 
-                    <TextView
-                        android:layout_centerInParent="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="9sp"
-                        android:textColor="#c5c5c5"
-                        android:letterSpacing="-0.03"
-                        android:lineSpacingExtra="3sp"
-                        android:gravity="center_horizontal"
-                        android:text="포인트"
-                        />
-                    <View
-                        android:layout_alignParentBottom="true"
-                        android:background="#606060"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"/>
+                        <TextView
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="9sp"
+                            android:textColor="#c5c5c5"
+                            android:letterSpacing="-0.03"
+                            android:lineSpacingExtra="3sp"
+                            android:gravity="center_horizontal"
+                            android:text="포인트"
+                            />
+                        <View
+                            android:layout_alignParentBottom="true"
+                            android:background="#606060"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"/>
 
-                </RelativeLayout>
+                    </RelativeLayout>
 
-            </LinearLayout>
+                </LinearLayout>
 
                 <TextView
                     android:layout_marginTop="10dp"
@@ -343,12 +343,12 @@
                     android:layout_marginBottom="8.5dp"
                     android:gravity="center_vertical"
                     android:background="@drawable/background_strock_707070">
-                <Spinner
-                    android:id="@+id/visitdaySP"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:layout_height="match_parent"></Spinner>
+                    <Spinner
+                        android:id="@+id/visitdaySP"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:layout_height="match_parent"></Spinner>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -367,24 +367,24 @@
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
                 android:layout_height="wrap_content">
-            <TextView
+                <TextView
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="9sp"
-                android:textColor="#666666"
-                android:text="상세필터"
-                android:layout_marginRight="4dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="7sp"
-                android:textColor="#a1a1a1"
-                android:letterSpacing="-0.03"
-                android:lineSpacingExtra="5sp"
-                android:text="상세 필터를 설정하지 않으면, 전체 고객이 선택됩니다 "
-                />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="9sp"
+                    android:textColor="#666666"
+                    android:text="상세필터"
+                    android:layout_marginRight="4dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="7sp"
+                    android:textColor="#a1a1a1"
+                    android:letterSpacing="-0.03"
+                    android:lineSpacingExtra="5sp"
+                    android:text="상세 필터를 설정하지 않으면, 전체 고객이 선택됩니다 "
+                    />
 
             </LinearLayout>
 
@@ -398,81 +398,81 @@
                 android:orientation="vertical"
                 android:background="@drawable/background_strock_e7e7e7">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:gravity="center_vertical"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10.5dp"
-                    android:textSize="9sp"
-                    android:textColor="#666666"
-                    android:text="성별"/>
                 <LinearLayout
-                    android:layout_width="50dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="17.5dp"
-                    android:background="@drawable/background_00d1ce"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1">
 
-                    android:gravity="center">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="8sp"
-                        android:textColor="#ffffff"
-                        android:letterSpacing="-0.03"
-                        android:lineSpacingExtra="4sp"
-                        android:gravity="center_horizontal"
-                        android:text="성별모름"
-                        />
-                    
-                    
+                        android:layout_marginLeft="10.5dp"
+                        android:textSize="9sp"
+                        android:textColor="#666666"
+                        android:text="성별"/>
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="17.5dp"
+                        android:background="@drawable/background_00d1ce"
+
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="8sp"
+                            android:textColor="#ffffff"
+                            android:letterSpacing="-0.03"
+                            android:lineSpacingExtra="4sp"
+                            android:gravity="center_horizontal"
+                            android:text="성별모름"
+                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/background_strock_c1c1c1"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="8sp"
+                            android:textColor="#9a9a99"
+                            android:letterSpacing="-0.03"
+                            android:lineSpacingExtra="4sp"
+                            android:gravity="center_horizontal"
+                            android:text="남성"
+                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/background_strock_c1c1c1"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="8sp"
+                            android:textColor="#9a9a99"
+                            android:letterSpacing="-0.03"
+                            android:lineSpacingExtra="4sp"
+                            android:gravity="center_horizontal"
+                            android:text="여성"
+                            />
+
+
+                    </LinearLayout>
+
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/background_strock_c1c1c1"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="8sp"
-                        android:textColor="#9a9a99"
-                        android:letterSpacing="-0.03"
-                        android:lineSpacingExtra="4sp"
-                        android:gravity="center_horizontal"
-                        android:text="남성"
-                        />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/background_strock_c1c1c1"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="8sp"
-                        android:textColor="#9a9a99"
-                        android:letterSpacing="-0.03"
-                        android:lineSpacingExtra="4sp"
-                        android:gravity="center_horizontal"
-                        android:text="여성"
-                        />
-
-
-                </LinearLayout>
-
-            </LinearLayout>
 
 
                 <LinearLayout

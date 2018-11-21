@@ -22,19 +22,19 @@ class MainActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
         useLL.setOnClickListener {
-            val intent = Intent(this, UseActivity::class.java)
+            val intent = Intent(this, UserListActivity::class.java)
             startActivity(intent)
+
         }
 
         couponLL.setOnClickListener {
-            val intent = Intent(this, CouponActivity::class.java)
+            val intent = Intent(this, UseActivity::class.java)
             startActivity(intent)
         }
 
 
         logoLL.setOnClickListener {
-            val intent = Intent(this, UserListActivity::class.java)
-            startActivity(intent)
+
         }
 
 

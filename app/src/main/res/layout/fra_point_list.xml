@@ -1,202 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" 
-    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient"
-    android:orientation="horizontal">
-    
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_marginLeft="8.5dp"
-            android:layout_width="149dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="43.5dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="포인트 내역"
-                android:textColor="#ffff"
-                android:textSize="24dp" />
-
-<LinearLayout
-    android:layout_marginTop="17.5dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:letterSpacing="-0.03"
-        android:lineSpacingExtra="1sp"
-        android:text="전체보기"
-        android:textColor="#ffffff"
-        android:textSize="9sp" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.3dp"
-        android:background="#ffff"/>
-</LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="17.5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="9sp"
-                    android:textColor="#80ffffff"
-                    android:letterSpacing="-0.03"
-                    android:lineSpacingExtra="1sp"
-                    android:text="오늘" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.3dp"
-                    android:background="#ffff"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="17.5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="9sp"
-                    android:textColor="#80ffffff"
-                    android:letterSpacing="-0.03"
-                    android:lineSpacingExtra="1sp"
-                    android:text="일주일" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.3dp"
-                    android:background="#ffff"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="17.5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="9sp"
-                    android:textColor="#80ffffff"
-                    android:letterSpacing="-0.03"
-                    android:lineSpacingExtra="1sp"
-                    android:text="한달" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.3dp"
-                    android:background="#ffff"/>
-
-
-
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
     <LinearLayout
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="9.5dp"
         android:orientation="vertical">
-        
-        <LinearLayout
-            android:layout_marginLeft="35dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="75dp"
-                android:layout_height="20dp"
-                android:gravity="center"
-               >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:textColor="#ffffff"
-                    android:lineSpacingExtra="25sp"
-                    android:text="고객 목록"
-                    />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="90dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="20dp"
-                android:gravity="center"
-                android:background="@drawable/background_strock_707070"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:textColor="#ffffff"
-                    android:lineSpacingExtra="25sp"
-                    android:text="포인트 내역"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginLeft="34dp"
-                android:layout_width="65dp"
-                android:layout_height="20dp"
-                android:gravity="center"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:textColor="#ffffff"
-                    android:lineSpacingExtra="25sp"
-                    android:text="고객 방문 분석"
-                    />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="71dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="20dp"
-                android:gravity="center"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:textColor="#ffffff"
-                    android:lineSpacingExtra="25sp"
-                    android:text="메세지/쿠폰관리"
-                    />
-
-            </LinearLayout>
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
 
         <LinearLayout
@@ -205,27 +16,27 @@
             android:layout_width="match_parent"
             android:gravity="center_vertical"
             android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="30.5dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="#90000000">
-
-            <EditText
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
                 android:layout_weight="1"
-                android:background="@null"
-                android:lineSpacingExtra="25sp"
-                android:textColorHint="#99ffffff"
-                android:hint="시간 선택"
-                android:textColor="#ffffff"
-                android:textSize="10sp" />
+                android:layout_height="30.5dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="#90000000">
 
-        </LinearLayout>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:lineSpacingExtra="25sp"
+                    android:textColorHint="#99ffffff"
+                    android:hint="시간 선택"
+                    android:textColor="#ffffff"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -281,7 +92,7 @@
             android:layout_marginBottom="6dp"
             android:orientation="horizontal"
             android:background="#ffff"
-           >
+            >
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="0.35"
@@ -435,7 +246,7 @@
 
                 </LinearLayout>
 
-                             <LinearLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="25dp">
                     <LinearLayout
@@ -601,21 +412,9 @@
 
 
             </LinearLayout>
-            
+
 
         </LinearLayout>
-
-        </LinearLayout>
-
 
     </LinearLayout>
-    
-    
-    
-
-
-
-
-    
-    
 </LinearLayout>
