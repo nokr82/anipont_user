@@ -19,9 +19,9 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/titleTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="고객목록"
                 android:textColor="#ffff"
                 android:textSize="24dp" />

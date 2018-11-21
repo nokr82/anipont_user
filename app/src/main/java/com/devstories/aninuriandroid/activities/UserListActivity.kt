@@ -2,7 +2,6 @@ package com.devstories.aninuriandroid.activities
 
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import com.devstories.aninuriandroid.R
@@ -27,7 +26,7 @@ class UserListActivity : FragmentActivity() {
         val User_List_Fragment : User_List_Fragment = User_List_Fragment()
         val User_visit_List_Fragment : User_visit_List_Fragment = User_visit_List_Fragment()
         val Message_Manage_Fragment : Message_Manage_Fragment = Message_Manage_Fragment()
-        val Coupon_List_Fragment : Coupon_List_Fragment = Coupon_List_Fragment()
+        val Point_List_Fragment : Point_List_Fragment = Point_List_Fragment()
 
 
         userLL.setBackgroundResource(R.drawable.background_strock_707070)
@@ -37,22 +36,27 @@ class UserListActivity : FragmentActivity() {
 
         userLL.setOnClickListener {
             setmenu()
+            titleTV.text = "고객목록"
             userLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.userFL, User_List_Fragment).commit()
         }
 
         pointLL.setOnClickListener {
+
             setmenu()
+            titleTV.text = "포인트 내역"
             pointLL.setBackgroundResource(R.drawable.background_strock_707070)
-            supportFragmentManager.beginTransaction().replace(R.id.userFL, Coupon_List_Fragment).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.userFL, Point_List_Fragment).commit()
         }
         uservisitLL.setOnClickListener {
             setmenu()
+            titleTV.text = "고객 방문 분석"
             uservisitLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.userFL, User_visit_List_Fragment).commit()
         }
         messageLL.setOnClickListener {
             setmenu()
+            titleTV.text = "메세지 쿠폰 관리"
             messageLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.userFL, Message_Manage_Fragment).commit()
         }
