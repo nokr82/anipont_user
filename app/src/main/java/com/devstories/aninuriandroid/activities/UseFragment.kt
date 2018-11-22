@@ -1,5 +1,7 @@
 package com.devstories.aninuriandroid.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -13,6 +15,7 @@ import kotlinx.android.synthetic.main.fra_use.*
 
 
 class UseFragment : Fragment() {
+    lateinit var myContext: Context
     internal lateinit var view: View
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
@@ -24,12 +27,13 @@ class UseFragment : Fragment() {
     lateinit var eightLL: LinearLayout
     lateinit var nineLL: LinearLayout
     lateinit var zeroLL: LinearLayout
+    lateinit var useLL: LinearLayout
     lateinit var backLL: LinearLayout
     lateinit var phoneTV: TextView
-    
+    var type = -1
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+        this.myContext = container!!.context
         return inflater.inflate(R.layout.fra_use,container,false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,6 +50,7 @@ class UseFragment : Fragment() {
         eightLL = view.findViewById(R.id.eightLL)
         zeroLL = view.findViewById(R.id.zeroLL)
         nineLL = view.findViewById(R.id.nineLL)
+        useLL = view.findViewById(R.id.useLL)
 
         phoneTV = view.findViewById(R.id.phoneTV)
 
@@ -94,6 +99,14 @@ class UseFragment : Fragment() {
                 phoneTV.setText(text.substring(0, text.length - 1))
             }else{
             }
+        }
+
+        useLL.setOnClickListener {
+            type = 3
+            val intent = Intent(myContext, UseActivity::class.java)
+            intent.putExtra("type",type)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
         }
 
     }

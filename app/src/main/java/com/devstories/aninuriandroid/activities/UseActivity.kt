@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_coupon_use.*
 class UseActivity :  FragmentActivity() {
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
-
+    var type = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coupon_use)
@@ -21,13 +21,31 @@ class UseActivity :  FragmentActivity() {
 
         val UseFragment : UseFragment = UseFragment()
         val CouponFragment : CouponFragment = CouponFragment()
+        val Point_AccurMulaage_Fragment : Point_AccurMulaage_Fragment = Point_AccurMulaage_Fragment()
 
 
-        useLL.setBackgroundResource(R.drawable.background_strock_707070)
-        supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
-        use_op_LL.visibility = View.VISIBLE
 
 
+        intent = getIntent()
+        type = intent.getIntExtra("type",-1)
+
+
+        if (type ==1){
+            useLL.setBackgroundResource(R.drawable.background_strock_707070)
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
+            use_op_LL.visibility = View.VISIBLE
+        }else if (type==2){
+            setmenu()
+            phonET.setHint("사용할 포인트를 입력하세요.")
+            titleTV.text = "쿠폰/포인트\n조회"
+            use_op_LL.visibility = View.GONE
+            couponLL.setBackgroundResource(R.drawable.background_strock_707070)
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, CouponFragment).commit()
+        }else{
+            useLL.setBackgroundResource(R.drawable.background_strock_707070)
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
+            use_op_LL.visibility = View.VISIBLE
+        }
 
         useLL.setOnClickListener {
             setmenu()

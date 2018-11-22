@@ -14,6 +14,8 @@ class MainActivity : RootActivity() {
     private var progressDialog: ProgressDialog? = null
 
 
+    var type = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,13 +24,17 @@ class MainActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
         useLL.setOnClickListener {
-            val intent = Intent(this, UserListActivity::class.java)
+            type = 1
+            val intent = Intent(this, UseActivity::class.java)
+            intent.putExtra("type",type)
             startActivity(intent)
 
         }
 
         couponLL.setOnClickListener {
+            type = 2
             val intent = Intent(this, UseActivity::class.java)
+            intent.putExtra("type",type)
             startActivity(intent)
         }
 

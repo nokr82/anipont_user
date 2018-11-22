@@ -22,6 +22,8 @@ class UserListActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_list)
 
+
+
         this.context = this
         progressDialog = ProgressDialog(context)
         val User_List_Fragment : User_List_Fragment = User_List_Fragment()
@@ -29,9 +31,8 @@ class UserListActivity : FragmentActivity() {
         val Message_Manage_Fragment : Message_Manage_Fragment = Message_Manage_Fragment()
         val Point_List_Fragment : Point_List_Fragment = Point_List_Fragment()
 
-        userLL.setBackgroundResource(R.drawable.background_strock_707070)
-        useroptionLL.visibility = View.VISIBLE
-        supportFragmentManager.beginTransaction().replace(R.id.userFL, User_List_Fragment).commit()
+
+
 
         userLL.setOnClickListener {
             setmenu()
