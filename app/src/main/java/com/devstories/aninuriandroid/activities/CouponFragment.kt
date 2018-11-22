@@ -1,17 +1,39 @@
 package com.devstories.aninuriandroid.activities
 
+import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.base.PrefUtils
+import com.devstories.aninuriandroid.base.Utils
+import com.loopj.android.http.JsonHttpResponseHandler
+import com.loopj.android.http.RequestParams
+import com.nostra13.universalimageloader.core.ImageLoader
+import cz.msebera.android.httpclient.Header
+import kotlinx.android.synthetic.main.fra_coupon.*
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class CouponFragment : Fragment() {
+    lateinit var myContext: Context
+    private var progressDialog: ProgressDialog? = null
+    var left_point = ""
+    var point = ""
+    var use_point = ""
+
 
     internal lateinit var view: View
     lateinit var oneLL: LinearLayout
@@ -25,13 +47,15 @@ class CouponFragment : Fragment() {
     lateinit var nineLL: LinearLayout
     lateinit var zeroLL: LinearLayout
     lateinit var backLL: LinearLayout
-
+    lateinit var left_pointTV: TextView
     lateinit var pointTV: TextView
+    lateinit var use_pointTV: TextView
 
 
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        this.myContext = container!!.context
 
             return inflater.inflate(R.layout.fra_coupon,container,false)
 
@@ -53,8 +77,9 @@ class CouponFragment : Fragment() {
         eightLL = view.findViewById(R.id.eightLL)
         zeroLL = view.findViewById(R.id.zeroLL)
         nineLL = view.findViewById(R.id.nineLL)
-
         pointTV = view.findViewById(R.id.pointTV)
+        left_pointTV = view.findViewById(R.id.left_pointTV)
+        use_pointTV = view.findViewById(R.id.use_pointTV)
 
 
     }
@@ -62,44 +87,141 @@ class CouponFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        l_point()
+
         oneLL.setOnClickListener {
-            pointTV.setText(pointTV.getText().toString() + 1)
+            use_pointTV.setText(use_pointTV.getText().toString() + 1)
+            l_point()
         }
         twoLL.setOnClickListener {
-            pointTV.setText(pointTV.getText().toString() + 2)
+            use_pointTV.setText(use_pointTV.getText().toString() + 2)
+            l_point()
         }
         threeLL.setOnClickListener {
-            pointTV.setText(pointTV.getText().toString() + 3)
+            use_pointTV.setText(use_pointTV.getText().toString() + 3)
+            l_point()
         }
         fourLL.setOnClickListener {
-            pointTV.setText(pointTV.getText().toString() + 4)
+            use_pointTV.setText(use_pointTV.getText().toString() + 4)
+            l_point()
         }
         fiveLL.setOnClickListener {
-            pointTV.setText(pointTV.getText().toString() + 5)
+            use_pointTV.setText(use_pointTV.getText().toString() + 5)
+            l_point()
         }
         sixLL.setOnClickListener {
-            pointTV.setText(pointTV.getText().toString() + 6)
+            use_pointTV.setText(use_pointTV.getText().toString() + 6)
+            l_point()
         }
         sevenLL.setOnClickListener {
-            pointTV.setText(pointTV.getText().toString() + 7)
+            use_pointTV.setText(use_pointTV.getText().toString() + 7)
+            l_point()
         }
         eightLL.setOnClickListener {
-            pointTV.setText(pointTV.getText().toString() + 8)
+            use_pointTV.setText(use_pointTV.getText().toString() + 8)
+            l_point()
         }
         nineLL.setOnClickListener {
-            pointTV.setText(pointTV.getText().toString() + 9)
+            use_pointTV.setText(use_pointTV.getText().toString() + 9)
+            l_point()
         }
         zeroLL.setOnClickListener {
-            pointTV.setText(pointTV.getText().toString() + 0)
+            use_pointTV.setText(use_pointTV.getText().toString() + 0)
+            l_point()
         }
         backLL.setOnClickListener {
-            val text = pointTV.getText().toString()
+            val text = use_pointTV.getText().toString()
             if (text.length > 0){
-                pointTV.setText(text.substring(0, text.length - 1))
-            }else{
+                use_pointTV.setText(text.substring(0, text.length - 1))
+                if (!text.equals("")){
+                    l_point()
+                }
             }
         }
 
     }
+
+    fun l_point(){
+        point = pointTV.text.toString()
+        use_point = use_pointTV.text.toString()
+        left_point = left_pointTV.text.toString()
+
+        val numpoint = Integer.parseInt(point)
+        var n_use_point =Integer.parseInt(use_point)
+        var n_left_point = Integer.parseInt(left_point)
+
+            n_left_point = numpoint - n_use_point
+
+        pointTV.text = numpoint.toString()
+        use_pointTV.text = n_use_point.toString()
+        left_pointTV.text = n_left_point.toString()
+    }
+//포인트뽑기
+    fun point_list() {
+        val params = RequestParams()
+        params.put("member_id",1)
+
+        MemberAction.my_point(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+                        val data = response.getJSONObject("Point")
+
+                        val r_point = Utils.getString(data, "point")
+                        var left_point = Utils.getString(data, "left_point")
+                        var use_point = Utils.getString(data, "use_point")
+
+                        pointTV.text = r_point
+                        left_pointTV.text = left_point
+                        use_pointTV.text = use_point
+
+                        }
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
 
 }
