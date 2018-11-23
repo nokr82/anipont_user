@@ -103,6 +103,7 @@
                 android:text="아메리카노 교환 가능"
                 />
                 <LinearLayout
+                    android:id="@+id/useLL"
                     android:layout_marginTop="10.5dp"
                     android:layout_width="195dp"
                     android:gravity="center"

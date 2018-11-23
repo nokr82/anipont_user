@@ -33,7 +33,7 @@
                     android:textSize="21sp"
                     android:textColor="#6c6c6c"
                     android:lineSpacingExtra="14sp"
-                    android:text="010-9588-0891"
+                    android:text=""
                     />
                 <TextView
                     android:layout_width="wrap_content"

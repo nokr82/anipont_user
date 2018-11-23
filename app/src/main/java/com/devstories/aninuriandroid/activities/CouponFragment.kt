@@ -57,7 +57,7 @@ class CouponFragment : Fragment() {
     var point = ""
     var use_point = ""
     var id  =""
-
+    var n_left_point = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
@@ -164,7 +164,7 @@ class CouponFragment : Fragment() {
 
         val numpoint = Integer.parseInt(point)
         var n_use_point =Integer.parseInt(use_point)
-        var n_left_point = Integer.parseInt(left_point)
+        n_left_point = Integer.parseInt(left_point)
 
 
             n_left_point = numpoint - n_use_point
@@ -279,6 +279,10 @@ fun loadpoint(phone:String) {
         params.put("company_id", 1)
         params.put("use_point", use_point)
 
+    if (n_left_point<0){
+        Toast.makeText(myContext,"한도초과",Toast.LENGTH_SHORT).show()
+
+    }else {
         MemberAction.point_stack(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -287,10 +291,10 @@ fun loadpoint(phone:String) {
                 }
                 try {
                     val result = response!!.getString("result")
-                    Log.d("적립",response.toString())
+                    Log.d("적립", response.toString())
 
                     if ("ok" == result) {
-                      Toast.makeText(myContext,"사용완료",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(myContext, "사용완료", Toast.LENGTH_SHORT).show()
 
                     }
 
@@ -330,5 +334,6 @@ fun loadpoint(phone:String) {
                 }
             }
         })
+    }
     }
 }
