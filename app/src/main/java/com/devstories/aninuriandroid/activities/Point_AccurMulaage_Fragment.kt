@@ -33,5 +33,8 @@ class Point_AccurMulaage_Fragment : Fragment() {
 
         }
 
+
+
+
     }
 

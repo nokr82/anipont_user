@@ -12,6 +12,7 @@ class UseActivity :  FragmentActivity() {
     lateinit var context:Context
     private var progressDialog: ProgressDialog? = null
     var type = -1
+    var save_point:String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coupon_use)
@@ -27,6 +28,7 @@ class UseActivity :  FragmentActivity() {
 
 
         intent = getIntent()
+        save_point = intent.getStringExtra("save_point")
         type = intent.getIntExtra("type",-1)
 
 

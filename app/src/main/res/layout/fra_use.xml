@@ -317,6 +317,7 @@
                 android:gravity="center_vertical"
                 android:background="#ffff">
                 <TextView
+                    android:id="@+id/save_pointTV"
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -324,7 +325,17 @@
                     android:textColor="#0066b0"
                     android:letterSpacing="-0.05"
                     android:lineSpacingExtra="-11sp"
-                    android:text="100 P "
+                    android:text="100"
+                    />
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="#0066b0"
+                    android:letterSpacing="-0.05"
+                    android:lineSpacingExtra="-11sp"
+                    android:text="P "
                     />
                 <TextView
                     android:layout_width="wrap_content"

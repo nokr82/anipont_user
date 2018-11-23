@@ -18,4 +18,11 @@ object MemberAction {
     fun my_point(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/my_point.json", params, handler)
     }
+
+    //포인트적립
+    fun point_stack(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/point_stack.json", params, handler)
+    }
+
+
 }

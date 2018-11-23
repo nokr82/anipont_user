@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -87,6 +88,8 @@ class CouponFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        loadpoint("01041145671")
+
         l_point()
 
         oneLL.setOnClickListener {
@@ -156,72 +159,103 @@ class CouponFragment : Fragment() {
         use_pointTV.text = n_use_point.toString()
         left_pointTV.text = n_left_point.toString()
     }
-//포인트뽑기
-    fun point_list() {
-        val params = RequestParams()
-        params.put("member_id",1)
+//포인트조회
+fun loadpoint(phone:String) {
+    val params = RequestParams()
+    params.put("phone", phone)
 
-        MemberAction.my_point(params, object : JsonHttpResponseHandler() {
+    MemberAction.my_info(params, object : JsonHttpResponseHandler() {
+        override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+            if (progressDialog != null) {
+                progressDialog!!.dismiss()
+            }
+            try {
 
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
+                Log.d("포인트",response.toString())
+                val result = response!!.getString("result")
+
+                if ("ok" == result) {
+                    var data = response.getJSONObject("member")
+                    var member = data.getJSONObject("Member")
+                    var id  = Utils.getString(member,"id")
+                    var point  = Utils.getString(member,"point")
+
+                    pointTV.text = point
+
                 }
 
-                try {
-                    val result = response!!.getString("result")
-
-                    if ("ok" == result) {
-                        val data = response.getJSONObject("Point")
-
-                        val r_point = Utils.getString(data, "point")
-                        var left_point = Utils.getString(data, "left_point")
-                        var use_point = Utils.getString(data, "use_point")
-
-                        pointTV.text = r_point
-                        left_pointTV.text = left_point
-                        use_pointTV.text = use_point
-
-                        }
-
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
+            } catch (e: JSONException) {
+                e.printStackTrace()
             }
+        }
 
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
+        override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+            super.onSuccess(statusCode, headers, response)
+        }
+
+        override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+            // System.out.println(responseString);
+        }
+
+        private fun error() {
+            Utils.alert(context, "조회중 장애가 발생하였습니다.")
+        }
+
+        override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                responseString: String?,
+                throwable: Throwable
+        ) {
+            if (progressDialog != null) {
+                progressDialog!!.dismiss()
             }
+            // System.out.println(responseString);
+            throwable.printStackTrace()
+            error()
+        }
 
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+        override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONObject?
+        ) {
+            if (progressDialog != null) {
+                progressDialog!!.dismiss()
             }
+            throwable.printStackTrace()
+            error()
+        }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
+        override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header>?,
+                throwable: Throwable,
+                errorResponse: JSONArray?
+        ) {
+            if (progressDialog != null) {
+                progressDialog!!.dismiss()
             }
+            throwable.printStackTrace()
+            error()
+        }
 
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
+        override fun onStart() {
+            // show dialog
+            if (progressDialog != null) {
 
-                    progressDialog!!.show()
-                }
+                progressDialog!!.show()
             }
+        }
 
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
+        override fun onFinish() {
+            if (progressDialog != null) {
+                progressDialog!!.dismiss()
             }
-        })
-    }
-
+        }
+    })
+}
 
 }
