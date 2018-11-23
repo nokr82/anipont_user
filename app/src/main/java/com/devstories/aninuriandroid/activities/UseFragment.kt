@@ -141,14 +141,13 @@ class UseFragment : Fragment() {
                     progressDialog!!.dismiss()
                 }
                 try {
-
                     Log.d("포인트",response.toString())
                     val result = response!!.getString("result")
-
                     if ("ok" == result) {
                         var data = response.getJSONObject("member")
                         var member = data.getJSONObject("Member")
                         var id  = Utils.getString(member,"id")
+
                         stack_point(id)
                     }
 

@@ -14,10 +14,6 @@ object MemberAction {
     fun my_info(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/my_info.json", params, handler)
     }
-    // 회원 포인트
-    fun my_point(params: RequestParams, handler: JsonHttpResponseHandler) {
-        HttpClient.post("/member/my_point.json", params, handler)
-    }
 
     //포인트적립
     fun point_stack(params: RequestParams, handler: JsonHttpResponseHandler) {

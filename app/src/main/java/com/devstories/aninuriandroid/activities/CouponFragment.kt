@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.base.PrefUtils
@@ -31,9 +32,7 @@ import java.util.*
 class CouponFragment : Fragment() {
     lateinit var myContext: Context
     private var progressDialog: ProgressDialog? = null
-    var left_point = ""
-    var point = ""
-    var use_point = ""
+
 
 
     internal lateinit var view: View
@@ -48,11 +47,16 @@ class CouponFragment : Fragment() {
     lateinit var nineLL: LinearLayout
     lateinit var zeroLL: LinearLayout
     lateinit var backLL: LinearLayout
+    lateinit var useLL: LinearLayout
+
     lateinit var left_pointTV: TextView
     lateinit var pointTV: TextView
     lateinit var use_pointTV: TextView
 
-
+    var left_point = ""
+    var point = ""
+    var use_point = ""
+    var id  =""
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,7 +70,7 @@ class CouponFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        useLL = view.findViewById(R.id.useLL)
         backLL = view.findViewById(R.id.backLL)
         oneLL = view.findViewById(R.id.oneLL)
         twoLL = view.findViewById(R.id.twoLL)
@@ -90,7 +94,10 @@ class CouponFragment : Fragment() {
 
         loadpoint("01041145671")
 
-        l_point()
+
+        useLL.setOnClickListener {
+            use_point(id)
+        }
 
         oneLL.setOnClickListener {
             use_pointTV.setText(use_pointTV.getText().toString() + 1)
@@ -134,11 +141,13 @@ class CouponFragment : Fragment() {
         }
         backLL.setOnClickListener {
             val text = use_pointTV.getText().toString()
-            if (text.length > 0){
+            if (use_pointTV.getText().toString().length > 0){
                 use_pointTV.setText(text.substring(0, text.length - 1))
                 if (!text.equals("")){
                     l_point()
                 }
+            }else{
+                use_pointTV.text = "0"
             }
         }
 
@@ -147,11 +156,16 @@ class CouponFragment : Fragment() {
     fun l_point(){
         point = pointTV.text.toString()
         use_point = use_pointTV.text.toString()
-        left_point = left_pointTV.text.toString()
+        left_point = pointTV.text.toString()
+
+        if (use_point.equals("")){
+            use_point = "0"
+        }
 
         val numpoint = Integer.parseInt(point)
         var n_use_point =Integer.parseInt(use_point)
         var n_left_point = Integer.parseInt(left_point)
+
 
             n_left_point = numpoint - n_use_point
 
@@ -177,11 +191,11 @@ fun loadpoint(phone:String) {
                 if ("ok" == result) {
                     var data = response.getJSONObject("member")
                     var member = data.getJSONObject("Member")
-                    var id  = Utils.getString(member,"id")
-                    var point  = Utils.getString(member,"point")
+                    id  = Utils.getString(member,"id")
+                    var point  = Utils.getString(member,"left_point")
 
                     pointTV.text = point
-
+                    l_point()
                 }
 
             } catch (e: JSONException) {
@@ -258,4 +272,63 @@ fun loadpoint(phone:String) {
     })
 }
 
+//포인트사용
+    fun use_point(member_id:String) {
+        val params = RequestParams()
+        params.put("member_id",member_id)
+        params.put("company_id", 1)
+        params.put("use_point", use_point)
+
+        MemberAction.point_stack(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                try {
+                    val result = response!!.getString("result")
+                    Log.d("적립",response.toString())
+
+                    if ("ok" == result) {
+                      Toast.makeText(myContext,"사용완료",Toast.LENGTH_SHORT).show()
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
 }
