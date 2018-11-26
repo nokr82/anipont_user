@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.base.Utils
@@ -149,6 +150,8 @@ class UseFragment : Fragment() {
                         var id  = Utils.getString(member,"id")
 
                         stack_point(id)
+                    }else{
+                        Toast.makeText(myContext,"한도초과",Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException) {
@@ -229,8 +232,8 @@ class UseFragment : Fragment() {
         val params = RequestParams()
         params.put("member_id",member_id)
         params.put("company_id", 1)
-        params.put("stack_point", save_point)
-
+        params.put("point", save_point)
+        params.put("type", 1)
         MemberAction.point_stack(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
