@@ -35,7 +35,6 @@ class CouponFragment : Fragment() {
     private var progressDialog: ProgressDialog? = null
 
 
-
     internal lateinit var view: View
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
@@ -63,9 +62,7 @@ class CouponFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
 
-            return inflater.inflate(R.layout.fra_coupon,container,false)
-
-
+        return inflater.inflate(R.layout.fra_coupon,container,false)
     }
 
 
@@ -151,7 +148,6 @@ class CouponFragment : Fragment() {
                 use_pointTV.text = "0"
             }
         }
-
     }
 
     fun l_point(){
@@ -174,107 +170,107 @@ class CouponFragment : Fragment() {
         use_pointTV.text = n_use_point.toString()
         left_pointTV.text = n_left_point.toString()
     }
-//포인트조회
-fun loadpoint(phone:String) {
-    val params = RequestParams()
-    params.put("phone", phone)
-    MemberAction.my_info(params, object : JsonHttpResponseHandler() {
-        override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-            if (progressDialog != null) {
-                progressDialog!!.dismiss()
-            }
-            try {
-                val result = response!!.getString("result")
-                Log.d("포인트",response.toString())
-                Log.d("포인트",result.toString())
-                if ("ok" == result) {
-                    var data = response.getJSONObject("member")
-                    var member = data.getJSONObject("Member")
-                    id  = Utils.getString(member,"id")
-                    var data2 = response.getJSONObject("point")
-                    var point = data2.getJSONObject("Point")
-                    val a_point = Utils.getString(point,"balance")
-
-
-                    pointTV.text = a_point
-                    l_point()
+    //포인트조회
+    fun loadpoint(phone:String) {
+        val params = RequestParams()
+        params.put("phone", phone)
+        MemberAction.my_info(params, object : JsonHttpResponseHandler() {
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
                 }
+                try {
+                    val result = response!!.getString("result")
+                    Log.d("포인트",response.toString())
+                    Log.d("포인트",result.toString())
+                    if ("ok" == result) {
+                        var data = response.getJSONObject("member")
+                        var member = data.getJSONObject("Member")
+                        id  = Utils.getString(member,"id")
+                        var data2 = response.getJSONObject("point")
+                        var point = data2.getJSONObject("Point")
+                        val a_point = Utils.getString(point,"balance")
 
-            } catch (e: JSONException) {
-                e.printStackTrace()
+
+                        pointTV.text = a_point
+                        l_point()
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
             }
-        }
 
-        override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-            super.onSuccess(statusCode, headers, response)
-        }
-
-        override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
-
-            // System.out.println(responseString);
-        }
-
-        private fun error() {
-            Utils.alert(context, "조회중 장애가 발생하였습니다.")
-        }
-
-        override fun onFailure(
-                statusCode: Int,
-                headers: Array<Header>?,
-                responseString: String?,
-                throwable: Throwable
-        ) {
-            if (progressDialog != null) {
-                progressDialog!!.dismiss()
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
             }
-            // System.out.println(responseString);
-            throwable.printStackTrace()
-            error()
-        }
 
-        override fun onFailure(
-                statusCode: Int,
-                headers: Array<Header>?,
-                throwable: Throwable,
-                errorResponse: JSONObject?
-        ) {
-            if (progressDialog != null) {
-                progressDialog!!.dismiss()
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
             }
-            throwable.printStackTrace()
-            error()
-        }
 
-        override fun onFailure(
-                statusCode: Int,
-                headers: Array<Header>?,
-                throwable: Throwable,
-                errorResponse: JSONArray?
-        ) {
-            if (progressDialog != null) {
-                progressDialog!!.dismiss()
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
             }
-            throwable.printStackTrace()
-            error()
-        }
 
-        override fun onStart() {
-            // show dialog
-            if (progressDialog != null) {
-
-                progressDialog!!.show()
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    responseString: String?,
+                    throwable: Throwable
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                // System.out.println(responseString);
+                throwable.printStackTrace()
+                error()
             }
-        }
 
-        override fun onFinish() {
-            if (progressDialog != null) {
-                progressDialog!!.dismiss()
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
             }
-        }
-    })
-}
 
-//포인트사용
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONArray?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+    //포인트사용
     fun use_point(member_id:String) {
         val params = RequestParams()
         params.put("member_id",member_id)
@@ -284,13 +280,13 @@ fun loadpoint(phone:String) {
 
     var n_use_point =Integer.parseInt(use_point)
 
-    if (n_left_point<0){
+    if (n_left_point < 0){
         Toast.makeText(myContext,"한도초과",Toast.LENGTH_SHORT).show()
 
-    }else if (n_use_point < 500) {
+    } else if (n_use_point < 500) {
         Toast.makeText(myContext,"사용포인트가 부족합니다",Toast.LENGTH_SHORT).show()
 
-    }  else{
+    } else {
             MemberAction.point_stack(params, object : JsonHttpResponseHandler() {
 
                 override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -344,5 +340,5 @@ fun loadpoint(phone:String) {
             })
         }
     }
-    }
+}
 
