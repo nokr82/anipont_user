@@ -43,7 +43,7 @@
                     android:letterSpacing="-0.03"
                     android:lineSpacingExtra="3sp"
                     android:gravity="center_horizontal"
-                    android:text="이용약관과 개인정보 취급방침에 동의하시면 휴대전화 번호 입력 후
+                    android:text="이용약관과 개인정보 취급방침에 동의하신 후 휴대전화 번호 입력 후
 적립버튼을 터치하세요."
                     />
 

@@ -19,6 +19,4 @@ object MemberAction {
     fun point_stack(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/point_stack.json", params, handler)
     }
-
-
 }
