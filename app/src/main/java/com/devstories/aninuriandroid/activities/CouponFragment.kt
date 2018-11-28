@@ -2,9 +2,6 @@ package com.devstories.aninuriandroid.activities
 
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -16,18 +13,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.R
-import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
-import com.nostra13.universalimageloader.core.ImageLoader
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.fra_coupon.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class CouponFragment : Fragment() {
