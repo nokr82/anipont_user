@@ -19,7 +19,7 @@ object MemberAction {
     fun point_stack(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/point_stack.json", params, handler)
     }
-    //포인트적립
+    //멤버체크
     fun is_member(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/is_member.json", params, handler)
     }

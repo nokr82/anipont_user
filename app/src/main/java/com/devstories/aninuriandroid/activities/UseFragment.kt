@@ -36,12 +36,6 @@ class UseFragment : Fragment() {
     private var timer: Timer? = null
 
 
-    internal var checkHandler: Handler = object : Handler() {
-        override fun handleMessage(msg: android.os.Message) {
-            checkStep()
-        }
-    }
-
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
     lateinit var threeLL: LinearLayout
@@ -144,6 +138,7 @@ class UseFragment : Fragment() {
             phone= phoneTV.text.toString()
                     step = 2
             loaduserdata()
+
         }
     }
     // 프로세스
@@ -175,7 +170,7 @@ class UseFragment : Fragment() {
 
 
 
-                        timerStart()
+
 
                     }
 
@@ -218,100 +213,6 @@ class UseFragment : Fragment() {
                 }
             }
         })
-    }
-    // 요청 체크
-    fun checkStep() {
-        val params = RequestParams()
-        params.put("company_id", 1)
-
-        RequestStepAction.check_step(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-
-                    val result = response!!.getString("result")
-                    if ("ok" == result) {
-                        var requestStep = response.getJSONObject("RequestStep")
-                        var member = response.getJSONObject("Member")
-
-//                        step = Utils.getInt(requestStep, "step")
-                        member_id = Utils.getInt(requestStep, "member_id")
-                        val result_step = Utils.getInt(requestStep, "step")
-                        val new_member_yn = Utils.getString(requestStep, "new_member_yn")
-
-                        if(step != result_step) {
-
-                            if (timer != null) {
-                                timer!!.cancel()
-                            }
-
-                            step = result_step
-
-                            if(step == 3) {
-
-
-
-                            }else if(step == 6){
-
-                            }
-
-                        }
-
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-
-            override fun onFailure(
-                    statusCode: Int,
-                    headers: Array<Header>?,
-                    throwable: Throwable,
-                    errorResponse: JSONObject?
-            ) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-                    progressDialog!!.show()
-                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-    }
-
-    fun timerStart(){
-        val task = object : TimerTask() {
-            override fun run() {
-                checkHandler.sendEmptyMessage(0)
-            }
-        }
-
-        timer = Timer()
-        timer!!.schedule(task, 0, 2000)
     }
 
     //사용자 회원유무확인
@@ -332,7 +233,17 @@ class UseFragment : Fragment() {
                         new_member_yn = response.getString("new_member_yn")
                         member_id = response.getInt("member_id")
                         changeStep()
-
+                        if (timer != null) {
+                            timer!!.cancel()
+                        }
+                        //회원이면 포인트조회로
+                        if (new_member_yn.equals("N")){
+                        val intent = Intent(myContext, UseActivity::class.java)
+                        type =2
+                        intent.putExtra("type",type)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                        }
 
                     }else{
                         Toast.makeText(myContext,"조회실패",Toast.LENGTH_SHORT).show()
