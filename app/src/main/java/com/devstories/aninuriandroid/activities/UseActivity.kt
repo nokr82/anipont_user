@@ -24,7 +24,7 @@ class UseActivity :  FragmentActivity() {
         progressDialog = ProgressDialog(context)
 
         val UseFragment : UseFragment = UseFragment()
-        val CouponFragment : CouponFragment = CouponFragment()
+        val Point_Use_Fragment : Point_Use_Fragment = Point_Use_Fragment()
         val Point_AccurMulaage_Fragment : Point_AccurMulaage_Fragment = Point_AccurMulaage_Fragment()
 
 
@@ -45,7 +45,7 @@ class UseActivity :  FragmentActivity() {
             titleTV.text = "쿠폰/포인트\n조회"
             use_op_LL.visibility = View.GONE
             couponLL.setBackgroundResource(R.drawable.background_strock_707070)
-            supportFragmentManager.beginTransaction().replace(R.id.main_frame, CouponFragment).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
         }else{
             useLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
@@ -67,7 +67,7 @@ class UseActivity :  FragmentActivity() {
             titleTV.text = "쿠폰/포인트\n조회"
             use_op_LL.visibility = View.GONE
             couponLL.setBackgroundResource(R.drawable.background_strock_707070)
-            supportFragmentManager.beginTransaction().replace(R.id.main_frame, CouponFragment).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
         }
 
 

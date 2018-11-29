@@ -26,7 +26,7 @@ import org.json.JSONObject
 import java.util.*
 
 
-class CouponFragment : Fragment() {
+class Point_Use_Fragment : Fragment() {
     lateinit var myContext: Context
     private var progressDialog: ProgressDialog? = null
 
@@ -52,9 +52,10 @@ class CouponFragment : Fragment() {
     var left_point = ""
     var point = ""
     var use_point = ""
+    var new_member_yn = ""
     var step = -1
-    var id  =""
     var n_left_point = -1
+    var member_id = -1
     var type =-1
 
     internal var checkHandler: Handler = object : Handler() {
@@ -99,9 +100,7 @@ class CouponFragment : Fragment() {
 
 
 
-        useLL.setOnClickListener {
 
-        }
 
         oneLL.setOnClickListener {
             use_pointTV.setText(use_pointTV.getText().toString() + 1)
@@ -154,6 +153,14 @@ class CouponFragment : Fragment() {
                 use_pointTV.text = "0"
             }
         }
+
+
+        useLL.setOnClickListener {
+                if (step==5){
+                    changeStep()
+                }
+        }
+
         timerStart()
     }
 
@@ -197,6 +204,10 @@ class CouponFragment : Fragment() {
                     if ("ok" == result) {
                         var requestStep = response.getJSONObject("RequestStep")
                         var member = response.getJSONObject("Member")
+                        member_id =  Utils.getInt(member, "member_id")
+                        Log.d("아이디",member_id.toString())
+                        new_member_yn = Utils.getString(requestStep, "new_member_yn")
+
 
                         val result_step = Utils.getInt(requestStep, "step")
                         var point_o = response.getJSONObject("Point")
@@ -267,6 +278,79 @@ class CouponFragment : Fragment() {
             }
         })
     }
+
+    // 프로세스
+    fun changeStep() {
+        val params = RequestParams()
+        params.put("company_id", 1)
+        params.put("member_id", member_id)
+        params.put("new_member_yn", new_member_yn)
+        params.put("point", use_point)
+        params.put("step", step)
+
+        RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+                        var requestStep = response.getJSONObject("RequestStep")
+                        var step = Utils.getInt(requestStep,"step")
+                    if (step!=5){
+                        use_point="0"
+                    }
+
+
+
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
 
     fun timerStart(){
         val task = object : TimerTask() {
