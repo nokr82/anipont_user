@@ -13,6 +13,9 @@ class UseActivity :  FragmentActivity() {
     private var progressDialog: ProgressDialog? = null
     var type = -1
     var save_point:String? = null
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coupon_use)
