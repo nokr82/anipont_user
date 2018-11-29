@@ -180,7 +180,7 @@ class CouponFragment : Fragment() {
 
 
     // 요청 체크
-    fun checkStep() {
+       fun checkStep() {
         val params = RequestParams()
         params.put("company_id", 1)
 
@@ -202,24 +202,24 @@ class CouponFragment : Fragment() {
                         var point_o = response.getJSONObject("Point")
 
                         val balance = Utils.getString(point_o, "balance")
-                         if(step != result_step) {
+                        if(step != result_step) {
                             step = result_step
                             Log.d("스텝",step.toString())
-                             pointTV.text = balance
-                             left_pointTV.text = balance
-                             if (step==3){
-                                 val intent = Intent(myContext, UseActivity::class.java)
-                                 type =3
-                                 intent.putExtra("type",type)
-                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                 startActivity(intent)
-                             }else if (step ==6){
-                                 val intent = Intent(myContext, UseActivity::class.java)
-                                 type =3
-                                 intent.putExtra("type",type)
-                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                 startActivity(intent)
-                             }
+                            pointTV.text = balance
+                            left_pointTV.text = balance
+                            if (step==3){
+                                val intent = Intent(myContext, UseActivity::class.java)
+                                type =3
+                                intent.putExtra("type",type)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                startActivity(intent)
+                            }else if (step ==6){
+                                val intent = Intent(myContext, UseActivity::class.java)
+                                type =3
+                                intent.putExtra("type",type)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                startActivity(intent)
+                            }
 
 
 

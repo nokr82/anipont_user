@@ -133,13 +133,19 @@ class UseFragment : Fragment() {
             }else{
             }
         }
-
+        checkStep()
         useLL.setOnClickListener {
             phone= phoneTV.text.toString()
-                    step = 2
-            loaduserdata()
-
+            if (step == 1){
+                step = 2
+                loaduserdata()
+            }else if (step ==4){
+                step = 5
+                loaduserdata()
+                }
         }
+
+
     }
     // 프로세스
     fun changeStep() {
@@ -203,6 +209,69 @@ class UseFragment : Fragment() {
                 // show dialog
                 if (progressDialog != null) {
 
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+    // 요청 체크
+    fun checkStep() {
+        val params = RequestParams()
+        params.put("company_id", 1)
+
+        RequestStepAction.check_step(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+                        var requestStep = response.getJSONObject("RequestStep")
+                        val result_step = Utils.getInt(requestStep, "step")
+                        if(step != result_step) {
+                            step = result_step
+                            Log.d("스텝",step.toString())
+
+                        }
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
                     progressDialog!!.show()
                 }
             }
