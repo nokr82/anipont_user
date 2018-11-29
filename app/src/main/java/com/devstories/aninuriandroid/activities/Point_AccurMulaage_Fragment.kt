@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,9 +18,9 @@ import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.fra_point_accumulate.*
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
 
 
 class Point_AccurMulaage_Fragment : Fragment() {
@@ -32,8 +33,8 @@ class Point_AccurMulaage_Fragment : Fragment() {
     lateinit var titleTV: TextView
 
     var type =-1
+    private var timer: Timer? = null
 
-    
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
 
@@ -65,7 +66,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
             startActivity(intent)
 
         }
-
+        timerStart()
 
         }
 
@@ -150,5 +151,22 @@ class Point_AccurMulaage_Fragment : Fragment() {
         })
     }
 
+
+
+    fun timerStart(){
+        val task = object : TimerTask() {
+            override fun run() {
+                val intent = Intent(myContext, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            }
+        }
+
+        timer = Timer()
+        timer!!.schedule(task,2500)
     }
+
+
+
+}
 

@@ -28,6 +28,7 @@ class MainActivity : RootActivity() {
 
     var step = -1
     var member_id = -1
+    //적립/사용 타입구분
     var p_type = -1
 
     var stackpoint = -1
@@ -105,13 +106,13 @@ class MainActivity : RootActivity() {
                             //포인트적립
                             if(step == 1) {
                                 type = 1
-                                val intent = Intent(context, UseActivity::class.java)
+                              val intent = Intent(context, UseActivity::class.java)
                                 intent.putExtra("type",type)
                                 startActivity(intent)
 
-                            }//쿠폰사용
+                            }//포인트 사용
                             else if(step == 4){
-                                type = 2
+                                type = 1
                                 val intent = Intent(context, UseActivity::class.java)
                                 intent.putExtra("type",type)
                                 startActivity(intent)
