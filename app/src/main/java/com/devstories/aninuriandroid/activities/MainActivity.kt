@@ -5,9 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Message
 import android.util.Log
+import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.adapter.FullScreenImageAdapter
+import com.devstories.aninuriandroid.base.Config
 import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.RootActivity
 import com.devstories.aninuriandroid.base.Utils
@@ -18,12 +22,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : RootActivity() {
 
-    lateinit var context:Context
+    lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
-
 
     var type = -1
 
@@ -33,6 +37,10 @@ class MainActivity : RootActivity() {
     var p_type = -1
 
     var stackpoint = -1
+    var company_id = -1
+
+    lateinit var imageAdater: FullScreenImageAdapter
+    var imagePaths = ArrayList<String>()
 
     internal var checkHandler: Handler = object : Handler() {
         override fun handleMessage(msg: android.os.Message) {
@@ -40,8 +48,10 @@ class MainActivity : RootActivity() {
         }
     }
 
-    private var timer: Timer? = null
+    private var time = 0
+    private var handler: Handler? = null
 
+    private var timer: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +60,15 @@ class MainActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
-        var storeName = PrefUtils.getStringPreference(context, "storeName", "")
-        if (storeName != null && !storeName.equals("")) {
-            storeNameTV.text = storeName
+        company_id = PrefUtils.getIntPreference(context, "company_id")
+
+        var company_name = PrefUtils.getStringPreference(context, "company_name", "")
+        if (company_name != null && !company_name.equals("")) {
+            storeNameTV.text = company_name
         }
+
+        imageAdater = FullScreenImageAdapter(this, imagePaths)
+        imageVP.adapter = imageAdater
 
         useLL.setOnClickListener {
             if (timer != null) {
@@ -61,7 +76,7 @@ class MainActivity : RootActivity() {
             }
             type = 1
             val intent = Intent(this, UseActivity::class.java)
-            intent.putExtra("type",type)
+            intent.putExtra("type", type)
             startActivity(intent)
 
         }
@@ -72,21 +87,120 @@ class MainActivity : RootActivity() {
             }
             type = 2
             val intent = Intent(this, UseActivity::class.java)
-            intent.putExtra("type",type)
+            intent.putExtra("type", type)
             startActivity(intent)
         }
 
         timerStart()
+        companyInfo()
+        timer()
+
+    }
+
+    fun companyInfo() {
+        val params = RequestParams()
+        params.put("company_id", company_id)
+
+        MemberAction.company_info(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+                        var company = response.getJSONObject("company")
+                        val images = response.getJSONArray("images")
+
+                        for(i in 0 until images.length()) {
+                            val image:JSONObject = images[i] as JSONObject
+                            val companyImage = image.getJSONObject("CompanyImage")
+
+                            val path = Config.url + Utils.getString(companyImage, "image_uri")
+
+                            imagePaths.add(path)
+
+                        }
+
+                        imageAdater.notifyDataSetChanged()
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
 
 
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
 
 
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+//                if (progressDialog != null) {
+//                    progressDialog!!.show()
+//                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+    private fun timer() {
+
+        if(handler != null) {
+            handler!!.removeCallbacksAndMessages(null);
         }
+
+        handler = object : Handler() {
+            override fun handleMessage(msg: Message) {
+
+                time++
+
+                val index = imageVP.getCurrentItem()
+                val last_index = imagePaths.size - 1
+
+                if (time % 2 == 0) {
+                    if (index < last_index) {
+                        imageVP.setCurrentItem(index + 1)
+                    } else {
+                        imageVP.setCurrentItem(0)
+                    }
+                }
+
+                handler!!.sendEmptyMessageDelayed(0, 2000) // 1초에 한번 업, 1000 = 1 초
+            }
+        }
+        handler!!.sendEmptyMessage(0)
+    }
 
     // 요청 체크
     fun checkStep() {
         val params = RequestParams()
-        params.put("company_id", 1)
+        params.put("company_id", company_id)
 
         RequestStepAction.check_step(params, object : JsonHttpResponseHandler() {
 
@@ -106,21 +220,21 @@ class MainActivity : RootActivity() {
                         member_id = Utils.getInt(requestStep, "member_id")
                         val result_step = Utils.getInt(requestStep, "step")
                         val new_member_yn = Utils.getString(requestStep, "new_member_yn")
-                        if(step != result_step) {
+                        if (step != result_step) {
                             step = result_step
-                            Log.d("스텝",step.toString())
+                            Log.d("스텝", step.toString())
                             //포인트적립
-                            if(step == 1) {
+                            if (step == 1) {
                                 type = 1
-                              val intent = Intent(context, UseActivity::class.java)
-                                intent.putExtra("type",type)
+                                val intent = Intent(context, UseActivity::class.java)
+                                intent.putExtra("type", type)
                                 startActivity(intent)
 
                             }//포인트 사용
-                            else if(step == 4){
+                            else if (step == 4) {
                                 type = 1
                                 val intent = Intent(context, UseActivity::class.java)
-                                intent.putExtra("type",type)
+                                intent.putExtra("type", type)
                                 startActivity(intent)
 
                             }
@@ -156,9 +270,9 @@ class MainActivity : RootActivity() {
 
             override fun onStart() {
                 // show dialog
-                if (progressDialog != null) {
-                    progressDialog!!.show()
-                }
+//                if (progressDialog != null) {
+//                    progressDialog!!.show()
+//                }
             }
 
             override fun onFinish() {
@@ -169,7 +283,7 @@ class MainActivity : RootActivity() {
         })
     }
 
-    fun timerStart(){
+    fun timerStart() {
         val task = object : TimerTask() {
             override fun run() {
                 checkHandler.sendEmptyMessage(0)
@@ -180,22 +294,19 @@ class MainActivity : RootActivity() {
         timer!!.schedule(task, 0, 2000)
     }
 
-
-
-
     override fun onDestroy() {
         super.onDestroy()
         if (progressDialog != null) {
             progressDialog!!.dismiss()
         }
+
         if (timer != null) {
             timer!!.cancel()
         }
 
-
     }
 
 
-    }
+}
 
 

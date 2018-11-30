@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.RootActivity
 import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -36,7 +37,7 @@ class LoginActivity : RootActivity() {
 
 
             if (getName == "" || getName == null || getName.isEmpty()) {
-                Toast.makeText(context, "이메일을 입력해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "아이디를 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -56,7 +57,7 @@ class LoginActivity : RootActivity() {
         params.put("login_id", email)
         params.put("passwd", passwd)
 
-        MemberAction.my_info(params, object : JsonHttpResponseHandler() {
+        MemberAction.login(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
@@ -65,35 +66,17 @@ class LoginActivity : RootActivity() {
 
                 try {
                     val result = response!!.getString("result")
-                    println("LoginActivity result ::: $result")
 
                     if ("ok" == result) {
                         val company = response.getJSONObject("company")
-                        println(company)
-                        //val images = response.getJSONArray("images")//[]
 
-                        val company_id = Utils.getInt(company, "id")
-
-                        /*PrefUtils.setPreference(context, "company_id", company_id)
+                        PrefUtils.setPreference(context, "company_id", Utils.getInt(company, "id"))
                         PrefUtils.setPreference(context, "login_id", Utils.getString(company, "login_id"))
                         PrefUtils.setPreference(context, "passwd", Utils.getString(company, "passwd"))
                         PrefUtils.setPreference(context, "company_name", Utils.getString(company, "company_name"))
-                        *//*PrefUtils.setPreference(context, "phone1", Utils.getString(company, "phone1"))
-                        PrefUtils.setPreference(context, "phone2", Utils.getInt(company, "phone2"))
-                        PrefUtils.setPreference(context, "phone3", Utils.getInt(company, "phone3"))
-                        PrefUtils.setPreference(context, "s_contract_term", Utils.getInt(company, "s_contract_term"))
-                        PrefUtils.setPreference(context, "e_contract_term", Utils.getInt(company, "e_contract_term"))
-                        PrefUtils.setPreference(context, "created", Utils.getInt(company, "created"))
-                        PrefUtils.setPreference(context, "updated", Utils.getInt(company, "updated"))
-                        PrefUtils.setPreference(context, "basic_per", Utils.getInt(company, "basic_per"))
-                        PrefUtils.setPreference(context, "option_per", Utils.getInt(company, "option_per"))
-                        PrefUtils.setPreference(context, "del_yn", Utils.getInt(company, "del_yn"))*//*
-
-                        PrefUtils.setPreference(context, "autoLogin", true)*/
+                        PrefUtils.setPreference(context, "autoLogin", true)
 
                         val intent = Intent(context, MainActivity::class.java)
-                        //intent.putExtra("is_push", is_push)
-                        intent.putExtra("company_id", company_id)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 

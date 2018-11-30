@@ -10,6 +10,16 @@ import com.loopj.android.http.RequestParams
  */
 object MemberAction {
 
+    // 로그인
+    fun login(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/login/index.json", params, handler)
+    }
+
+    // 업체 정보
+    fun company_info(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/company/info.json", params, handler)
+    }
+
     // 회원 페이지
     fun my_info(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/member/my_info.json", params, handler)

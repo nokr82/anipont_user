@@ -79,7 +79,8 @@ class IntroActivity : RootActivity() {
 
         if (!autoLogin) {
             PrefUtils.clear(context)
-            val intent = Intent(context, MainActivity::class.java)
+
+            val intent = Intent(context, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
 
@@ -91,24 +92,21 @@ class IntroActivity : RootActivity() {
     internal var handler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
             //versionInfo();
-            //login()
+            login()
 
-            val intent = Intent(context, MainActivity::class.java)
-            intent.putExtra("user_id", 9)
-            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+//            val intent = Intent(context, MainActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(intent)
         }
     }
 
     private fun login() {
 
         val params = RequestParams()
-//        params.put("login_id", PrefUtils.getStringPreference(context,"login_id"))
-//        params.put("passwd", PrefUtils.getStringPreference(context,"passwd"))
         params.put("login_id", PrefUtils.getStringPreference(context,"login_id"))
         params.put("passwd", PrefUtils.getStringPreference(context,"passwd"))
 
-        MemberAction.my_info(params, object : JsonHttpResponseHandler() {
+        MemberAction.login(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
@@ -118,24 +116,21 @@ class IntroActivity : RootActivity() {
                 try {
                     val result = response!!.getString("result")
 
-                    print(response)
-
                     if ("ok" == result) {
 
                         val company = response.getJSONObject("company")
-                        //val images = response.getJSONArray("images")//[]
 
-                        val user_id = Utils.getInt(company, "id")
+                        val company_id = Utils.getInt(company, "id")
 
-                        PrefUtils.setPreference(context, "user_id", user_id)
-                        PrefUtils.setPreference(context, "login_id", Utils.getInt(company, "login_id"))
+                        PrefUtils.setPreference(context, "company_id", company_id)
+                        PrefUtils.setPreference(context, "login_id", Utils.getString(company, "login_id"))
+                        PrefUtils.setPreference(context, "passwd", Utils.getString(company, "passwd"))
+                        PrefUtils.setPreference(context, "company_name", Utils.getString(company, "company_name"))
                         PrefUtils.setPreference(context, "name", Utils.getString(company, "name"))
 
                         PrefUtils.setPreference(context, "autoLogin", true)
 
                         val intent = Intent(context, MainActivity::class.java)
-                        //intent.putExtra("is_push", is_push)
-                        intent.putExtra("company_id", user_id)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 
