@@ -4,13 +4,23 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
+import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
-import kotlinx.android.synthetic.main.fra_point_accumulate.*
+import com.devstories.aninuriandroid.base.Utils
+import com.loopj.android.http.JsonHttpResponseHandler
+import com.loopj.android.http.RequestParams
+import cz.msebera.android.httpclient.Header
+import org.json.JSONException
+import org.json.JSONObject
+import java.util.*
 
 
 class Point_AccurMulaage_Fragment : Fragment() {
@@ -18,9 +28,13 @@ class Point_AccurMulaage_Fragment : Fragment() {
     lateinit var myContext: Context
     internal lateinit var view: View
     lateinit var useLL: LinearLayout
-    var type =-1
+    lateinit var left_pointTV: TextView
+    lateinit var pointTV: TextView
+    lateinit var titleTV: TextView
 
-    
+    var type =-1
+    private var timer: Timer? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
 
@@ -34,13 +48,16 @@ class Point_AccurMulaage_Fragment : Fragment() {
 
         useLL = view.findViewById(R.id.useLL)
 
+        left_pointTV = view.findViewById(R.id.left_pointTV)
+        pointTV = view.findViewById(R.id.pointTV)
+        titleTV = view.findViewById(R.id.titleTV)
 
 
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        checkStep()
         useLL.setOnClickListener {
             type = 2
             val intent = Intent(myContext, UseActivity::class.java)
@@ -49,9 +66,107 @@ class Point_AccurMulaage_Fragment : Fragment() {
             startActivity(intent)
 
         }
-
+        timerStart()
 
         }
 
+    // 요청 체크
+    fun checkStep() {
+        val params = RequestParams()
+        params.put("company_id", 1)
+
+        RequestStepAction.check_step(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+                        var requestStep = response.getJSONObject("RequestStep")
+                        var member = response.getJSONObject("Member")
+                        var point_o = response.getJSONObject("Point")
+
+                        val type = Utils.getInt(point_o, "type")
+                        val point = Utils.getString(point_o, "point")
+                        val balance = Utils.getString(point_o, "balance")
+
+                        Log.d("type",type.toString())
+
+                        if (type==1){
+                            titleTV.text = "적립완료"
+                        }else if (type==2){
+                            titleTV.text = "사용완료"
+                        }
+
+
+                        left_pointTV.text = balance+"P"
+                        pointTV.text = point+"P"
+
+
+
+                        }
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
     }
+
+
+
+    fun timerStart(){
+        val task = object : TimerTask() {
+            override fun run() {
+                val intent = Intent(myContext, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            }
+        }
+
+        timer = Timer()
+        timer!!.schedule(task,2500)
+    }
+
+
+
+}
 

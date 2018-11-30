@@ -38,97 +38,6 @@ class UseFragment : Fragment() {
 
     private var timer: Timer? = null
 
-    internal var checkHandler: Handler = object : Handler() {
-        override fun handleMessage(msg: android.os.Message) {
-            //checkStep()
-            val params = RequestParams()
-            params.put("company_id", 1)
-            RequestStepAction.check_step(params, object : JsonHttpResponseHandler() {
-                override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                    if (progressDialog != null) {
-                        progressDialog!!.dismiss()
-                    }
-                    try {
-                        Log.d("포인트 메커니즘",response.toString())
-                        val result = response!!.getString("result")
-                        if ("ok" == result) {
-                            var data = response.getJSONObject("Member")
-                            var requestStep = data.getJSONObject("RequestStep")
-                            var step  = Utils.getString(requestStep,"step")
-
-                            if (step.equals("3"))
-                                Log.i("Handler", "step 정보 가져옴")
-
-                        }else{
-                            Toast.makeText(myContext,"메커니즘 조회 실패",Toast.LENGTH_SHORT).show()
-                        }
-
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                }
-
-                private fun error() {
-                    Utils.alert(context, "[핸들러] 조회중 장애가 발생하였습니다.")
-                }
-
-                override fun onFailure(
-                        statusCode: Int,
-                        headers: Array<Header>?,
-                        responseString: String?,
-                        throwable: Throwable
-                ) {
-                    if (progressDialog != null) {
-                        progressDialog!!.dismiss()
-                    }
-                    // System.out.println(responseString);
-                    throwable.printStackTrace()
-                    error()
-                }
-
-                override fun onFailure(
-                        statusCode: Int,
-                        headers: Array<Header>?,
-                        throwable: Throwable,
-                        errorResponse: JSONObject?
-                ) {
-                    if (progressDialog != null) {
-                        progressDialog!!.dismiss()
-                    }
-                    throwable.printStackTrace()
-                    error()
-                }
-
-                override fun onFailure(
-                        statusCode: Int,
-                        headers: Array<Header>?,
-                        throwable: Throwable,
-                        errorResponse: JSONArray?
-                ) {
-                    if (progressDialog != null) {
-                        progressDialog!!.dismiss()
-                    }
-                    throwable.printStackTrace()
-                    error()
-                }
-
-                override fun onStart() {
-                    // show dialog
-                    if (progressDialog != null) {
-
-                        progressDialog!!.show()
-                    }
-                }
-
-                override fun onFinish() {
-                    if (progressDialog != null) {
-                        progressDialog!!.dismiss()
-                    }
-                }
-            })
-        }
-    }
-
 
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
@@ -146,10 +55,15 @@ class UseFragment : Fragment() {
     lateinit var save_pointTV: TextView
 
 
-    var phone = -1
-
+    var phone = ""
     var type = -1
     var save_point = ""
+    var step = -1
+    var member_id = -1
+    var p_type = -1
+    var new_member_yn = ""
+
+    var stackpoint = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
@@ -222,37 +136,50 @@ class UseFragment : Fragment() {
             }else{
             }
         }
-
+        checkStep()
         useLL.setOnClickListener {
-            var phone = phoneTV.text.toString()
-
-            loaduserdata(phone)
-
-
+            phone= phoneTV.text.toString()
+            if (step == 1){
+                step = 2
+                loaduserdata()
+            }else if (step ==4){
+                step = 5
+                loaduserdata()
+                }
         }
 
     }
-
-    fun loaduserdata(phone:String) {
+    // 프로세스
+    fun changeStep() {
         val params = RequestParams()
-        params.put("phone", phone)
+        params.put("company_id", 1)
+        params.put("member_id", member_id)
+        params.put("new_member_yn", new_member_yn)
+        params.put("step", step)
 
-        MemberAction.my_info(params, object : JsonHttpResponseHandler() {
+        RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {
+
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
                 }
+
                 try {
-                    Log.d("포인트",response.toString())
+
                     val result = response!!.getString("result")
                     if ("ok" == result) {
+                        var requestStep = response.getJSONObject("RequestStep")
                         var data = response.getJSONObject("member")
-                        var member = data.getJSONObject("Member")
-                        var id  = Utils.getString(member,"id")
+                        var step = Utils.getInt(requestStep,"step")
+//                        if (step ==2){
+//                            timer!!.cancel()
+//                        }
 
-                        if (id.isEmpty()){
+//                        step = Utils.getInt(requestStep, "step")
+
+                        if (id < 0){
                             //아이디가 없음(비회원임)
-                            changeStep("", 2, "Y")
+                            changeStep()
                         } else {
                             //아이디값이 있는 경우(기존 회원임)
                             val params = RequestParams()
@@ -357,12 +284,180 @@ class UseFragment : Fragment() {
                             println("상호명 ::::::: ${PrefUtils.getStringPreference(context,"storeName")}")
 
 
-                            changeStep(id, 2, "N")
+                            changeStep()
                         }
 
 
+
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    responseString: String?,
+                    throwable: Throwable
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                // System.out.println(responseString);
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONArray?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+    // 요청 체크
+    fun checkStep() {
+        val params = RequestParams()
+        params.put("company_id", 1)
+
+        RequestStepAction.check_step(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+                        var requestStep = response.getJSONObject("RequestStep")
+                        val result_step = Utils.getInt(requestStep, "step")
+                        if(step != result_step) {
+                            step = result_step
+                            Log.d("스텝",step.toString())
+
+                        }
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+    //사용자 회원유무확인
+    fun loaduserdata() {
+        val params = RequestParams()
+        params.put("company_id", 1)
+        params.put("phone", phone)
+
+        //MemberAction.is_member(params, object : JsonHttpResponseHandler() {
+        RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                try {
+                    Log.d("포인트",response.toString())
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+                        var requestStep = response.getJSONObject("RequestStep")
+                        var step = Utils.getInt(requestStep,"step")
+                        if (step ==3){
+                            timer!!.cancel()
+                        }
+
+//                        step = Utils.getInt(requestStep, "step")
+
+
+
                     }else{
-                        Toast.makeText(myContext,"한도초과",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(myContext,"조회실패",Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException) {
@@ -439,160 +534,8 @@ class UseFragment : Fragment() {
         })
     }
 
-    //포인트적립
-    fun stack_point(member_id:String) {
-        val params = RequestParams()
-        params.put("member_id",member_id)
-        params.put("company_id", 2)
-        params.put("point", save_point)
-        params.put("type", 1)
-        MemberAction.point_stack(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                try {
-                    val result = response!!.getString("result")
-                    Log.d("적립",response.toString())
-
-                    if ("ok" == result) {
-                        type = 3
-                        val intent = Intent(myContext, UseActivity::class.java)
-                        intent.putExtra("type",type)
-                        intent.putExtra("phone",phone)
-                        intent.putExtra("save_point",save_point)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        startActivity(intent)
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-            }
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-    }
-
-    // 프로세스
-    fun changeStep(member_id:String, step:Int, check_new_member_yn:String) {
-        val params = RequestParams()
-        params.put("company_id", 2)
-        params.put("member_id", member_id)
-        params.put("new_member_yn", check_new_member_yn)
-        params.put("step",step)
 
 
 
 
-        RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-
-                try {
-
-                    val result = response!!.getString("result")
-                    if ("ok" == result) {
-                        var requestStep = response.getJSONObject("RequestStep")
-                        var step = Utils.getInt(requestStep,"step")
-                        if (step ==3){
-                            timer!!.cancel()
-                        }
-
-//                        step = Utils.getInt(requestStep, "step")
-
-
-
-                        timerStart()
-
-                    }
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-
-            private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
-            }
-
-
-            override fun onFailure(
-                    statusCode: Int,
-                    headers: Array<Header>?,
-                    throwable: Throwable,
-                    errorResponse: JSONObject?
-            ) {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-                throwable.printStackTrace()
-                error()
-            }
-
-            override fun onStart() {
-                // show dialog
-                if (progressDialog != null) {
-
-                    progressDialog!!.show()
-                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
-        })
-
-
-
-    }
-
-
-    fun timerStart(){
-        val task = object : TimerTask() {
-            override fun run() {
-                checkHandler.sendEmptyMessage(0)
-            }
-        }
-
-        timer = Timer()
-        timer!!.schedule(task, 0, 2000)
-    }
 }
