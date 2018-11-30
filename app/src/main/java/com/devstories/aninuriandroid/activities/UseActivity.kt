@@ -8,12 +8,11 @@ import android.view.View
 import com.devstories.aninuriandroid.R
 import kotlinx.android.synthetic.main.activity_coupon_use.*
 
-class UseActivity :  FragmentActivity() {
-    lateinit var context:Context
+class UseActivity : FragmentActivity() {
+    lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     var type = -1
-    var save_point:String? = null
-
+    var save_point: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,30 +22,30 @@ class UseActivity :  FragmentActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
-        val UseFragment : UseFragment = UseFragment()
-        val Point_Use_Fragment : Point_Use_Fragment = Point_Use_Fragment()
-        val Point_AccurMulaage_Fragment : Point_AccurMulaage_Fragment = Point_AccurMulaage_Fragment()
+        val UseFragment: UseFragment = UseFragment()
+        val Point_Use_Fragment: Point_Use_Fragment = Point_Use_Fragment()
+        val Point_AccurMulaage_Fragment: Point_AccurMulaage_Fragment = Point_AccurMulaage_Fragment()
 
 
 
 
         intent = getIntent()
         save_point = intent.getStringExtra("save_point")
-        type = intent.getIntExtra("type",-1)
+        type = intent.getIntExtra("type", -1)
 
 
-        if (type ==1){
+        if (type == 1) {
             useLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
             use_op_LL.visibility = View.VISIBLE
-        }else if (type==2){
+        } else if (type == 2) {
             setmenu()
             phonET.setHint("사용할 포인트를 입력하세요.")
             titleTV.text = "쿠폰/포인트\n조회"
             use_op_LL.visibility = View.GONE
             couponLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
-        }else{
+        } else {
             useLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
             use_op_LL.visibility = View.VISIBLE
@@ -68,16 +67,17 @@ class UseActivity :  FragmentActivity() {
             use_op_LL.visibility = View.GONE
             couponLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
-        }
 
 
         }
 
-    fun setmenu(){
+
+    }
+
+    fun setmenu() {
         couponLL.setBackgroundResource(R.drawable.background_strock_null)
         useLL.setBackgroundResource(R.drawable.background_strock_null)
     }
-
 
 
     override fun onDestroy() {
@@ -85,11 +85,9 @@ class UseActivity :  FragmentActivity() {
         if (progressDialog != null) {
             progressDialog!!.dismiss()
         }
-
-
     }
 
 
-    }
+}
 
 

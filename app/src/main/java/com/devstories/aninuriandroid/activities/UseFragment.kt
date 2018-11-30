@@ -22,6 +22,7 @@ import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
+import kotlinx.android.synthetic.main.activity_coupon_use.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -145,7 +146,7 @@ class UseFragment : Fragment() {
             }else if (step ==4){
                 step = 5
                 loaduserdata()
-                }
+            }
         }
 
     }
@@ -287,9 +288,6 @@ class UseFragment : Fragment() {
                             changeStep()
                         }
 
-
-
-
                     }
 
                 } catch (e: JSONException) {
@@ -365,6 +363,7 @@ class UseFragment : Fragment() {
             }
         })
     }
+
     // 요청 체크
     fun checkStep() {
         val params = RequestParams()
@@ -386,7 +385,16 @@ class UseFragment : Fragment() {
                         if(step != result_step) {
                             step = result_step
                             Log.d("스텝",step.toString())
+                            if (step == 3) {
 
+                                timer!!.cancel()
+                                phonET.setHint("사용할 포인트를 입력하세요.")
+                                titleTV.text = "쿠폰/포인트\n조회"
+                                use_op_LL.visibility = View.GONE
+
+
+
+                            }
                         }
                     }
                 } catch (e: JSONException) {

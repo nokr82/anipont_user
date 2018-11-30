@@ -98,7 +98,9 @@ class Point_Use_Fragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
 
-
+        //인텐트로 전화번호를 받는다
+        //전화번호로 고객의 정보를 조회하고
+        user_left_point("")
 
 
 
@@ -163,6 +165,115 @@ class Point_Use_Fragment : Fragment() {
 
         timerStart()
     }
+
+
+
+
+    fun user_left_point(phoneNumber:String) {
+        val params = RequestParams()
+        params.put("company_id", 1)
+        params.put("phone", phoneNumber)
+
+        MemberAction.inquiry_point(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+                        var point = response.getJSONObject("point")
+                        var coupon = response.getJSONArray("coupon")
+
+                        var tempPoint = Utils.getString(point, "point")
+                        //setText()
+                        pointTV.setText(tempPoint)
+
+                        for (i in 0 until coupon.length()) {
+
+                        }
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
+                super.onSuccess(statusCode, headers, response)
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    responseString: String?,
+                    throwable: Throwable
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                // System.out.println(responseString);
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONArray?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+
+
 
     fun l_point(){
         point = pointTV.text.toString()
