@@ -5,12 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.RootActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : RootActivity() {
 
-    lateinit var context:Context
+    lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
 
 
@@ -23,10 +24,15 @@ class MainActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
+        var storeName = PrefUtils.getStringPreference(context, "storeName", "")
+        if (storeName != null && !storeName.equals("")) {
+            storeNameTV.text = storeName
+        }
+
         useLL.setOnClickListener {
             type = 1
             val intent = Intent(this, UseActivity::class.java)
-            intent.putExtra("type",type)
+            intent.putExtra("type", type)
             startActivity(intent)
 
         }
@@ -34,7 +40,7 @@ class MainActivity : RootActivity() {
         couponLL.setOnClickListener {
             type = 2
             val intent = Intent(this, UseActivity::class.java)
-            intent.putExtra("type",type)
+            intent.putExtra("type", type)
             startActivity(intent)
         }
 
@@ -44,7 +50,7 @@ class MainActivity : RootActivity() {
         }
 
 
-        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -56,6 +62,6 @@ class MainActivity : RootActivity() {
     }
 
 
-    }
+}
 
 
