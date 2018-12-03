@@ -51,8 +51,6 @@ class Point_Use_Fragment : Fragment() {
     lateinit var pointTV: TextView
     lateinit var use_pointTV: TextView
 
-    var phoneNumber = ""
-
     var left_point = ""
     var point = ""
     var use_point = ""
@@ -61,6 +59,7 @@ class Point_Use_Fragment : Fragment() {
     var n_left_point = -1
     var member_id = -1
     var type = -1
+    var phoneNumber = ""
 
     internal var checkHandler: Handler = object : Handler() {
         override fun handleMessage(msg: android.os.Message) {
@@ -68,17 +67,14 @@ class Point_Use_Fragment : Fragment() {
         }
     }
 
-    internal var getPhoneNumber: BroadcastReceiver? = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent != null) {
-                phoneNumber = intent.getStringExtra("phone")
-
-                println("Point Use Fragment get member phone number :::: $phoneNumber")
-            }
-        }
-    }
-
     private var timer: Timer? = null
+
+    /*override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        phoneNumber = activity!!.intent.extras.getString("phone")
+        type = activity!!.intent.extras.getInt("type")
+    }*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
@@ -90,9 +86,6 @@ class Point_Use_Fragment : Fragment() {
         if (!mobile.isNullOrEmpty()){
             phoneNumber = mobile!!
         }*/
-
-        val filter = IntentFilter("USER_PHONE_NUMBER")
-        context!!.registerReceiver(getPhoneNumber, filter)
 
         return inflater.inflate(R.layout.fra_coupon, container, false)
     }
@@ -116,63 +109,63 @@ class Point_Use_Fragment : Fragment() {
         left_pointTV = view.findViewById(R.id.left_pointTV)
         use_pointTV = view.findViewById(R.id.use_pointTV)
 
+        phoneNumber = this.arguments!!.getString("phoneNumber")
+        user_left_point(phoneNumber)
 
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         //인텐트로 전화번호를 받는다
         //전화번호로 고객의 정보를 조회하고
-        //user_left_point("")
-
-
+        /*val filter = IntentFilter("POINT_USE")
+        context!!.registerReceiver(getPhoneNumber, filter)*/
 
         oneLL.setOnClickListener {
-            use_pointTV.setText(use_pointTV.getText().toString() + 1)
+            use_pointTV.text = use_pointTV.text.toString() + 1
             l_point()
         }
         twoLL.setOnClickListener {
-            use_pointTV.setText(use_pointTV.getText().toString() + 2)
+            use_pointTV.text = use_pointTV.text.toString() + 2
             l_point()
         }
         threeLL.setOnClickListener {
-            use_pointTV.setText(use_pointTV.getText().toString() + 3)
+            use_pointTV.text = use_pointTV.text.toString() + 3
             l_point()
         }
         fourLL.setOnClickListener {
-            use_pointTV.setText(use_pointTV.getText().toString() + 4)
+            use_pointTV.text = use_pointTV.text.toString() + 4
             l_point()
         }
         fiveLL.setOnClickListener {
-            use_pointTV.setText(use_pointTV.getText().toString() + 5)
+            use_pointTV.text = use_pointTV.text.toString() + 5
             l_point()
         }
         sixLL.setOnClickListener {
-            use_pointTV.setText(use_pointTV.getText().toString() + 6)
+            use_pointTV.text = use_pointTV.text.toString() + 6
             l_point()
         }
         sevenLL.setOnClickListener {
-            use_pointTV.setText(use_pointTV.getText().toString() + 7)
+            use_pointTV.text = use_pointTV.text.toString() + 7
             l_point()
         }
         eightLL.setOnClickListener {
-            use_pointTV.setText(use_pointTV.getText().toString() + 8)
+            use_pointTV.text = use_pointTV.text.toString() + 8
             l_point()
         }
         nineLL.setOnClickListener {
-            use_pointTV.setText(use_pointTV.getText().toString() + 9)
+            use_pointTV.text = use_pointTV.text.toString() + 9
             l_point()
         }
         zeroLL.setOnClickListener {
-            use_pointTV.setText(use_pointTV.getText().toString() + 0)
+            use_pointTV.text = use_pointTV.text.toString() + 0
             l_point()
         }
         backLL.setOnClickListener {
-            val text = use_pointTV.getText().toString()
-            if (use_pointTV.getText().toString().length > 0) {
-                use_pointTV.setText(text.substring(0, text.length - 1))
+            val text = use_pointTV.text.toString()
+            if (use_pointTV.text.toString().length > 0) {
+                use_pointTV.text = text.substring(0, text.length - 1)
                 if (!text.equals("")) {
                     l_point()
                 }
@@ -208,26 +201,25 @@ class Point_Use_Fragment : Fragment() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
-                        var point = response.getJSONObject("point")
-                        var coupon = response.getJSONArray("coupon")
+                        //var point = response.getJSONObject("point")
 
-                        var tempPoint = Utils.getString(point, "point")
-                        //setText()
-                        pointTV.setText(tempPoint)
+                        var point = response.getString("point")
+                        //var tempPoint = Utils.getString(point, "point")
 
-                        for (i in 0 until coupon.length()) {
+                        //var coupon = response.getJSONArray("coupon")
 
-                        }
+                        pointTV.text = point
+                        left_pointTV.text = point
+
+                        /*for (i in 0 until coupon.length()) {
+
+                        }*/
 
                     }
 
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
             }
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
@@ -502,9 +494,7 @@ class Point_Use_Fragment : Fragment() {
             timer!!.cancel()
         }
 
-        if (getPhoneNumber != null) {
-            context!!.unregisterReceiver(getPhoneNumber)
-        }
+
     }
 
 
