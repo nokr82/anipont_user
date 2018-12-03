@@ -1,7 +1,9 @@
 package com.devstories.aninuriandroid.activities
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.view.View
@@ -15,6 +17,7 @@ class UseActivity : FragmentActivity() {
     var save_point: String? = null
 
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coupon_use)
@@ -22,9 +25,9 @@ class UseActivity : FragmentActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
-        val UseFragment: UseFragment = UseFragment()
-        val Point_Use_Fragment: Point_Use_Fragment = Point_Use_Fragment()
-        val Point_AccurMulaage_Fragment: Point_AccurMulaage_Fragment = Point_AccurMulaage_Fragment()
+        val UseFragment = UseFragment()
+        val Point_Use_Fragment = Point_Use_Fragment()
+        val Point_AccurMulaage_Fragment = Point_AccurMulaage_Fragment()
 
 
 
@@ -58,7 +61,17 @@ class UseActivity : FragmentActivity() {
             use_op_LL.visibility = View.VISIBLE
             useLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
+
+
         }
+
+        /*UseFragment.getView().useLL.setOnClickListener {
+            var sendItt = Intent()
+            sendItt.action = "USER_PHONE_NUMBER"
+            sendItt.putExtra("phone", UseFragment.phone)
+            context?.sendBroadcast(sendItt)
+            couponLL.callOnClick()
+        }*/
 
         couponLL.setOnClickListener {
             setmenu()
@@ -67,10 +80,24 @@ class UseActivity : FragmentActivity() {
             use_op_LL.visibility = View.GONE
             couponLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
-
-
         }
 
+        val frgMng = supportFragmentManager
+        val useFrag = UseFragment()
+        /*UseFragment.useLL.setOnClickListener {
+            var sendItt = Intent()
+            sendItt.action = "USER_PHONE_NUMBER"
+            sendItt.putExtra("phone", UseFragment.phone)
+            context?.sendBroadcast(sendItt)
+            couponLL.callOnClick()
+        }*/
+        useFrag?.useLL?.setOnClickListener {
+            var sendItt = Intent()
+            sendItt.action = "USER_PHONE_NUMBER"
+            sendItt.putExtra("phone", UseFragment.phone)
+            context?.sendBroadcast(sendItt)
+            this.couponLL.callOnClick()
+        }
 
     }
 

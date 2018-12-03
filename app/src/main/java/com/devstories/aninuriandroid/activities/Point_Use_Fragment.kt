@@ -1,8 +1,10 @@
 package com.devstories.aninuriandroid.activities
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -49,6 +51,8 @@ class Point_Use_Fragment : Fragment() {
     lateinit var pointTV: TextView
     lateinit var use_pointTV: TextView
 
+    var phoneNumber = ""
+
     var left_point = ""
     var point = ""
     var use_point = ""
@@ -56,11 +60,21 @@ class Point_Use_Fragment : Fragment() {
     var step = -1
     var n_left_point = -1
     var member_id = -1
-    var type =-1
+    var type = -1
 
     internal var checkHandler: Handler = object : Handler() {
         override fun handleMessage(msg: android.os.Message) {
             checkStep()
+        }
+    }
+
+    internal var getPhoneNumber: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent != null) {
+                phoneNumber = intent.getStringExtra("phone")
+
+                println("Point Use Fragment get member phone number :::: $phoneNumber")
+            }
         }
     }
 
@@ -69,7 +83,18 @@ class Point_Use_Fragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
 
-        return inflater.inflate(R.layout.fra_coupon,container,false)
+        //Dear Fragment, From Fragment
+        /*var mobile = this.arguments?.getString("phone")
+        println("Point Use Fragment get member id :::: $mobile")
+
+        if (!mobile.isNullOrEmpty()){
+            phoneNumber = mobile!!
+        }*/
+
+        val filter = IntentFilter("USER_PHONE_NUMBER")
+        context!!.registerReceiver(getPhoneNumber, filter)
+
+        return inflater.inflate(R.layout.fra_coupon, container, false)
     }
 
 
@@ -100,7 +125,7 @@ class Point_Use_Fragment : Fragment() {
 
         //인텐트로 전화번호를 받는다
         //전화번호로 고객의 정보를 조회하고
-        user_left_point("")
+        //user_left_point("")
 
 
 
@@ -146,30 +171,28 @@ class Point_Use_Fragment : Fragment() {
         }
         backLL.setOnClickListener {
             val text = use_pointTV.getText().toString()
-            if (use_pointTV.getText().toString().length > 0){
+            if (use_pointTV.getText().toString().length > 0) {
                 use_pointTV.setText(text.substring(0, text.length - 1))
-                if (!text.equals("")){
+                if (!text.equals("")) {
                     l_point()
                 }
-            }else{
+            } else {
                 use_pointTV.text = "0"
             }
         }
 
 
         useLL.setOnClickListener {
-                if (step==5){
-                    changeStep()
-                }
+            if (step == 5) {
+                changeStep()
+            }
         }
 
         timerStart()
     }
 
 
-
-
-    fun user_left_point(phoneNumber:String) {
+    fun user_left_point(phoneNumber: String) {
         val params = RequestParams()
         params.put("company_id", 1)
         params.put("phone", phoneNumber)
@@ -273,23 +296,21 @@ class Point_Use_Fragment : Fragment() {
     }
 
 
-
-
-    fun l_point(){
+    fun l_point() {
         point = pointTV.text.toString()
         use_point = use_pointTV.text.toString()
         left_point = pointTV.text.toString()
 
-        if (use_point.equals("")){
+        if (use_point.equals("")) {
             use_point = "0"
         }
 
         val numpoint = Integer.parseInt(point)
-        var n_use_point =Integer.parseInt(use_point)
+        var n_use_point = Integer.parseInt(use_point)
         n_left_point = Integer.parseInt(left_point)
 
 
-            n_left_point = numpoint - n_use_point
+        n_left_point = numpoint - n_use_point
 
         pointTV.text = numpoint.toString()
         use_pointTV.text = n_use_point.toString()
@@ -298,9 +319,10 @@ class Point_Use_Fragment : Fragment() {
 
 
     // 요청 체크
-       fun checkStep() {
+    fun checkStep() {
         val params = RequestParams()
         params.put("company_id", 1)
+        params.put("phone", phoneNumber)
 
         RequestStepAction.check_step(params, object : JsonHttpResponseHandler() {
 
@@ -315,8 +337,8 @@ class Point_Use_Fragment : Fragment() {
                     if ("ok" == result) {
                         var requestStep = response.getJSONObject("RequestStep")
                         var member = response.getJSONObject("Member")
-                        member_id =  Utils.getInt(member, "member_id")
-                        Log.d("아이디",member_id.toString())
+                        member_id = Utils.getInt(member, "member_id")
+                        Log.d("아이디", member_id.toString())
                         new_member_yn = Utils.getString(requestStep, "new_member_yn")
 
 
@@ -324,26 +346,24 @@ class Point_Use_Fragment : Fragment() {
                         var point_o = response.getJSONObject("Point")
 
                         val balance = Utils.getString(point_o, "balance")
-                        if(step != result_step) {
+                        if (step != result_step) {
                             step = result_step
-                            Log.d("스텝",step.toString())
+                            Log.d("스텝", step.toString())
                             pointTV.text = balance
                             left_pointTV.text = balance
-                            if (step==3){
+                            if (step == 3) {
                                 val intent = Intent(myContext, UseActivity::class.java)
-                                type =3
-                                intent.putExtra("type",type)
+                                type = 3
+                                intent.putExtra("type", type)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 startActivity(intent)
-                            }else if (step ==6){
+                            } else if (step == 6) {
                                 val intent = Intent(myContext, UseActivity::class.java)
-                                type =3
-                                intent.putExtra("type",type)
+                                type = 3
+                                intent.putExtra("type", type)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 startActivity(intent)
                             }
-
-
 
 
                         }
@@ -411,12 +431,10 @@ class Point_Use_Fragment : Fragment() {
                     val result = response!!.getString("result")
                     if ("ok" == result) {
                         var requestStep = response.getJSONObject("RequestStep")
-                        var step = Utils.getInt(requestStep,"step")
-                    if (step!=5){
-                        use_point="0"
-                    }
-
-
+                        var step = Utils.getInt(requestStep, "step")
+                        if (step != 5) {
+                            use_point = "0"
+                        }
 
 
                     }
@@ -463,7 +481,7 @@ class Point_Use_Fragment : Fragment() {
     }
 
 
-    fun timerStart(){
+    fun timerStart() {
         val task = object : TimerTask() {
             override fun run() {
                 checkHandler.sendEmptyMessage(0)
@@ -475,8 +493,6 @@ class Point_Use_Fragment : Fragment() {
     }
 
 
-
-
     override fun onDestroy() {
         super.onDestroy()
         if (progressDialog != null) {
@@ -486,9 +502,10 @@ class Point_Use_Fragment : Fragment() {
             timer!!.cancel()
         }
 
-
+        if (getPhoneNumber != null) {
+            context!!.unregisterReceiver(getPhoneNumber)
+        }
     }
-
 
 
 }

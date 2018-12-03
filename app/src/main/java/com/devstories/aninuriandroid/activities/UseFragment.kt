@@ -1,11 +1,15 @@
 package com.devstories.aninuriandroid.activities
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -69,6 +73,8 @@ class UseFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
         progressDialog = ProgressDialog(myContext)
+
+        view = inflater.inflate(R.layout.fra_use,container,false)
 
         return inflater.inflate(R.layout.fra_use,container,false)
     }
@@ -137,12 +143,16 @@ class UseFragment : Fragment() {
             }else{
             }
         }
-        checkStep()
+        //checkStep()
+
         useLL.setOnClickListener {
             phone= phoneTV.text.toString()
             if (step == 1){
                 step = 2
                 loaduserdata()
+
+
+
             }else if (step ==4){
                 step = 5
                 loaduserdata()
@@ -443,9 +453,10 @@ class UseFragment : Fragment() {
         params.put("company_id", 1)
         params.put("phone", phone)
 
-        //MemberAction.is_member(params, object : JsonHttpResponseHandler() {
-        RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {
+        MemberAction.is_member(params, object : JsonHttpResponseHandler() {
+        //RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {
 
+            @SuppressLint("ResourceType")
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
                 if (progressDialog != null) {
                     progressDialog!!.dismiss()
@@ -454,14 +465,37 @@ class UseFragment : Fragment() {
                     Log.d("포인트",response.toString())
                     val result = response!!.getString("result")
                     if ("ok" == result) {
-                        var requestStep = response.getJSONObject("RequestStep")
+                        /*var requestStep = response.getJSONObject("RequestStep")
                         var step = Utils.getInt(requestStep,"step")
                         if (step ==3){
                             timer!!.cancel()
+                        }*/
+                        var isNewMember = response!!.getString("new_member_yn")
+
+                        if (isNewMember.equals("N")){
+                            var phone = response!!.getString("phone")
+                            //Point_Use_Fragment로 유저 id랑 company id를 넘김
+                            //Activity의 Intent
+                            /*val frag = Point_Use_Fragment()
+                            val bundle = Bundle()
+                            bundle.putString("phone", phone)
+                            frag.arguments = bundle
+
+
+                            val fragManager = fragmentManager
+                            val fragTrans = fragManager?.beginTransaction()
+                            fragTrans?.replace(R.layout.fra_coupon, frag)
+                            fragTrans?.commit()*/
+
+                            //fourLL.callOnClick()
+
+                            /*var sendItt = Intent()
+                            sendItt.action = "USER_PHONE_NUMBER"
+                            sendItt.putExtra("phone", phone)
+                            context?.sendBroadcast(sendItt)*/
+
+
                         }
-
-//                        step = Utils.getInt(requestStep, "step")
-
 
 
                     }else{
@@ -541,9 +575,6 @@ class UseFragment : Fragment() {
             }
         })
     }
-
-
-
 
 
 }
