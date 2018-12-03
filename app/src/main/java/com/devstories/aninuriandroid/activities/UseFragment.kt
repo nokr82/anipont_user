@@ -156,6 +156,14 @@ class UseFragment : Fragment() {
             }else if (step ==4){
                 step = 5
                 loaduserdata()
+            }else if (step == -1){
+                val intent = Intent(myContext,UseActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                intent.putExtra("type", 2)
+                intent.putExtra("phone", phone)
+                startActivity(intent)
+
             }
         }
 

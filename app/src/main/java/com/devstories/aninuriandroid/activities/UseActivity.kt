@@ -91,13 +91,13 @@ class UseActivity : FragmentActivity() {
             context?.sendBroadcast(sendItt)
             couponLL.callOnClick()
         }*/
-        useFrag?.useLL?.setOnClickListener {
+     /*   useFrag.useLL.setOnClickListener {
             var sendItt = Intent()
             sendItt.action = "USER_PHONE_NUMBER"
             sendItt.putExtra("phone", UseFragment.phone)
             context?.sendBroadcast(sendItt)
             this.couponLL.callOnClick()
-        }
+        }*/
 
     }
 
