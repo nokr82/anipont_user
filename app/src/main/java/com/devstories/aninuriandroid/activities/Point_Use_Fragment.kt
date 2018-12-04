@@ -18,14 +18,18 @@ import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.adapter.CouponListAdapter
 import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
+import kotlinx.android.synthetic.main.fra_coupon.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class Point_Use_Fragment : Fragment() {
@@ -60,6 +64,9 @@ class Point_Use_Fragment : Fragment() {
     var member_id = -1
     var type = -1
     var phoneNumber = ""
+
+    var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
+    lateinit var couponAdapter : CouponListAdapter
 
     internal var checkHandler: Handler = object : Handler() {
         override fun handleMessage(msg: android.os.Message) {
@@ -174,6 +181,8 @@ class Point_Use_Fragment : Fragment() {
             }
         }
 
+        couponAdapter = CouponListAdapter(myContext, R.layout.item_member_coupon, couponData)
+        couponListLV.adapter = couponAdapter
 
         useLL.setOnClickListener {
             if (step == 5) {
@@ -206,14 +215,20 @@ class Point_Use_Fragment : Fragment() {
                         var point = response.getString("point")
                         //var tempPoint = Utils.getString(point, "point")
 
-                        //var coupon = response.getJSONArray("coupon")
-
                         pointTV.text = point
                         left_pointTV.text = point
 
-                        /*for (i in 0 until coupon.length()) {
+                        couponData.clear()
 
-                        }*/
+                        var data = response.getJSONArray("coupons")
+                        Log.d("쿠폰데이터", data.toString())
+                        for (i in 0 until data.length()) {
+
+                            couponData.add(data[i] as JSONObject)
+
+                        }
+                        couponAdapter.notifyDataSetChanged()
+
 
                     }
 

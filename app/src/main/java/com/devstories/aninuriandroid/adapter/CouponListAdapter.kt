@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.base.Utils
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.ArrayList
 
 open class CouponListAdapter (context: Context, view:Int, data: ArrayList<JSONObject>) : ArrayAdapter<JSONObject>(context, view, data)  {
@@ -20,6 +22,8 @@ open class CouponListAdapter (context: Context, view:Int, data: ArrayList<JSONOb
 
         if (convertView == null) {
             retView = View.inflate(context, view, null)
+            item = ViewHolder(retView)
+            retView.tag = item
         } else {
             retView = convertView
             item = convertView.tag as ViewHolder
@@ -30,9 +34,27 @@ open class CouponListAdapter (context: Context, view:Int, data: ArrayList<JSONOb
             }
         }
 
-        var json = data.get(position)
-        val coupons = json.getJSONArray("coupons")
-        //val coupon = coupons.getJSONObject("Coupon")
+        val couponOJ = data.get(position)
+
+        val memberCoupon = couponOJ.getJSONObject("MemberCoupon")
+        val coupon = couponOJ.getJSONObject("Coupon")
+
+        val used = Utils.getString(memberCoupon, "use_yn")
+        val del = Utils.getString(memberCoupon, "del_yn")
+
+        if (used == "N" && del == "N") {
+
+            val coupon_name = Utils.getString(coupon, "name")
+            val coupon_type = Utils.getString(coupon, "type")
+            val coupon_valid = SimpleDateFormat("yyyy-MM-dd")
+                    .parse(Utils.getString(memberCoupon, "e_use_date"))
+            val coupon_week = Utils.getString(coupon, "week_use_yn")
+            val coupon_sat = Utils.getString(coupon, "sat_use_yn")
+            val coupon_sun = Utils.getString(coupon, "sun_use_yn")
+
+
+        }
+
         return retView
     }
 
