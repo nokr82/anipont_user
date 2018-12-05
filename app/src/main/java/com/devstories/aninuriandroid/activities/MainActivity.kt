@@ -61,6 +61,7 @@ class MainActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
         company_id = PrefUtils.getIntPreference(context, "company_id")
+        company_id = 1
 
         var company_name = PrefUtils.getStringPreference(context, "company_name", "")
         if (company_name != null && !company_name.equals("")) {
@@ -206,9 +207,9 @@ class MainActivity : RootActivity() {
         RequestStepAction.check_step(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                if (progressDialog != null) {
+                /*if (progressDialog != null) {
                     progressDialog!!.dismiss()
-                }
+                }*/
 
                 try {
 
@@ -269,18 +270,6 @@ class MainActivity : RootActivity() {
                 error()
             }
 
-            override fun onStart() {
-                // show dialog
-//                if (progressDialog != null) {
-//                    progressDialog!!.show()
-//                }
-            }
-
-            override fun onFinish() {
-                if (progressDialog != null) {
-                    progressDialog!!.dismiss()
-                }
-            }
         })
     }
 

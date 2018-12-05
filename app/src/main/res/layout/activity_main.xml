@@ -48,8 +48,7 @@
                     android:textSize="14sp"
                     android:textColor="#ffffff"
                     android:lineSpacingExtra="4.5sp"
-                    android:text="사용/조회"
-                    />
+                    android:text="사용/조회" />
             </LinearLayout>
 
 
@@ -66,19 +65,9 @@
                     android:textSize="14sp"
                     android:textColor="#ffffff"
                     android:lineSpacingExtra="4.5sp"
-                    android:text="쿠폰/포인트 조회"
-                    />
+                    android:text="쿠폰/포인트 조회" />
             </LinearLayout>
-
-
-
-
-
-
         </LinearLayout>
-
-
-
     </LinearLayout>
 
 </RelativeLayout>

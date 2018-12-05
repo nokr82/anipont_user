@@ -143,7 +143,8 @@ class UseFragment : Fragment() {
             }else{
             }
         }
-        //checkStep()
+
+        checkStep()
 
         useLL.setOnClickListener {
             phone= phoneTV.text.toString()
@@ -410,8 +411,6 @@ class UseFragment : Fragment() {
                                 titleTV.text = "쿠폰/포인트\n조회"
                                 use_op_LL.visibility = View.GONE
 
-
-
                             }
                         }
                     }
@@ -480,6 +479,7 @@ class UseFragment : Fragment() {
                         }*/
                         var isNewMember = response!!.getString("new_member_yn")
 
+
                         if (isNewMember.equals("N")){
                             //var memberID = response!!.getString("member_id")
                             //Point_Use_Fragment로 유저 id랑 company id를 넘김
@@ -502,11 +502,23 @@ class UseFragment : Fragment() {
                             sendItt.putExtra("phone", phone)
                             context?.sendBroadcast(sendItt)*/
 
+                            //여기서 request_step 테이블에 유저 넘버 넘겨줘야됨
+                            member_id = response!!.getString("member_id").toInt()
+                            new_member_yn = "N"
+
                             val intent = Intent()
                             intent.putExtra("phone", phone)
                             intent.putExtra("type", 2)
                             intent.action = "POINT_USE"
                             myContext.sendBroadcast(intent)
+
+                            changeStep()
+
+                        } else {
+                            member_id = 0
+                            new_member_yn = "Y"
+
+                            changeStep()
                         }
 
 

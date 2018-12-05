@@ -19,6 +19,7 @@ import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.adapter.CouponListAdapter
+import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -85,15 +86,6 @@ class Point_Use_Fragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
-        val extra = arguments
-        member_id = extra!!.getInt("member_id")
-        //Dear Fragment, From Fragment
-        /*var mobile = this.arguments?.getString("phone")
-        println("Point Use Fragment get member id :::: $mobile")
-
-        if (!mobile.isNullOrEmpty()){
-            phoneNumber = mobile!!
-        }*/
 
         return inflater.inflate(R.layout.fra_coupon, container, false)
     }
@@ -117,6 +109,8 @@ class Point_Use_Fragment : Fragment() {
         left_pointTV = view.findViewById(R.id.left_pointTV)
         use_pointTV = view.findViewById(R.id.use_pointTV)
 
+        phoneNumber = this.arguments!!.getString("phoneNumber")
+        user_left_point(phoneNumber)
 
     }
 
@@ -218,6 +212,7 @@ class Point_Use_Fragment : Fragment() {
                         left_pointTV.text = point
 
                         couponData.clear()
+                        couponAdapter.notifyDataSetChanged()
 
                         var data = response.getJSONArray("coupons")
                         Log.d("쿠폰데이터", data.toString())
@@ -371,7 +366,6 @@ class Point_Use_Fragment : Fragment() {
                                 startActivity(intent)
                             }
 
-
                         }
 
                     }
@@ -419,7 +413,7 @@ class Point_Use_Fragment : Fragment() {
     // 프로세스
     fun changeStep() {
         val params = RequestParams()
-        params.put("company_id", 1)
+        params.put("company_id", PrefUtils.getStringPreference(myContext, "company_id"))
         params.put("member_id", member_id)
         params.put("new_member_yn", new_member_yn)
         params.put("point", use_point)
@@ -441,7 +435,6 @@ class Point_Use_Fragment : Fragment() {
                         if (step != 5) {
                             use_point = "0"
                         }
-
 
                     }
 
@@ -507,10 +500,6 @@ class Point_Use_Fragment : Fragment() {
         if (timer != null) {
             timer!!.cancel()
         }
-
-
     }
-
-
 }
 
