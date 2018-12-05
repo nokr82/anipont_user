@@ -94,39 +94,13 @@ class UseActivity : FragmentActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
         }
 
-        /*UseFragment.getView().useLL.setOnClickListener {
-            var sendItt = Intent()
-            sendItt.action = "USER_PHONE_NUMBER"
-            sendItt.putExtra("phone", UseFragment.phone)
-            context?.sendBroadcast(sendItt)
-            couponLL.callOnClick()
-        }*/
 
-        couponLL.setOnClickListener {
-            setmenu()
-            phonET.setHint("사용할 포인트를 입력하세요.")
-            titleTV.text = "쿠폰/포인트\n조회"
-            use_op_LL.visibility = View.GONE
-            couponLL.setBackgroundResource(R.drawable.background_strock_707070)
-            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
-        }
+
+
 
         val frgMng = supportFragmentManager
         val useFrag = UseFragment()
-        /*UseFragment.useLL.setOnClickListener {
-            var sendItt = Intent()
-            sendItt.action = "USER_PHONE_NUMBER"
-            sendItt.putExtra("phone", UseFragment.phone)
-            context?.sendBroadcast(sendItt)
-            couponLL.callOnClick()
-        }*/
-     /*   useFrag.useLL.setOnClickListener {
-            var sendItt = Intent()
-            sendItt.action = "USER_PHONE_NUMBER"
-            sendItt.putExtra("phone", UseFragment.phone)
-            context?.sendBroadcast(sendItt)
-            this.couponLL.callOnClick()
-        }*/
+
 
     }
 

@@ -102,9 +102,7 @@ class UseFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-//        phoneTV.addTextChangedListener(PhoneNumberFormattingTextWatcher())
-
-        save_point = save_pointTV.text.toString()
+       save_point = save_pointTV.text.toString()
 
         oneLL.setOnClickListener {
             phoneTV.setText(phoneTV.getText().toString() + 1)
@@ -158,12 +156,7 @@ class UseFragment : Fragment() {
                 step = 5
                 loaduserdata()
             }else if (step == -1){
-                /*val intent = Intent(myContext,UseActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                intent.putExtra("type", 2)
-                intent.putExtra("phone", phone)
-                startActivity(intent)*/
+
                 loaduserdata()
             }
         }
@@ -200,11 +193,7 @@ class UseFragment : Fragment() {
                         var requestStep = response.getJSONObject("RequestStep")
                         var data = response.getJSONObject("member")
                         var step = Utils.getInt(requestStep,"step")
-//                        if (step ==2){
-//                            timer!!.cancel()
-//                        }
 
-//                        step = Utils.getInt(requestStep, "step")
 
                         if (id < 0){
                             //아이디가 없음(비회원임)
@@ -235,9 +224,6 @@ class UseFragment : Fragment() {
 
                                         } else {
 
-                                            /*val intent = Intent(context, LoginActivity::class.java)
-                                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                            startActivity(intent)*/
 
                                         }
 
@@ -329,7 +315,7 @@ class UseFragment : Fragment() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
 
-                // System.out.println(responseString);
+
             }
 
             private fun error() {
@@ -481,35 +467,11 @@ class UseFragment : Fragment() {
                     Log.d("포인트",response.toString())
                     val result = response!!.getString("result")
                     if ("ok" == result) {
-                        /*var requestStep = response.getJSONObject("RequestStep")
-                        var step = Utils.getInt(requestStep,"step")
-                        if (step ==3){
-                            timer!!.cancel()
-                        }*/
+
                         var isNewMember = response!!.getString("new_member_yn")
 
 
                         if (isNewMember.equals("N")){
-                            //var memberID = response!!.getString("member_id")
-                            //Point_Use_Fragment로 유저 id랑 company id를 넘김
-                            //Activity의 Intent
-                            /*val frag = Point_Use_Fragment()
-                            val bundle = Bundle()
-                            bundle.putString("phone", phone)
-                            frag.arguments = bundle
-
-
-                            val fragManager = fragmentManager
-                            val fragTrans = fragManager?.beginTransaction()
-                            fragTrans?.replace(R.layout.fra_coupon, frag)
-                            fragTrans?.commit()*/
-
-                            //fourLL.callOnClick()
-
-                            /*var sendItt = Intent()
-                            sendItt.action = "USER_PHONE_NUMBER"
-                            sendItt.putExtra("phone", phone)
-                            context?.sendBroadcast(sendItt)*/
                             if (step == 2) {
 
                                 //여기서 request_step 테이블에 유저 넘버 넘겨줘야됨
@@ -521,18 +483,16 @@ class UseFragment : Fragment() {
                                 intent.putExtra("type", 2)
                                 intent.action = "POINT_USE"
                                 myContext.sendBroadcast(intent)
-                            }
-                            /*else if (step == 5) {
+                            }else if (step == 5) {
                                 member_id = response!!.getString("member_id").toInt()
                                 new_member_yn = "N"
-                            }*/
+
+                            }
 
                             changeStep()
 
                         } else {
-                            member_id = 0
                             new_member_yn = "Y"
-
                             changeStep()
                         }
 
