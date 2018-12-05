@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -65,7 +66,9 @@ class Point_Use_Fragment : Fragment() {
     var member_id = -1
     var type = -1
     var phoneNumber = ""
+    var selectedCouponID = -1
 
+    var couponID : ArrayList<Int> = ArrayList<Int>()
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var couponAdapter : CouponListAdapter
 
@@ -177,10 +180,27 @@ class Point_Use_Fragment : Fragment() {
         couponAdapter = CouponListAdapter(myContext, R.layout.item_member_coupon, couponData)
         couponListLV.adapter = couponAdapter
 
+
         useLL.setOnClickListener {
             if (step == 5) {
+                if (Integer.parseInt(use_point) > 0) {
+                    type = 1
+                } else if (selectedCouponID > -1) {
+                    type = 2
+                }
                 changeStep()
             }
+        }
+
+        couponListLV.setOnItemClickListener { parent, view, position, id ->
+            var data = couponData.get(position)
+
+            val memberCoupon = data.getJSONObject("MemberCoupon")
+            val couponID = Utils.getInt(memberCoupon, "id")
+
+            Log.d("리스트선택",data.toString())
+
+            selectedCouponID = couponID
         }
 
         timerStart()
@@ -502,4 +522,3 @@ class Point_Use_Fragment : Fragment() {
         }
     }
 }
-

@@ -176,6 +176,15 @@ class UseFragment : Fragment() {
         params.put("member_id", member_id)
         params.put("new_member_yn", new_member_yn)
         params.put("step", step)
+        if (step == 5) {
+            if (type == 1) {
+                params.put("type", type)
+                params.put("point", "use point")
+            } else if (type == 2) {
+                params.put("type", type)
+                params.put("coupon_id", "selectedCouponID")
+            }
+        }
 
         RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {
 
@@ -501,16 +510,22 @@ class UseFragment : Fragment() {
                             sendItt.action = "USER_PHONE_NUMBER"
                             sendItt.putExtra("phone", phone)
                             context?.sendBroadcast(sendItt)*/
+                            if (step == 2) {
 
-                            //여기서 request_step 테이블에 유저 넘버 넘겨줘야됨
-                            member_id = response!!.getString("member_id").toInt()
-                            new_member_yn = "N"
+                                //여기서 request_step 테이블에 유저 넘버 넘겨줘야됨
+                                member_id = response!!.getString("member_id").toInt()
+                                new_member_yn = "N"
 
-                            val intent = Intent()
-                            intent.putExtra("phone", phone)
-                            intent.putExtra("type", 2)
-                            intent.action = "POINT_USE"
-                            myContext.sendBroadcast(intent)
+                                val intent = Intent()
+                                intent.putExtra("phone", phone)
+                                intent.putExtra("type", 2)
+                                intent.action = "POINT_USE"
+                                myContext.sendBroadcast(intent)
+                            }
+                            /*else if (step == 5) {
+                                member_id = response!!.getString("member_id").toInt()
+                                new_member_yn = "N"
+                            }*/
 
                             changeStep()
 

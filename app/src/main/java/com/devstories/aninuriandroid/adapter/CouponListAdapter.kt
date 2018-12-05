@@ -42,6 +42,9 @@ open class CouponListAdapter (context: Context, view:Int, data: ArrayList<JSONOb
 
         val used = Utils.getString(memberCoupon, "use_yn")
         val del = Utils.getString(memberCoupon, "del_yn")
+        val couponID = Utils.getString(memberCoupon, "id")
+        var checkedYN = false
+
 
         if (used == "N" && del == "N") {
 
