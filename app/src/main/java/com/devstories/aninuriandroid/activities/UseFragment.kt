@@ -157,14 +157,13 @@ class UseFragment : Fragment() {
                 step = 5
                 loaduserdata()
             }else if (step == -1){
-                loaduserdata()
-                val intent = Intent(myContext,UseActivity::class.java)
+                /*val intent = Intent(myContext,UseActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 intent.putExtra("type", 2)
-                intent.putExtra("member_id", member_id)
-                startActivity(intent)
-
+                intent.putExtra("phone", phone)
+                startActivity(intent)*/
+                loaduserdata()
             }
         }
 
@@ -480,10 +479,9 @@ class UseFragment : Fragment() {
                             timer!!.cancel()
                         }*/
                         var isNewMember = response!!.getString("new_member_yn")
-                         member_id = response!!.getInt("member_id")
 
                         if (isNewMember.equals("N")){
-                            var phone = response!!.getString("phone")
+                            //var memberID = response!!.getString("member_id")
                             //Point_Use_Fragment로 유저 id랑 company id를 넘김
                             //Activity의 Intent
                             /*val frag = Point_Use_Fragment()
@@ -504,7 +502,11 @@ class UseFragment : Fragment() {
                             sendItt.putExtra("phone", phone)
                             context?.sendBroadcast(sendItt)*/
 
-
+                            val intent = Intent()
+                            intent.putExtra("phone", phone)
+                            intent.putExtra("type", 2)
+                            intent.action = "POINT_USE"
+                            myContext.sendBroadcast(intent)
                         }
 
 
