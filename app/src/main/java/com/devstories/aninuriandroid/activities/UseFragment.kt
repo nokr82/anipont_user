@@ -43,7 +43,6 @@ class UseFragment : Fragment() {
 
     private var timer: Timer? = null
 
-
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
     lateinit var threeLL: LinearLayout
@@ -59,7 +58,6 @@ class UseFragment : Fragment() {
     lateinit var phoneTV: TextView
     lateinit var save_pointTV: TextView
 
-
     var phone = ""
     var type = -1
     var save_point = ""
@@ -70,13 +68,15 @@ class UseFragment : Fragment() {
 
     var stackpoint = -1
 
+    var company_id = -1
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
         progressDialog = ProgressDialog(myContext)
 
-        view = inflater.inflate(R.layout.fra_use,container,false)
+        view = inflater.inflate(R.layout.fra_use, container, false)
 
-        return inflater.inflate(R.layout.fra_use,container,false)
+        return inflater.inflate(R.layout.fra_use, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -102,7 +102,9 @@ class UseFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-       save_point = save_pointTV.text.toString()
+        company_id = PrefUtils.getIntPreference(context, "company_id")
+
+        save_point = save_pointTV.text.toString()
 
         oneLL.setOnClickListener {
             phoneTV.setText(phoneTV.getText().toString() + 1)
@@ -136,36 +138,33 @@ class UseFragment : Fragment() {
         }
         backLL.setOnClickListener {
             val text = phoneTV.getText().toString()
-            if (text.length > 0){
+            if (text.length > 0) {
                 phoneTV.setText(text.substring(0, text.length - 1))
-            }else{
+            } else {
             }
         }
 
         checkStep()
 
         useLL.setOnClickListener {
-            phone= phoneTV.text.toString()
-            if (step == 1){
-                step = 2
-                loaduserdata()
 
+            phone = Utils.getString(phoneTV)
 
-
-            }else if (step ==4){
-                step = 5
-                loaduserdata()
-            }else if (step == -1){
-
-                loaduserdata()
+            if (phone == "") {
+                Toast.makeText(context, "핸드폰 번호를 입력해주세요", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
             }
+
+            loaduserdata()
+
         }
 
     }
+
     // 프로세스
     fun changeStep() {
         val params = RequestParams()
-        params.put("company_id", 1)
+        params.put("company_id", company_id)
         params.put("member_id", member_id)
         params.put("new_member_yn", new_member_yn)
         params.put("step", step)
@@ -189,118 +188,22 @@ class UseFragment : Fragment() {
                 try {
 
                     val result = response!!.getString("result")
+
                     if ("ok" == result) {
                         var requestStep = response.getJSONObject("RequestStep")
-                        var data = response.getJSONObject("member")
-                        var step = Utils.getInt(requestStep,"step")
+                        val result_step = Utils.getInt(requestStep, "step")
 
+                        val intent = Intent();
+                        intent.action = "FINISH_ACTIVITY"
+                        myContext.sendBroadcast(intent)
 
-                        if (id < 0){
-                            //아이디가 없음(비회원임)
-                            changeStep()
-                        } else {
-                            //아이디값이 있는 경우(기존 회원임)
-                            val params = RequestParams()
-                            params.put("company_id", Utils.getString(data,"company_id"))
-
-                            //회사 정보 조회
-                            HttpClient.post("/company/info.json", params, object : JsonHttpResponseHandler() {
-                                override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                                    if (progressDialog != null) {
-                                        progressDialog!!.dismiss()
-                                    }
-
-                                    try {
-                                        val result = response!!.getString("result")
-
-                                        if ("ok" == result) {
-
-                                            val company = response.getJSONObject("company")
-                                            //val images = response.getJSONArray("images")//[]
-
-                                            var comName = Utils.getString(company,"company_name")
-                                            PrefUtils.setPreference(context, "storeName", Utils.getString(company,"company_name"))
-                                            println("get storeName :: $comName")
-
-                                        } else {
-
-
-                                        }
-
-                                    } catch (e: JSONException) {
-                                        e.printStackTrace()
-                                    }
-
-                                }
-
-                                override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONArray?) {
-                                    super.onSuccess(statusCode, headers, response)
-                                }
-
-                                override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
-
-                                    // System.out.println(responseString);
-                                }
-
-                                private fun error() {
-                                    //Utils.alert(context, "조회중 장애가 발생하였습니다.")
-                                    Utils.alert(context, "조회중 장애가 발생했습니다.")
-                                }
-
-                                override fun onFailure(statusCode: Int, headers: Array<Header>?, responseString: String?, throwable: Throwable) {
-                                    if (progressDialog != null) {
-                                        progressDialog!!.dismiss()
-                                    }
-
-                                    // System.out.println(responseString);
-
-                                    throwable.printStackTrace()
-                                    error()
-                                }
-
-                                override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONObject?) {
-                                    if (progressDialog != null) {
-                                        progressDialog!!.dismiss()
-                                    }
-
-                                    // print(errorResponse)
-
-                                    throwable.printStackTrace()
-                                    error()
-                                }
-
-                                override fun onFailure(statusCode: Int, headers: Array<Header>?, throwable: Throwable, errorResponse: JSONArray?) {
-                                    if (progressDialog != null) {
-                                        progressDialog!!.dismiss()
-                                    }
-
-                                    // print(errorResponse)
-
-                                    throwable.printStackTrace()
-                                    error()
-                                }
-
-                                override fun onStart() {
-                                    // show dialog
-                                    if (progressDialog != null) {
-
-                                        progressDialog!!.show()
-                                    }
-                                }
-
-                                override fun onFinish() {
-                                    if (progressDialog != null) {
-                                        progressDialog!!.dismiss()
-                                    }
-                                }
-                            })
-                            //회사 정보 조회
-
-                            println("상호명 ::::::: ${PrefUtils.getStringPreference(context,"storeName")}")
-
-
-                            changeStep()
-                        }
+//                        if (result_step == 2) {
+//                            val intent = Intent()
+//                            intent.putExtra("phone", phone)
+//                            intent.putExtra("type", 2)
+//                            intent.action = "POINT_USE"
+//                            myContext.sendBroadcast(intent)
+//                        }
 
                     }
 
@@ -381,7 +284,7 @@ class UseFragment : Fragment() {
     // 요청 체크
     fun checkStep() {
         val params = RequestParams()
-        params.put("company_id", 1)
+        params.put("company_id", company_id)
 
         RequestStepAction.check_step(params, object : JsonHttpResponseHandler() {
 
@@ -393,22 +296,36 @@ class UseFragment : Fragment() {
                 try {
 
                     val result = response!!.getString("result")
+
                     if ("ok" == result) {
+
                         var requestStep = response.getJSONObject("RequestStep")
                         val result_step = Utils.getInt(requestStep, "step")
-                        if(step != result_step) {
+                        member_id = Utils.getInt(requestStep, "member_id")
+
+                        if (step != result_step) {
                             step = result_step
-                            Log.d("스텝",step.toString())
+
                             if (step == 3) {
 
+                                var intent = Intent()
+                                intent.action = "END_STEP"
+                                myContext.sendBroadcast(intent)
+
                                 timer!!.cancel()
+
                                 phonET.setHint("사용할 포인트를 입력하세요.")
                                 titleTV.text = "쿠폰/포인트\n조회"
                                 use_op_LL.visibility = View.GONE
 
+                            } else if (step == 5) {
+
                             }
+
                         }
+
                     }
+
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -452,11 +369,10 @@ class UseFragment : Fragment() {
     //사용자 회원유무확인
     fun loaduserdata() {
         val params = RequestParams()
-        params.put("company_id", 1)
+        params.put("company_id", company_id)
         params.put("phone", phone)
 
         MemberAction.is_member(params, object : JsonHttpResponseHandler() {
-        //RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {
 
             @SuppressLint("ResourceType")
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
@@ -464,41 +380,24 @@ class UseFragment : Fragment() {
                     progressDialog!!.dismiss()
                 }
                 try {
-                    Log.d("포인트",response.toString())
+
                     val result = response!!.getString("result")
+
                     if ("ok" == result) {
 
-                        var isNewMember = response!!.getString("new_member_yn")
+                        new_member_yn = Utils.getString(response, "new_member_yn")
+                        member_id = Utils.getInt(response, "member_id")
 
-
-                        if (isNewMember.equals("N")){
-                            if (step == 2) {
-
-                                //여기서 request_step 테이블에 유저 넘버 넘겨줘야됨
-                                member_id = response!!.getString("member_id").toInt()
-                                new_member_yn = "N"
-
-                                val intent = Intent()
-                                intent.putExtra("phone", phone)
-                                intent.putExtra("type", 2)
-                                intent.action = "POINT_USE"
-                                myContext.sendBroadcast(intent)
-                            }else if (step == 5) {
-                                member_id = response!!.getString("member_id").toInt()
-                                new_member_yn = "N"
-
-                            }
-
-                            changeStep()
-
-                        } else {
-                            new_member_yn = "Y"
-                            changeStep()
+                        if (step == 1) {
+                            step = 2
+                        } else if (step == 4) {
+                            step = 5
                         }
 
+                        changeStep()
 
-                    }else{
-                        Toast.makeText(myContext,"조회실패",Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(myContext, "조회실패", Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException) {

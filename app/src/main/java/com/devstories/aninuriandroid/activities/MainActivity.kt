@@ -1,5 +1,6 @@
 package com.devstories.aninuriandroid.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -38,6 +39,8 @@ class MainActivity : RootActivity() {
 
     var stackpoint = -1
     var company_id = -1
+
+    val USE_ACTIVITY = 301
 
     lateinit var imageAdater: FullScreenImageAdapter
     var imagePaths = ArrayList<String>()
@@ -221,9 +224,11 @@ class MainActivity : RootActivity() {
                         member_id = Utils.getInt(requestStep, "member_id")
                         val result_step = Utils.getInt(requestStep, "step")
                         val new_member_yn = Utils.getString(requestStep, "new_member_yn")
+
                         if (step != result_step) {
+
                             step = result_step
-                            Log.d("스텝", step.toString())
+
                             //포인트적립
                             if (step == 1) {
                                 type = 1
@@ -231,7 +236,17 @@ class MainActivity : RootActivity() {
                                 intent.putExtra("type", type)
                                 startActivity(intent)
 
-                            }//포인트 사용
+                            } else if (step == 3) {
+
+                                if (null != timer) {
+                                    timer!!.cancel()
+                                }
+
+                                val intent = Intent(context, UseActivity::class.java)
+                                intent.putExtra("type", 3)
+                                startActivityForResult(intent, USE_ACTIVITY)
+                            }
+                            //포인트 사용
                             else if (step == 4) {
                                 type = 1
                                 val intent = Intent(context, UseActivity::class.java)
@@ -291,6 +306,19 @@ class MainActivity : RootActivity() {
 
         if (timer != null) {
             timer!!.cancel()
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode) {
+            USE_ACTIVITY -> {
+                if(resultCode == Activity.RESULT_OK) {
+                    timerStart()
+                }
+            }
         }
 
     }
