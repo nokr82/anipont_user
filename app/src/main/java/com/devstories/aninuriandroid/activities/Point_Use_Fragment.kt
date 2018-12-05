@@ -212,7 +212,7 @@ class Point_Use_Fragment : Fragment() {
                         left_pointTV.text = point
 
                         couponData.clear()
-                        couponAdapter.notifyDataSetChanged()
+                        //couponAdapter.notifyDataSetChanged()
 
                         var data = response.getJSONArray("coupons")
                         Log.d("쿠폰데이터", data.toString())
