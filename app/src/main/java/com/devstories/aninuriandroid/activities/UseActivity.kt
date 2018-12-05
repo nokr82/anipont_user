@@ -17,6 +17,7 @@ class UseActivity : FragmentActivity() {
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     var type = -1
+    var request_step_id = -1
     var save_point: String? = null
 
     val UseFragment = UseFragment()
@@ -57,6 +58,11 @@ class UseActivity : FragmentActivity() {
 
     internal var finishActivityReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+
+            var intent1 = Intent()
+            intent1.putExtra("request_step_id", request_step_id)
+            setResult(RESULT_OK, intent1)
+
             finish()
         }
     }
@@ -85,6 +91,7 @@ class UseActivity : FragmentActivity() {
         intent = getIntent()
         save_point = intent.getStringExtra("save_point")
         type = intent.getIntExtra("type", -1)
+        request_step_id = intent.getIntExtra("request_step_id", -1)
 
 
         if (type == 1) {
@@ -152,9 +159,6 @@ class UseActivity : FragmentActivity() {
 
     override fun finish() {
         super.finish()
-
-        var intent = Intent()
-        setResult(Activity.RESULT_OK, intent)
 
     }
 

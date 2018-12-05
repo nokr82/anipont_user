@@ -93,7 +93,6 @@ class Point_Use_Fragment : Fragment() {
         return inflater.inflate(R.layout.fra_coupon, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         useLL = view.findViewById(R.id.useLL)

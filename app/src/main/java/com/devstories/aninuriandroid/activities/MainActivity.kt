@@ -238,12 +238,11 @@ class MainActivity : RootActivity() {
 
                             } else if (step == 3) {
 
-                                if (null != timer) {
-                                    timer!!.cancel()
-                                }
+                                println("request_step_id : " + "=============================")
 
                                 val intent = Intent(context, UseActivity::class.java)
                                 intent.putExtra("type", 3)
+                                intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
                                 startActivityForResult(intent, USE_ACTIVITY)
                             }
                             //포인트 사용
@@ -256,6 +255,50 @@ class MainActivity : RootActivity() {
                             }
 
                         }
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+        })
+    }
+
+    // 요청 삭제
+    fun endStep(request_step_id:Int) {
+        val params = RequestParams()
+        params.put("request_step_id", request_step_id)
+
+        RequestStepAction.end_step(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
 
                     }
 
@@ -315,9 +358,9 @@ class MainActivity : RootActivity() {
 
         when(requestCode) {
             USE_ACTIVITY -> {
-                if(resultCode == Activity.RESULT_OK) {
-                    timerStart()
-                }
+                val request_step_id = data!!.getIntExtra("request_step_id", -1)
+
+                endStep(request_step_id)
             }
         }
 
