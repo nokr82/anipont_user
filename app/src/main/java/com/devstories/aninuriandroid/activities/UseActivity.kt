@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
+import android.util.Log
 import android.view.View
 import com.devstories.aninuriandroid.R
 import kotlinx.android.synthetic.main.activity_coupon_use.*
@@ -14,6 +15,7 @@ class UseActivity : FragmentActivity() {
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     var type = -1
+    var member_id = -1
     var save_point: String? = null
 
 
@@ -35,6 +37,7 @@ class UseActivity : FragmentActivity() {
         intent = getIntent()
         save_point = intent.getStringExtra("save_point")
         type = intent.getIntExtra("type", -1)
+        member_id = intent.getIntExtra("member_id", -1)
 
 
         if (type == 1) {
@@ -47,7 +50,12 @@ class UseActivity : FragmentActivity() {
             titleTV.text = "쿠폰/포인트\n조회"
             use_op_LL.visibility = View.GONE
             couponLL.setBackgroundResource(R.drawable.background_strock_707070)
+            val bundle = Bundle()
+            bundle.putInt("member_id", member_id)
+            Log.d("프레",member_id.toString())
+            Point_Use_Fragment.setArguments(bundle)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
+
         } else {
             useLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
@@ -65,13 +73,7 @@ class UseActivity : FragmentActivity() {
 
         }
 
-        /*UseFragment.getView().useLL.setOnClickListener {
-            var sendItt = Intent()
-            sendItt.action = "USER_PHONE_NUMBER"
-            sendItt.putExtra("phone", UseFragment.phone)
-            context?.sendBroadcast(sendItt)
-            couponLL.callOnClick()
-        }*/
+
 
         couponLL.setOnClickListener {
             setmenu()
@@ -82,22 +84,7 @@ class UseActivity : FragmentActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
         }
 
-        val frgMng = supportFragmentManager
-        val useFrag = UseFragment()
-        /*UseFragment.useLL.setOnClickListener {
-            var sendItt = Intent()
-            sendItt.action = "USER_PHONE_NUMBER"
-            sendItt.putExtra("phone", UseFragment.phone)
-            context?.sendBroadcast(sendItt)
-            couponLL.callOnClick()
-        }*/
-     /*   useFrag.useLL.setOnClickListener {
-            var sendItt = Intent()
-            sendItt.action = "USER_PHONE_NUMBER"
-            sendItt.putExtra("phone", UseFragment.phone)
-            context?.sendBroadcast(sendItt)
-            this.couponLL.callOnClick()
-        }*/
+
 
     }
 

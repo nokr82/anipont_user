@@ -52,6 +52,7 @@ class PointActivity : RootActivity() {
             moneyTV.setText(moneyTV.getText().toString() + 0)
         }
         delLL.setOnClickListener {
+
             val text = moneyTV.getText().toString()
             if (text.length > 0){
                 moneyTV.setText(text.substring(0, text.length - 1))

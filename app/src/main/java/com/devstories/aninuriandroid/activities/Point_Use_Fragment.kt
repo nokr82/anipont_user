@@ -61,7 +61,6 @@ class Point_Use_Fragment : Fragment() {
     var n_left_point = -1
     var member_id = -1
     var type = -1
-
     internal var checkHandler: Handler = object : Handler() {
         override fun handleMessage(msg: android.os.Message) {
             checkStep()
@@ -82,7 +81,8 @@ class Point_Use_Fragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
-
+        val extra = arguments
+        member_id = extra!!.getInt("member_id")
         //Dear Fragment, From Fragment
         /*var mobile = this.arguments?.getString("phone")
         println("Point Use Fragment get member id :::: $mobile")
@@ -196,7 +196,7 @@ class Point_Use_Fragment : Fragment() {
         val params = RequestParams()
         params.put("company_id", 1)
         params.put("phone", phoneNumber)
-
+        params.put("member_id", member_id)
         MemberAction.inquiry_point(params, object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {

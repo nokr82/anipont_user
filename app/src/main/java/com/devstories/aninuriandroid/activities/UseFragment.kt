@@ -157,11 +157,12 @@ class UseFragment : Fragment() {
                 step = 5
                 loaduserdata()
             }else if (step == -1){
+                loaduserdata()
                 val intent = Intent(myContext,UseActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 intent.putExtra("type", 2)
-                intent.putExtra("phone", phone)
+                intent.putExtra("member_id", member_id)
                 startActivity(intent)
 
             }
@@ -479,6 +480,7 @@ class UseFragment : Fragment() {
                             timer!!.cancel()
                         }*/
                         var isNewMember = response!!.getString("new_member_yn")
+                         member_id = response!!.getInt("member_id")
 
                         if (isNewMember.equals("N")){
                             var phone = response!!.getString("phone")

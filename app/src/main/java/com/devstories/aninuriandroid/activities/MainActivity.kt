@@ -114,7 +114,8 @@ class MainActivity : RootActivity() {
                     if ("ok" == result) {
                         var company = response.getJSONObject("company")
                         val images = response.getJSONArray("images")
-
+                        Log.d("이미지",images.toString())
+                        imagePaths.clear()
                         for(i in 0 until images.length()) {
                             val image:JSONObject = images[i] as JSONObject
                             val companyImage = image.getJSONObject("CompanyImage")
