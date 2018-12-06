@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="80dp"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/storeNameTV"
@@ -26,6 +26,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.6"
             android:text=""
+            android:textSize="28sp"
             android:layout_height="match_parent"
             android:background="#ffff">
         </TextView>
@@ -37,6 +38,7 @@
 
             <LinearLayout
                 android:id="@+id/useLL"
+                android:visibility="visible"
                 android:layout_width="0dp"
                 android:layout_weight="0.15"
                 android:background="#313131"
@@ -45,9 +47,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="28sp"
                     android:textColor="#ffffff"
-                    android:lineSpacingExtra="4.5sp"
+                    android:lineSpacingExtra="9sp"
                     android:text="사용/조회" />
             </LinearLayout>
 
@@ -62,9 +64,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="28sp"
                     android:textColor="#ffffff"
-                    android:lineSpacingExtra="4.5sp"
+                    android:lineSpacingExtra="9sp"
                     android:text="쿠폰/포인트 조회" />
             </LinearLayout>
         </LinearLayout>
