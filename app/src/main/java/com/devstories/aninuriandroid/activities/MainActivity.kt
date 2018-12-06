@@ -249,7 +249,7 @@ class MainActivity : RootActivity() {
                                 val intent = Intent(context, UseActivity::class.java)
                                 intent.putExtra("type", 3)
                                 intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
-                                startActivity(intent)
+                                startActivityForResult(intent, USE_ACTIVITY)
                             }
 
                         }
