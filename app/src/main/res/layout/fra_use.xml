@@ -5,10 +5,10 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="9.5dp"
+        android:layout_marginTop="19dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="12dp"
         android:orientation="horizontal"
         >
 
@@ -30,7 +30,7 @@
                     android:inputType="phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="21sp"
+                    android:textSize="42sp"
                     android:textColor="#6c6c6c"
                     android:lineSpacingExtra="14sp"
                     android:text=""
@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="7sp"
+                    android:textSize="14sp"
                     android:textColor="#9a9a9a"
                     android:letterSpacing="-0.03"
                     android:lineSpacingExtra="3sp"
@@ -76,7 +76,7 @@
                             android:lineSpacingExtra="-15sp"
                             android:text="1"
                             android:textColor="#666666"
-                            android:textSize="24sp" />
+                            android:textSize="48sp" />
 
                     </LinearLayout>
                     <LinearLayout
@@ -89,7 +89,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="48sp"
                             android:textColor="#666666"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-15sp"
@@ -107,7 +107,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="48sp"
                             android:textColor="#666666"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-15sp"
@@ -137,7 +137,7 @@
                             android:lineSpacingExtra="-15sp"
                             android:text="4"
                             android:textColor="#666666"
-                            android:textSize="24sp" />
+                            android:textSize="48sp" />
 
                     </LinearLayout>
                     <LinearLayout
@@ -150,7 +150,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="48sp"
                             android:textColor="#666666"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-15sp"
@@ -174,7 +174,7 @@
                             android:lineSpacingExtra="-15sp"
                             android:text="6"
                             android:textColor="#666666"
-                            android:textSize="24sp" />
+                            android:textSize="48sp" />
 
                     </LinearLayout>
 
@@ -193,7 +193,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="48sp"
                             android:textColor="#666666"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-15sp"
@@ -211,7 +211,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="48sp"
                             android:textColor="#666666"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-15sp"
@@ -229,7 +229,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="48sp"
                             android:textColor="#666666"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-15sp"
@@ -252,8 +252,8 @@
                         android:gravity="center"
                         android:layout_height="match_parent">
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="70dp"
+                            android:layout_height="55dp"
                             android:src="@mipmap/btn_del"
                             />
 
@@ -268,7 +268,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="48sp"
                             android:textColor="#666666"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-15sp"
@@ -287,7 +287,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="21sp"
+                            android:textSize="42sp"
                             android:textColor="#ffffff"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-12sp"
@@ -314,25 +314,25 @@
             <LinearLayout
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="80dp"
                 android:gravity="center_vertical"
                 android:background="#ffff">
                 <TextView
                     android:id="@+id/save_pointTV"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="40sp"
                     android:textColor="#0066b0"
                     android:letterSpacing="-0.05"
                     android:lineSpacingExtra="-11sp"
                     android:text="100"
                     />
                 <TextView
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="40sp"
                     android:textColor="#0066b0"
                     android:letterSpacing="-0.05"
                     android:lineSpacingExtra="-11sp"
@@ -341,7 +341,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="40sp"
                     android:textColor="#666666"
                     android:letterSpacing="-0.05"
                     android:lineSpacingExtra="-11sp"
@@ -350,32 +350,32 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:background="#f3f3f3"
-                android:layout_height="60dp">
+                android:layout_height="120dp">
 
                 <ImageView
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="40sp"
                     android:src="@mipmap/bubble_katalk"/>
                 <ImageView
-                    android:layout_marginTop="11.5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="100dp"
+                    android:layout_height="25dp"
                     android:src="@mipmap/t_kakao"/>
 
                 <TextView
                     android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="9.5dp"
-                    android:layout_marginBottom="12dp"
-                    android:textSize="7sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginBottom="24dp"
+                    android:textSize="14sp"
                     android:textColor="#2a2a2a"
                     android:letterSpacing="-0.05"
                     android:lineSpacingExtra="2sp"

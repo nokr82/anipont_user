@@ -12,10 +12,10 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="149dp"
-            android:layout_marginLeft="8.5dp"
+            android:layout_width="300dp"
+            android:layout_marginLeft="34dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="43.5dp"
+            android:layout_marginTop="87dp"
             android:orientation="vertical">
 
             <TextView
@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="사용/조회"
                 android:textColor="#ffff"
-                android:textSize="24dp" />
+                android:textSize="48dp" />
 
             <LinearLayout
                 android:id="@+id/use_op_LL"
@@ -34,17 +34,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16.5dp"
+                android:layout_marginTop="33dp"
                 android:gravity="center_horizontal"
                 android:letterSpacing="-0.03"
-                android:lineSpacingExtra="1sp"
+                android:lineSpacingExtra="2sp"
                 android:text="내 포인트 사용/조회"
                 android:textColor="#ffffff"
-                android:textSize="9sp" />
+                android:textSize="25sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.3dp"
+                    android:layout_height="0.6dp"
                     android:background="#ffff"/>
 
 
@@ -58,10 +58,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="9.5dp"
+        android:layout_marginRight="19dp"
         android:orientation="vertical">
         
         <LinearLayout
@@ -71,14 +71,14 @@
             android:orientation="horizontal">
             <LinearLayout
                 android:id="@+id/useLL"
-                android:layout_width="75dp"
-                android:layout_height="20dp"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
                 android:gravity="center"
               >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10sp"
+                    android:textSize="20sp"
                     android:textColor="#ffffff"
                     android:lineSpacingExtra="25sp"
                     android:text="사용/조회"
@@ -87,15 +87,15 @@
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/couponLL"
-                android:layout_width="75dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="40dp"
                 android:gravity="center"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10sp"
+                    android:textSize="20sp"
                     android:textColor="#ffffff"
                     android:lineSpacingExtra="25sp"
                     android:text="쿠폰/포인트 조회"
@@ -106,9 +106,9 @@
         
         
         <LinearLayout
-            android:layout_marginTop="15.5dp"
+            android:layout_marginTop="31dp"
             android:layout_width="match_parent"
-            android:layout_height="30.5dp"
+            android:layout_height="61dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="#90000000"
@@ -120,9 +120,9 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="10dp"
+                android:textSize="20dp"
                 android:textColorHint="#ffffff"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="70dp"
                 android:textColor="#ffffff"
                 android:lineSpacingExtra="25sp"
                 android:hint="휴대전화번호를 눌러주세요."/>
@@ -139,23 +139,11 @@
         </LinearLayout>
         <FrameLayout
             android:id="@+id/main_frame"
-            android:layout_marginTop="9.5dp"
+            android:layout_marginTop="19dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
            />
 
-
-
-
-
     </LinearLayout>
-    
-    
-    
-
-
-
-
-    
     
 </LinearLayout>
