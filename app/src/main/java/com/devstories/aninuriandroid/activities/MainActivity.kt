@@ -86,13 +86,14 @@ class MainActivity : RootActivity() {
         }
 
         couponLL.setOnClickListener {
-            if (timer != null) {
-                timer!!.cancel()
-            }
-            type = 2
+//            if (timer != null) {
+//                timer!!.cancel()
+//            }
+
             val intent = Intent(this, UseActivity::class.java)
-            intent.putExtra("type", type)
+            intent.putExtra("type", 2)
             startActivity(intent)
+
         }
 
         timerStart()

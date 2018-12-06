@@ -34,10 +34,35 @@ class UseActivity : FragmentActivity() {
 
                 val bundle = Bundle()
                 bundle.putString("phoneNumber", phoneNumber)
+                bundle.putString("type", "STEP")
                 Point_Use_Fragment.arguments = bundle
 
                 phonET.setHint("사용할 포인트를 입력하세요.")
                 titleTV.text = "쿠폰/포인트\n조회"
+
+                use_op_LL.visibility = View.GONE
+                couponLL.setBackgroundResource(R.drawable.background_strock_707070)
+                supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
+
+            }
+        }
+    }
+
+    internal var myPointReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent != null) {
+
+                setmenu()
+                val type = intent.getStringExtra("type")
+                var phoneNumber = intent.getStringExtra("phone")
+
+                val bundle = Bundle()
+                bundle.putString("phoneNumber", phoneNumber)
+                bundle.putString("type", type)
+                Point_Use_Fragment.arguments = bundle
+
+                titleTV.text = "쿠폰/포인트\n조회"
+
                 use_op_LL.visibility = View.GONE
                 couponLL.setBackgroundResource(R.drawable.background_strock_707070)
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
@@ -84,6 +109,9 @@ class UseActivity : FragmentActivity() {
         val filter2 = IntentFilter("FINISH_ACTIVITY")
         registerReceiver(finishActivityReceiver, filter2)
 
+        val filter3 = IntentFilter("MY_POINT")
+        registerReceiver(myPointReceiver, filter3)
+
         intent = getIntent()
         save_point = intent.getStringExtra("save_point")
         type = intent.getIntExtra("type", -1)
@@ -98,9 +126,18 @@ class UseActivity : FragmentActivity() {
             setmenu()
             phonET.setHint("사용할 포인트를 입력하세요.")
             titleTV.text = "쿠폰/포인트\n조회"
-            use_op_LL.visibility = View.GONE
-            couponLL.setBackgroundResource(R.drawable.background_strock_707070)
-            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
+//            use_op_LL.visibility = View.GONE
+//            couponLL.setBackgroundResource(R.drawable.background_strock_707070)
+//            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
+
+            val bundle = Bundle()
+            bundle.putInt("type", type)
+            UseFragment.arguments = bundle
+
+            useLL.setBackgroundResource(R.drawable.background_strock_707070)
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
+            use_op_LL.visibility = View.VISIBLE
+
         } else {
             useLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
@@ -151,10 +188,9 @@ class UseActivity : FragmentActivity() {
             unregisterReceiver(finishActivityReceiver)
         }
 
-    }
-
-    override fun finish() {
-        super.finish()
+        if (myPointReceiver != null) {
+            unregisterReceiver(myPointReceiver)
+        }
 
     }
 
