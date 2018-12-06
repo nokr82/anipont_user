@@ -67,6 +67,7 @@ class Point_Use_Fragment : Fragment() {
     var type = -1
     var phoneNumber = ""
     var selectedCouponID = -1
+    var company_id = -1
 
     var couponID : ArrayList<Int> = ArrayList<Int>()
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
@@ -123,6 +124,7 @@ class Point_Use_Fragment : Fragment() {
         //전화번호로 고객의 정보를 조회하고
         /*val filter = IntentFilter("POINT_USE")
         context!!.registerReceiver(getPhoneNumber, filter)*/
+        company_id = PrefUtils.getIntPreference(context, "company_id")
 
         oneLL.setOnClickListener {
             use_pointTV.text = use_pointTV.text.toString() + 1
@@ -208,7 +210,7 @@ class Point_Use_Fragment : Fragment() {
 
     fun user_left_point(phoneNumber: String) {
         val params = RequestParams()
-        params.put("company_id", 1)
+        params.put("company_id", company_id)
         params.put("phone", phoneNumber)
 
         MemberAction.inquiry_point(params, object : JsonHttpResponseHandler() {
@@ -342,7 +344,7 @@ class Point_Use_Fragment : Fragment() {
     // 요청 체크
     fun checkStep() {
         val params = RequestParams()
-        params.put("company_id", 1)
+        params.put("company_id", company_id)
         params.put("phone", phoneNumber)
 
         RequestStepAction.check_step(params, object : JsonHttpResponseHandler() {
@@ -434,7 +436,7 @@ class Point_Use_Fragment : Fragment() {
     // 프로세스
     fun changeStep() {
         val params = RequestParams()
-        params.put("company_id", PrefUtils.getStringPreference(myContext, "company_id"))
+        params.put("company_id", company_id)
         params.put("member_id", member_id)
         params.put("new_member_yn", new_member_yn)
         params.put("point", use_point)
