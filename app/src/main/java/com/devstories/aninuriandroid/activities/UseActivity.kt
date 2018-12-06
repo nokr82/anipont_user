@@ -1,6 +1,7 @@
 package com.devstories.aninuriandroid.activities
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -17,9 +18,8 @@ class UseActivity : FragmentActivity() {
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     var type = -1
-    var member_id = -1
+    var request_step_id = -1
     var save_point: String? = null
-
 
     val UseFragment = UseFragment()
     val Point_Use_Fragment = Point_Use_Fragment()
@@ -49,6 +49,25 @@ class UseActivity : FragmentActivity() {
         }
     }
 
+    internal var endRequestStepReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            useLL.setBackgroundResource(R.drawable.background_strock_707070)
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
+            use_op_LL.visibility = View.VISIBLE
+        }
+    }
+
+    internal var finishActivityReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+
+            var intent1 = Intent()
+            intent1.putExtra("request_step_id", request_step_id)
+            setResult(RESULT_OK, intent1)
+
+            finish()
+        }
+    }
+
 
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,13 +81,18 @@ class UseActivity : FragmentActivity() {
         //인텐트로 전화번호를 받는다
         //전화번호로 고객의 정보를 조회하고
         val filter = IntentFilter("POINT_USE")
-        context!!.registerReceiver(getPhoneNumber, filter)
+        registerReceiver(getPhoneNumber, filter)
 
+        val filter1 = IntentFilter("END_STEP")
+        registerReceiver(endRequestStepReceiver, filter1)
+
+        val filter2 = IntentFilter("FINISH_ACTIVITY")
+        registerReceiver(finishActivityReceiver, filter2)
 
         intent = getIntent()
         save_point = intent.getStringExtra("save_point")
         type = intent.getIntExtra("type", -1)
-        member_id = intent.getIntExtra("member_id", -1)
+        request_step_id = intent.getIntExtra("request_step_id", -1)
 
 
         if (type == 1) {
@@ -81,12 +105,7 @@ class UseActivity : FragmentActivity() {
             titleTV.text = "쿠폰/포인트\n조회"
             use_op_LL.visibility = View.GONE
             couponLL.setBackgroundResource(R.drawable.background_strock_707070)
-            val bundle = Bundle()
-            bundle.putInt("member_id", member_id)
-            Log.d("프레",member_id.toString())
-            Point_Use_Fragment.setArguments(bundle)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
-
         } else {
             useLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
@@ -104,15 +123,10 @@ class UseActivity : FragmentActivity() {
 
 
 
-        couponLL.setOnClickListener {
-            setmenu()
-            phonET.setHint("사용할 포인트를 입력하세요.")
-            titleTV.text = "쿠폰/포인트\n조회"
-            use_op_LL.visibility = View.GONE
-            couponLL.setBackgroundResource(R.drawable.background_strock_707070)
-            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
-        }
 
+
+        val frgMng = supportFragmentManager
+        val useFrag = UseFragment()
 
 
     }
@@ -131,11 +145,23 @@ class UseActivity : FragmentActivity() {
         }
 
         if (getPhoneNumber != null) {
-            context!!.unregisterReceiver(getPhoneNumber)
+            unregisterReceiver(getPhoneNumber)
+        }
+
+        if (endRequestStepReceiver != null) {
+            unregisterReceiver(endRequestStepReceiver)
+        }
+
+        if (finishActivityReceiver != null) {
+            unregisterReceiver(finishActivityReceiver)
         }
 
     }
 
+    override fun finish() {
+        super.finish()
+
+    }
 
 }
 

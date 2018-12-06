@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -65,7 +66,9 @@ class Point_Use_Fragment : Fragment() {
     var member_id = -1
     var type = -1
     var phoneNumber = ""
+    var selectedCouponID = -1
 
+    var couponID : ArrayList<Int> = ArrayList<Int>()
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var couponAdapter : CouponListAdapter
 
@@ -89,7 +92,6 @@ class Point_Use_Fragment : Fragment() {
 
         return inflater.inflate(R.layout.fra_coupon, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -177,10 +179,27 @@ class Point_Use_Fragment : Fragment() {
         couponAdapter = CouponListAdapter(myContext, R.layout.item_member_coupon, couponData)
         couponListLV.adapter = couponAdapter
 
+
         useLL.setOnClickListener {
             if (step == 5) {
+                if (Integer.parseInt(use_point) > 0) {
+                    type = 1
+                } else if (selectedCouponID > -1) {
+                    type = 2
+                }
                 changeStep()
             }
+        }
+
+        couponListLV.setOnItemClickListener { parent, view, position, id ->
+            var data = couponData.get(position)
+
+            val memberCoupon = data.getJSONObject("MemberCoupon")
+            val couponID = Utils.getInt(memberCoupon, "id")
+
+            Log.d("리스트선택",data.toString())
+
+            selectedCouponID = couponID
         }
 
         timerStart()
@@ -206,21 +225,22 @@ class Point_Use_Fragment : Fragment() {
                         //var point = response.getJSONObject("point")
 
                         var point = response.getString("point")
-                        //var tempPoint = Utils.getString(point, "point")
 
                         pointTV.text = point
                         left_pointTV.text = point
 
                         couponData.clear()
-                        couponAdapter.notifyDataSetChanged()
 
                         var data = response.getJSONArray("coupons")
-                        Log.d("쿠폰데이터", data.toString())
+
                         for (i in 0 until data.length()) {
 
-                            couponData.add(data[i] as JSONObject)
+                            var json = data[i] as JSONObject
+                            json.put("check_yn", "N")
 
+                            couponData.add(json)
                         }
+
                         couponAdapter.notifyDataSetChanged()
 
 
@@ -337,16 +357,17 @@ class Point_Use_Fragment : Fragment() {
                     val result = response!!.getString("result")
                     if ("ok" == result) {
                         var requestStep = response.getJSONObject("RequestStep")
-                        var member = response.getJSONObject("Member")
-                        member_id = Utils.getInt(member, "member_id")
-                        Log.d("아이디", member_id.toString())
-                        new_member_yn = Utils.getString(requestStep, "new_member_yn")
 
+                        var member = response.getJSONObject("Member")
+                        member_id = Utils.getInt(member, "id")
+
+                        new_member_yn = Utils.getString(requestStep, "new_member_yn")
 
                         val result_step = Utils.getInt(requestStep, "step")
                         var point_o = response.getJSONObject("Point")
 
                         val balance = Utils.getString(point_o, "balance")
+
                         if (step != result_step) {
                             step = result_step
                             Log.d("스텝", step.toString())
@@ -502,4 +523,3 @@ class Point_Use_Fragment : Fragment() {
         }
     }
 }
-
