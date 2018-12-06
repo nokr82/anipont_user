@@ -39,11 +39,10 @@ class UseActivity : FragmentActivity() {
 
                 phonET.setHint("사용할 포인트를 입력하세요.")
                 titleTV.text = "쿠폰/포인트\n조회"
+
                 use_op_LL.visibility = View.GONE
                 couponLL.setBackgroundResource(R.drawable.background_strock_707070)
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
-
-                println("UseActivity get member phone number :::: $phoneNumber")
 
             }
         }
@@ -51,19 +50,17 @@ class UseActivity : FragmentActivity() {
 
     internal var endRequestStepReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            useLL.setBackgroundResource(R.drawable.background_strock_707070)
-            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
-            use_op_LL.visibility = View.VISIBLE
-        }
-    }
-
-    internal var finishActivityReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
 
             var intent1 = Intent()
             intent1.putExtra("request_step_id", request_step_id)
             setResult(RESULT_OK, intent1)
 
+            finish()
+        }
+    }
+
+    internal var finishActivityReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
             finish()
         }
     }
@@ -103,9 +100,18 @@ class UseActivity : FragmentActivity() {
             setmenu()
             phonET.setHint("사용할 포인트를 입력하세요.")
             titleTV.text = "쿠폰/포인트\n조회"
-            use_op_LL.visibility = View.GONE
-            couponLL.setBackgroundResource(R.drawable.background_strock_707070)
-            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
+//            use_op_LL.visibility = View.GONE
+//            couponLL.setBackgroundResource(R.drawable.background_strock_707070)
+//            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
+
+            val bundle = Bundle()
+            bundle.putInt("type", type)
+            UseFragment.arguments = bundle
+
+            useLL.setBackgroundResource(R.drawable.background_strock_707070)
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
+            use_op_LL.visibility = View.VISIBLE
+
         } else {
             useLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
@@ -120,8 +126,6 @@ class UseActivity : FragmentActivity() {
             useLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
         }
-
-
 
 
 
@@ -155,11 +159,6 @@ class UseActivity : FragmentActivity() {
         if (finishActivityReceiver != null) {
             unregisterReceiver(finishActivityReceiver)
         }
-
-    }
-
-    override fun finish() {
-        super.finish()
 
     }
 

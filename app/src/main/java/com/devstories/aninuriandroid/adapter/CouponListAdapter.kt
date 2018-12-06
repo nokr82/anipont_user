@@ -1,6 +1,7 @@
 package com.devstories.aninuriandroid.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -79,6 +80,11 @@ open class CouponListAdapter (context: Context, view:Int, data: ArrayList<JSONOb
         item.item_s_validityTV.text = coupon_s_valid.toString()
         item.item_e_validityTV.text = coupon_e_valid.toString()
 
+        if(check_yn == "Y") {
+            item.LL.setBackgroundColor(Color.parseColor("#00d1ce"))
+        } else {
+            item.LL.setBackgroundColor(Color.parseColor("#FFFFFF"))
+        }
 
         return retView
     }
@@ -96,6 +102,7 @@ open class CouponListAdapter (context: Context, view:Int, data: ArrayList<JSONOb
     }
 
     class ViewHolder(v : View) {
+        var LL :LinearLayout
         var couponBackLL :LinearLayout
         var item_couponNameTV :TextView
         var item_s_validityTV :TextView
@@ -104,6 +111,7 @@ open class CouponListAdapter (context: Context, view:Int, data: ArrayList<JSONOb
 
 
         init {
+            LL = v.findViewById(R.id.LL)
             couponBackLL = v.findViewById(R.id.couponBackLL)
             item_couponNameTV = v.findViewById(R.id.item_couponNameTV)
             item_s_validityTV = v.findViewById(R.id.item_s_validityTV)

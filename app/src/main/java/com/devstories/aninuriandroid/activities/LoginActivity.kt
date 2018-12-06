@@ -31,6 +31,8 @@ class LoginActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
+        PrefUtils.clear(context)
+
         loginLL.setOnClickListener {
             var getName = Utils.getString(loginIdET)
             var getPW = Utils.getString(loginPassTV)
