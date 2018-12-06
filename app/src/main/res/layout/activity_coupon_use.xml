@@ -111,7 +111,8 @@
             android:layout_height="30.5dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:background="#90000000">
+            android:background="#90000000"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/phonET"

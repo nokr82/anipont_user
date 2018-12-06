@@ -42,27 +42,23 @@ class UseActivity : FragmentActivity() {
                 couponLL.setBackgroundResource(R.drawable.background_strock_707070)
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
 
-                println("UseActivity get member phone number :::: $phoneNumber")
-
             }
         }
     }
 
     internal var endRequestStepReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            useLL.setBackgroundResource(R.drawable.background_strock_707070)
-            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
-            use_op_LL.visibility = View.VISIBLE
-        }
-    }
-
-    internal var finishActivityReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
 
             var intent1 = Intent()
             intent1.putExtra("request_step_id", request_step_id)
             setResult(RESULT_OK, intent1)
 
+            finish()
+        }
+    }
+
+    internal var finishActivityReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
             finish()
         }
     }

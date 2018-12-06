@@ -41,8 +41,6 @@ class UseFragment : Fragment() {
 
     internal lateinit var view: View
 
-    private var timer: Timer? = null
-
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
     lateinit var threeLL: LinearLayout
@@ -193,9 +191,17 @@ class UseFragment : Fragment() {
                         var requestStep = response.getJSONObject("RequestStep")
                         val result_step = Utils.getInt(requestStep, "step")
 
-                        val intent = Intent();
-                        intent.action = "FINISH_ACTIVITY"
-                        myContext.sendBroadcast(intent)
+                        if(result_step == 2) {
+                            val intent = Intent();
+                            intent.action = "FINISH_ACTIVITY"
+                            myContext.sendBroadcast(intent)
+                        } else if (result_step == 5) {
+                            val intent = Intent()
+                            intent.putExtra("phone", phone)
+                            intent.putExtra("type", 2)
+                            intent.action = "POINT_USE"
+                            myContext.sendBroadcast(intent)
+                        }
 
 //                        if (result_step == 2) {
 //                            val intent = Intent()
@@ -306,19 +312,11 @@ class UseFragment : Fragment() {
                         if (step != result_step) {
                             step = result_step
 
-                            if (step == 3) {
-
-                                var intent = Intent()
-                                intent.action = "END_STEP"
-                                myContext.sendBroadcast(intent)
-
-                                timer!!.cancel()
+                            if (step == 5) {
 
                                 phonET.setHint("사용할 포인트를 입력하세요.")
                                 titleTV.text = "쿠폰/포인트\n조회"
                                 use_op_LL.visibility = View.GONE
-
-                            } else if (step == 5) {
 
                             }
 

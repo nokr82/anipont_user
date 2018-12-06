@@ -235,23 +235,20 @@ class MainActivity : RootActivity() {
                                 val intent = Intent(context, UseActivity::class.java)
                                 intent.putExtra("type", type)
                                 startActivity(intent)
-
                             } else if (step == 3) {
-
-                                println("request_step_id : " + "=============================")
-
                                 val intent = Intent(context, UseActivity::class.java)
                                 intent.putExtra("type", 3)
                                 intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
                                 startActivityForResult(intent, USE_ACTIVITY)
-                            }
-                            //포인트 사용
-                            else if (step == 4) {
+                            } else if (step == 4) {
                                 type = 1
                                 val intent = Intent(context, UseActivity::class.java)
                                 intent.putExtra("type", type)
                                 startActivity(intent)
-
+                            } else if (step == 6) {
+                                val intent = Intent(context, UseActivity::class.java)
+                                intent.putExtra("type", 3)
+                                startActivity(intent)
                             }
 
                         }
