@@ -64,7 +64,7 @@ class MainActivity : RootActivity() {
         progressDialog = ProgressDialog(context)
 
         company_id = PrefUtils.getIntPreference(context, "company_id")
-        company_id = 1
+        //company_id = 1
 
         var company_name = PrefUtils.getStringPreference(context, "company_name", "")
         if (company_name != null && !company_name.equals("")) {
