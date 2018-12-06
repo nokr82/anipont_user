@@ -87,6 +87,8 @@ class Point_Use_Fragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
 
+        company_id = PrefUtils.getIntPreference(context, "company_id")
+
         return inflater.inflate(R.layout.fra_coupon, container, false)
     }
 
@@ -109,8 +111,10 @@ class Point_Use_Fragment : Fragment() {
         use_pointTV = view.findViewById(R.id.use_pointTV)
         couponListLV = view.findViewById(R.id.couponListLV)
 
-        phoneNumber = this.arguments!!.getString("phoneNumber")
-        user_left_point(phoneNumber)
+        if(arguments != null) {
+            phoneNumber = arguments!!.getString("phoneNumber")
+            user_left_point(phoneNumber)
+        }
 
     }
 
@@ -121,7 +125,6 @@ class Point_Use_Fragment : Fragment() {
         //전화번호로 고객의 정보를 조회하고
         /*val filter = IntentFilter("POINT_USE")
         context!!.registerReceiver(getPhoneNumber, filter)*/
-        company_id = PrefUtils.getIntPreference(context, "company_id")
 
         oneLL.setOnClickListener {
             use_pointTV.text = use_pointTV.text.toString() + 1
@@ -253,11 +256,12 @@ class Point_Use_Fragment : Fragment() {
                             var json = data[i] as JSONObject
                             json.put("check_yn", "N")
 
+                            println("json : " + json)
+
                             couponData.add(json)
                         }
 
                         couponAdapter.notifyDataSetChanged()
-
 
                     }
 
