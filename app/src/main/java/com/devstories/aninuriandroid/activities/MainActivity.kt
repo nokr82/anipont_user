@@ -248,6 +248,7 @@ class MainActivity : RootActivity() {
                             } else if (step == 6) {
                                 val intent = Intent(context, UseActivity::class.java)
                                 intent.putExtra("type", 3)
+                                intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
                                 startActivity(intent)
                             }
 
