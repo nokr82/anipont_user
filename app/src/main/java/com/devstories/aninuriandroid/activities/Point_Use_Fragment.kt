@@ -198,7 +198,7 @@ class Point_Use_Fragment : Fragment() {
             val memberCoupon = data.getJSONObject("MemberCoupon")
             val couponID = Utils.getInt(memberCoupon, "id")
 
-            Log.d("리스트선택",data.toString())
+            Log.d("선택된 쿠폰 아이디",couponID.toString())
 
             selectedCouponID = couponID
         }
