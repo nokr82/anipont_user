@@ -41,6 +41,9 @@ class IntroActivity : RootActivity() {
         this.context = this
         progressDialog = ProgressDialog(context)
 
+        //초기화
+        //PrefUtils.clear(context)
+
         // clear all notification
         val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         nm.cancelAll()
@@ -91,12 +94,7 @@ class IntroActivity : RootActivity() {
 
     internal var handler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
-            //versionInfo();
             login()
-
-//            val intent = Intent(context, MainActivity::class.java)
-//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//            startActivity(intent)
         }
     }
 
@@ -105,6 +103,8 @@ class IntroActivity : RootActivity() {
         val params = RequestParams()
         params.put("login_id", PrefUtils.getStringPreference(context,"login_id"))
         params.put("passwd", PrefUtils.getStringPreference(context,"passwd"))
+
+        println("소비자 인트로에서 ")
 
         MemberAction.login(params, object : JsonHttpResponseHandler() {
 
