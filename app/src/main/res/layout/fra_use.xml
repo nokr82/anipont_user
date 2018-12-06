@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     android:textColor="#9a9a9a"
                     android:letterSpacing="-0.03"
                     android:lineSpacingExtra="3sp"
@@ -398,7 +398,6 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:layout_marginLeft="9.5dp"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical"
                     android:background="#ffff"
@@ -407,13 +406,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="8sp"
                         android:layout_marginLeft="10dp"
-                        android:textColor="#cbcbcb"
                         android:letterSpacing="-0.05"
                         android:lineSpacingExtra="1sp"
                         android:text="내포인트"
-                        />
+                        android:textColor="#cbcbcb"
+                        android:textSize="16dp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -425,7 +423,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
+                            android:textSize="36dp"
                             android:layout_marginLeft="10dp"
                             android:textColor="#303030"
                             android:letterSpacing="-0.05"
@@ -437,7 +435,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
+                            android:textSize="36dp"
                             android:textColor="#303030"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-9sp"

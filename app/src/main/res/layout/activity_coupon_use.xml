@@ -40,12 +40,7 @@
                 android:lineSpacingExtra="2sp"
                 android:text="내 포인트 사용/조회"
                 android:textColor="#ffffff"
-                android:textSize="25sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.6dp"
-                    android:background="#ffff"/>
+                android:textSize="36dp" />
 
 
             </LinearLayout>
@@ -78,7 +73,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textColor="#ffffff"
                     android:lineSpacingExtra="25sp"
                     android:text="사용/조회"
@@ -95,7 +90,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textColor="#ffffff"
                     android:lineSpacingExtra="25sp"
                     android:text="쿠폰/포인트 조회"
