@@ -158,7 +158,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
         val task = object : TimerTask() {
             override fun run() {
                 var intent = Intent()
-                intent.action = "FINISH_ACTIVITY"
+                intent.action = "END_STEP"
                 myContext.sendBroadcast(intent)
             }
         }

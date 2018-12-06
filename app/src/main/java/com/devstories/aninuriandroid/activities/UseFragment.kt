@@ -15,11 +15,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.adapter.CouponListAdapter
 import com.devstories.aninuriandroid.base.HttpClient
 import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.Utils
@@ -41,8 +43,6 @@ class UseFragment : Fragment() {
 
     internal lateinit var view: View
 
-    private var timer: Timer? = null
-
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
     lateinit var threeLL: LinearLayout
@@ -55,11 +55,15 @@ class UseFragment : Fragment() {
     lateinit var zeroLL: LinearLayout
     lateinit var useLL: LinearLayout
     lateinit var backLL: LinearLayout
+    lateinit var myPointLL: LinearLayout
+    lateinit var pointTV: TextView
     lateinit var phoneTV: TextView
     lateinit var save_pointTV: TextView
+    lateinit var couponListLV: ListView
 
     var phone = ""
     var type = -1
+    var frame_type = -1
     var save_point = ""
     var step = -1
     var member_id = -1
@@ -69,6 +73,9 @@ class UseFragment : Fragment() {
     var stackpoint = -1
 
     var company_id = -1
+
+    var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
+    lateinit var couponAdapter : CouponListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
@@ -97,6 +104,15 @@ class UseFragment : Fragment() {
         useLL = view.findViewById(R.id.useLL)
         phoneTV = view.findViewById(R.id.phoneTV)
 
+        couponListLV = view.findViewById(R.id.couponListLV)
+
+        pointTV = view.findViewById(R.id.pointTV)
+        myPointLL = view.findViewById(R.id.myPointLL)
+
+        if(arguments != null) {
+            frame_type = arguments!!.getInt("type")
+            arguments = null
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -144,8 +160,6 @@ class UseFragment : Fragment() {
             }
         }
 
-        checkStep()
-
         useLL.setOnClickListener {
 
             phone = Utils.getString(phoneTV)
@@ -158,6 +172,15 @@ class UseFragment : Fragment() {
             loaduserdata()
 
         }
+
+        if(frame_type != 2) {
+            checkStep()
+        } else {
+
+        }
+
+        couponAdapter = CouponListAdapter(myContext, R.layout.item_member_coupon, couponData)
+        couponListLV.adapter = couponAdapter
 
     }
 
@@ -193,9 +216,17 @@ class UseFragment : Fragment() {
                         var requestStep = response.getJSONObject("RequestStep")
                         val result_step = Utils.getInt(requestStep, "step")
 
-                        val intent = Intent();
-                        intent.action = "FINISH_ACTIVITY"
-                        myContext.sendBroadcast(intent)
+                        if(result_step == 2) {
+                            val intent = Intent();
+                            intent.action = "FINISH_ACTIVITY"
+                            myContext.sendBroadcast(intent)
+                        } else if (result_step == 5) {
+                            val intent = Intent()
+                            intent.putExtra("phone", phone)
+                            intent.putExtra("type", 2)
+                            intent.action = "POINT_USE"
+                            myContext.sendBroadcast(intent)
+                        }
 
 //                        if (result_step == 2) {
 //                            val intent = Intent()
@@ -306,19 +337,11 @@ class UseFragment : Fragment() {
                         if (step != result_step) {
                             step = result_step
 
-                            if (step == 3) {
-
-                                var intent = Intent()
-                                intent.action = "END_STEP"
-                                myContext.sendBroadcast(intent)
-
-                                timer!!.cancel()
+                            if (step == 5) {
 
                                 phonET.setHint("사용할 포인트를 입력하세요.")
                                 titleTV.text = "쿠폰/포인트\n조회"
                                 use_op_LL.visibility = View.GONE
-
-                            } else if (step == 5) {
 
                             }
 
@@ -385,16 +408,21 @@ class UseFragment : Fragment() {
 
                     if ("ok" == result) {
 
-                        new_member_yn = Utils.getString(response, "new_member_yn")
-                        member_id = Utils.getInt(response, "member_id")
+                        if(frame_type != 2) {
+                            new_member_yn = Utils.getString(response, "new_member_yn")
+                            member_id = Utils.getInt(response, "member_id")
 
-                        if (step == 1) {
-                            step = 2
-                        } else if (step == 4) {
-                            step = 5
+                            if (step == 1) {
+                                step = 2
+                            } else if (step == 4) {
+                                step = 5
+                            }
+
+                            changeStep()
+                        } else {
+                            user_left_point()
                         }
 
-                        changeStep()
 
                     } else {
                         Toast.makeText(myContext, "조회실패", Toast.LENGTH_SHORT).show()
@@ -474,5 +502,114 @@ class UseFragment : Fragment() {
         })
     }
 
+    fun user_left_point() {
+        val params = RequestParams()
+        params.put("company_id", company_id)
+        params.put("phone", phone)
+
+        MemberAction.inquiry_point(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+                    val result = response!!.getString("result")
+
+                    if ("ok" == result) {
+                        //var point = response.getJSONObject("point")
+
+                        var point = response.getString("point")
+
+                        myPointLL.visibility = View.VISIBLE
+
+                        pointTV.text = point
+
+                        couponData.clear()
+
+                        var data = response.getJSONArray("coupons")
+
+                        for (i in 0 until data.length()) {
+
+                            var json = data[i] as JSONObject
+                            json.put("check_yn", "N")
+
+                            couponData.add(json)
+                        }
+
+                        couponAdapter.notifyDataSetChanged()
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, responseString: String?) {
+
+                // System.out.println(responseString);
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    responseString: String?,
+                    throwable: Throwable
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                // System.out.println(responseString);
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONArray?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
 
 }

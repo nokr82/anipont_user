@@ -1,10 +1,8 @@
 package com.devstories.aninuriandroid.activities
 
 import android.app.ProgressDialog
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -12,10 +10,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.LinearLayout
+import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
@@ -25,11 +22,9 @@ import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.fra_coupon.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -57,6 +52,8 @@ class Point_Use_Fragment : Fragment() {
     lateinit var pointTV: TextView
     lateinit var use_pointTV: TextView
 
+    lateinit var couponListLV:ListView
+
     var left_point = ""
     var point = ""
     var use_point = ""
@@ -69,7 +66,6 @@ class Point_Use_Fragment : Fragment() {
     var selectedCouponID = -1
     var company_id = -1
 
-    var couponID : ArrayList<Int> = ArrayList<Int>()
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var couponAdapter : CouponListAdapter
 
@@ -91,6 +87,8 @@ class Point_Use_Fragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
 
+        company_id = PrefUtils.getIntPreference(context, "company_id")
+
         return inflater.inflate(R.layout.fra_coupon, container, false)
     }
 
@@ -111,9 +109,12 @@ class Point_Use_Fragment : Fragment() {
         pointTV = view.findViewById(R.id.pointTV)
         left_pointTV = view.findViewById(R.id.left_pointTV)
         use_pointTV = view.findViewById(R.id.use_pointTV)
+        couponListLV = view.findViewById(R.id.couponListLV)
 
-        phoneNumber = this.arguments!!.getString("phoneNumber")
-        user_left_point(phoneNumber)
+        if(arguments != null) {
+            phoneNumber = arguments!!.getString("phoneNumber")
+            user_left_point(phoneNumber)
+        }
 
     }
 
@@ -124,7 +125,6 @@ class Point_Use_Fragment : Fragment() {
         //전화번호로 고객의 정보를 조회하고
         /*val filter = IntentFilter("POINT_USE")
         context!!.registerReceiver(getPhoneNumber, filter)*/
-        company_id = PrefUtils.getIntPreference(context, "company_id")
 
         oneLL.setOnClickListener {
             use_pointTV.text = use_pointTV.text.toString() + 1
@@ -180,30 +180,46 @@ class Point_Use_Fragment : Fragment() {
 
         couponAdapter = CouponListAdapter(myContext, R.layout.item_member_coupon, couponData)
         couponListLV.adapter = couponAdapter
+        couponListLV.setOnItemClickListener { parent, view, position, id ->
 
+            var data = couponData.get(position)
+
+            val check_yn = Utils.getString(data, "check_yn")
+
+            if(check_yn == "Y") {
+                data.put("check_yn" , "N")
+            } else {
+
+                for(i in 0 until couponData.size) {
+                    var data = couponData.get(i)
+                    data.put("check_yn", "N")
+                }
+
+                data.put("check_yn" , "Y")
+            }
+
+            couponAdapter.notifyDataSetChanged()
+
+        }
 
         useLL.setOnClickListener {
-            if (step == 5) {
-                if (Integer.parseInt(use_point) > 0) {
-                    type = 1
-                } else if (selectedCouponID > -1) {
-                    type = 2
+
+            for (i in 0 until couponData.size) {
+                val data = couponData[i]
+                val check_yn = Utils.getString(data, "check_yn")
+
+                if(check_yn == "Y") {
+                    val MemberCoupon = data.getJSONObject("MemberCoupon")
+                    selectedCouponID = Utils.getInt(MemberCoupon, "id")
                 }
+
+            }
+
+            if (step == 5) {
+                step = 7
                 changeStep()
             }
         }
-
-        couponListLV.setOnItemClickListener { parent, view, position, id ->
-            var data = couponData.get(position)
-
-            val memberCoupon = data.getJSONObject("MemberCoupon")
-            val couponID = Utils.getInt(memberCoupon, "id")
-
-            Log.d("선택된 쿠폰 아이디",couponID.toString())
-
-            selectedCouponID = couponID
-        }
-
         timerStart()
     }
 
@@ -240,11 +256,12 @@ class Point_Use_Fragment : Fragment() {
                             var json = data[i] as JSONObject
                             json.put("check_yn", "N")
 
+                            println("json : " + json)
+
                             couponData.add(json)
                         }
 
                         couponAdapter.notifyDataSetChanged()
-
 
                     }
 
@@ -320,7 +337,7 @@ class Point_Use_Fragment : Fragment() {
 
 
     fun l_point() {
-        point = pointTV.text.toString()
+        point = Utils.getString(pointTV)
         use_point = use_pointTV.text.toString()
         left_point = pointTV.text.toString()
 
@@ -339,7 +356,6 @@ class Point_Use_Fragment : Fragment() {
         use_pointTV.text = n_use_point.toString()
         left_pointTV.text = n_left_point.toString()
     }
-
 
     // 요청 체크
     fun checkStep() {
@@ -439,6 +455,7 @@ class Point_Use_Fragment : Fragment() {
         params.put("company_id", company_id)
         params.put("member_id", member_id)
         params.put("new_member_yn", new_member_yn)
+        params.put("member_coupon_id", selectedCouponID)
         params.put("point", use_point)
         params.put("step", step)
 
@@ -455,8 +472,15 @@ class Point_Use_Fragment : Fragment() {
                     if ("ok" == result) {
                         var requestStep = response.getJSONObject("RequestStep")
                         var step = Utils.getInt(requestStep, "step")
-                        if (step != 5) {
-                            use_point = "0"
+
+//                        if (step != 5) {
+//                            use_point = "0"
+//                        }
+
+                        if(step == 7) {
+                            var intent = Intent()
+                            intent.action = "FINISH_ACTIVITY"
+                            myContext.sendBroadcast(intent)
                         }
 
                     }
