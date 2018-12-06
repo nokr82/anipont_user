@@ -37,61 +37,48 @@ open class CouponListAdapter (context: Context, view:Int, data: ArrayList<JSONOb
 
         val couponOJ = data.get(position)
 
+        var check_yn = couponOJ.getString("check_yn")
+
         val memberCoupon = couponOJ.getJSONObject("MemberCoupon")
         val coupon = couponOJ.getJSONObject("Coupon")
 
-        val used = Utils.getString(memberCoupon, "use_yn")
-        val del = Utils.getString(memberCoupon, "del_yn")
         val couponID = Utils.getString(memberCoupon, "id")
-        var checkedYN = false
 
+        val coupon_name = Utils.getString(coupon, "name")
+        val coupon_type = Utils.getInt(coupon, "type")
+        val coupon_s_valid = Utils.getString(memberCoupon, "s_use_date")
+        val coupon_e_valid = Utils.getString(memberCoupon, "e_use_date")
+        val coupon_message = Utils.getString(coupon, "content")
 
-        if (used == "N" && del == "N") {
+        var backgroundImg = R.mipmap.coupon
 
-            val coupon_name = Utils.getString(coupon, "name")
-            val coupon_type = Utils.getInt(coupon, "type")
-            /*val coupon_s_valid = SimpleDateFormat("yyyy-MM-dd")
-                    .parse(Utils.getString(memberCoupon, "s_use_date"))
-            val coupon_e_valid = SimpleDateFormat("yyyy-MM-dd")
-                    .parse(Utils.getString(memberCoupon, "e_use_date"))*/
-            val coupon_s_valid = Utils.getString(memberCoupon, "s_use_date")
-            val coupon_e_valid = Utils.getString(memberCoupon, "e_use_date")
-            val coupon_message = Utils.getString(coupon, "message")
-
-            var backgroundImg = R.mipmap.coupon
-
-            when(coupon_type) {
-                1 -> {
-                    backgroundImg = R.mipmap.coupon_first
-                }
-                2 -> {
-                    backgroundImg = R.mipmap.coupon_second
-                }
-                3 -> {
-                    backgroundImg = R.mipmap.coupon_third
-                }
-                4 -> {
-                    backgroundImg = R.mipmap.coupon_fourth
-                }
-                5 -> {
-                    backgroundImg = R.mipmap.coupon_first
-                }
-                6 -> {
-                    backgroundImg = R.mipmap.coupon_second
-                }
+        when(coupon_type) {
+            1 -> {
+                backgroundImg = R.mipmap.coupon_first
             }
-
-            item.couponBackLL.setBackgroundResource(backgroundImg)
-            item.item_couponNameTV.text = coupon_name
-            item.item_messageTV.text = coupon_message
-            item.item_s_validityTV.text = coupon_s_valid.toString()
-            item.item_e_validityTV.text = coupon_e_valid.toString()
-
-            /*val coupon_week = Utils.getString(coupon, "week_use_yn")
-            val coupon_sat = Utils.getString(coupon, "sat_use_yn")
-            val coupon_sun = Utils.getString(coupon, "sun_use_yn")*/
-
+            2 -> {
+                backgroundImg = R.mipmap.coupon_second
+            }
+            3 -> {
+                backgroundImg = R.mipmap.coupon_third
+            }
+            4 -> {
+                backgroundImg = R.mipmap.coupon_fourth
+            }
+            5 -> {
+                backgroundImg = R.mipmap.coupon_first
+            }
+            6 -> {
+                backgroundImg = R.mipmap.coupon_second
+            }
         }
+
+        item.couponBackLL.setBackgroundResource(backgroundImg)
+        item.item_couponNameTV.text = coupon_name
+        item.item_messageTV.text = coupon_message
+        item.item_s_validityTV.text = coupon_s_valid.toString()
+        item.item_e_validityTV.text = coupon_e_valid.toString()
+
 
         return retView
     }

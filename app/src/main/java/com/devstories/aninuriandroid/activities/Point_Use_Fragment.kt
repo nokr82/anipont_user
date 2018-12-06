@@ -93,7 +93,6 @@ class Point_Use_Fragment : Fragment() {
         return inflater.inflate(R.layout.fra_coupon, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         useLL = view.findViewById(R.id.useLL)
@@ -226,21 +225,22 @@ class Point_Use_Fragment : Fragment() {
                         //var point = response.getJSONObject("point")
 
                         var point = response.getString("point")
-                        //var tempPoint = Utils.getString(point, "point")
 
                         pointTV.text = point
                         left_pointTV.text = point
 
                         couponData.clear()
-                        //couponAdapter.notifyDataSetChanged()
 
                         var data = response.getJSONArray("coupons")
-                        Log.d("쿠폰데이터", data.toString())
+
                         for (i in 0 until data.length()) {
 
-                            couponData.add(data[i] as JSONObject)
+                            var json = data[i] as JSONObject
+                            json.put("check_yn", "N")
 
+                            couponData.add(json)
                         }
+
                         couponAdapter.notifyDataSetChanged()
 
 
@@ -357,16 +357,17 @@ class Point_Use_Fragment : Fragment() {
                     val result = response!!.getString("result")
                     if ("ok" == result) {
                         var requestStep = response.getJSONObject("RequestStep")
-                        var member = response.getJSONObject("Member")
-                        member_id = Utils.getInt(member, "member_id")
-                        Log.d("아이디", member_id.toString())
-                        new_member_yn = Utils.getString(requestStep, "new_member_yn")
 
+                        var member = response.getJSONObject("Member")
+                        member_id = Utils.getInt(member, "id")
+
+                        new_member_yn = Utils.getString(requestStep, "new_member_yn")
 
                         val result_step = Utils.getInt(requestStep, "step")
                         var point_o = response.getJSONObject("Point")
 
                         val balance = Utils.getString(point_o, "balance")
+
                         if (step != result_step) {
                             step = result_step
                             Log.d("스텝", step.toString())

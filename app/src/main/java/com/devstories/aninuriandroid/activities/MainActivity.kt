@@ -1,5 +1,6 @@
 package com.devstories.aninuriandroid.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -38,6 +39,8 @@ class MainActivity : RootActivity() {
 
     var stackpoint = -1
     var company_id = -1
+
+    val USE_ACTIVITY = 301
 
     lateinit var imageAdater: FullScreenImageAdapter
     var imagePaths = ArrayList<String>()
@@ -221,9 +224,11 @@ class MainActivity : RootActivity() {
                         member_id = Utils.getInt(requestStep, "member_id")
                         val result_step = Utils.getInt(requestStep, "step")
                         val new_member_yn = Utils.getString(requestStep, "new_member_yn")
+
                         if (step != result_step) {
+
                             step = result_step
-                            Log.d("스텝", step.toString())
+
                             //포인트적립
                             if (step == 1) {
                                 type = 1
@@ -231,7 +236,16 @@ class MainActivity : RootActivity() {
                                 intent.putExtra("type", type)
                                 startActivity(intent)
 
-                            }//포인트 사용
+                            } else if (step == 3) {
+
+                                println("request_step_id : " + "=============================")
+
+                                val intent = Intent(context, UseActivity::class.java)
+                                intent.putExtra("type", 3)
+                                intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
+                                startActivityForResult(intent, USE_ACTIVITY)
+                            }
+                            //포인트 사용
                             else if (step == 4) {
                                 type = 1
                                 val intent = Intent(context, UseActivity::class.java)
@@ -250,6 +264,49 @@ class MainActivity : RootActivity() {
 
             }
 
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+        })
+    }
+
+    // 요청 삭제
+    fun endStep(request_step_id:Int) {
+        val params = RequestParams()
+        params.put("request_step_id", request_step_id)
+
+        RequestStepAction.end_step(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
 
             private fun error() {
                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
@@ -295,6 +352,18 @@ class MainActivity : RootActivity() {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode) {
+            USE_ACTIVITY -> {
+                val request_step_id = data!!.getIntExtra("request_step_id", -1)
+
+                endStep(request_step_id)
+            }
+        }
+
+    }
 
 }
 
