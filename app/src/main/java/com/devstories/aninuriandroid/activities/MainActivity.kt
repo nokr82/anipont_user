@@ -255,6 +255,8 @@ class MainActivity : RootActivity() {
 
                         }
 
+                    } else {
+                        step  = -1
                     }
 
                 } catch (e: JSONException) {
