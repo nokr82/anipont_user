@@ -241,7 +241,7 @@ class MainActivity : RootActivity() {
                                 intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
                                 startActivityForResult(intent, USE_ACTIVITY)
                             } else if (step == 4) {
-                                type = 1
+                                type = 3
                                 val intent = Intent(context, UseActivity::class.java)
                                 intent.putExtra("type", type)
                                 startActivity(intent)

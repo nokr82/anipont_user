@@ -22,6 +22,8 @@ class UseActivity : FragmentActivity() {
     var save_point: String? = null
 
     val UseFragment = UseFragment()
+    val SelectFragment = SelectFragment()
+    val StackFragment = StackFragment()
     val Point_Use_Fragment = Point_Use_Fragment()
     val Point_AccurMulaage_Fragment = Point_AccurMulaage_Fragment()
 
@@ -92,23 +94,24 @@ class UseActivity : FragmentActivity() {
 
 
         if (type == 1) {
+            titleTV.text = "쿠폰/포인트\n적립"
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
-            use_op_LL.visibility = View.VISIBLE
+            use_op_LL.visibility = View.GONE
         } else if (type == 2) {
             setmenu()
             phonET.setHint("사용할 포인트를 입력하세요.")
             titleTV.text = "쿠폰/포인트\n조회"
-//            use_op_LL.visibility = View.GONE
-//            couponLL.setBackgroundResource(R.drawable.background_strock_707070)
-//            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
 
             val bundle = Bundle()
             bundle.putInt("type", type)
-            UseFragment.arguments = bundle
+            SelectFragment.arguments = bundle
 
-            supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
-            use_op_LL.visibility = View.VISIBLE
-
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, SelectFragment).commit()
+            use_op_LL.visibility = View.GONE
+        }else if (type == 3) {
+            titleTV.text = "쿠폰/포인트\n사용"
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, StackFragment).commit()
+            use_op_LL.visibility = View.GONE
         } else {
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
             use_op_LL.visibility = View.VISIBLE

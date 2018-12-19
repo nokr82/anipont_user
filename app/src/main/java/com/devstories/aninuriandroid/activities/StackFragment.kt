@@ -37,7 +37,7 @@ import org.json.JSONObject
 import java.util.*
 
 
-class UseFragment : Fragment() {
+class StackFragment : Fragment() {
 
     private var progressDialog: ProgressDialog? = null
     lateinit var myContext: Context
@@ -124,6 +124,9 @@ class UseFragment : Fragment() {
         company_id = PrefUtils.getIntPreference(context, "company_id")
 
         save_point = save_pointTV.text.toString()
+
+        typeTV.text = "조회"
+
         oneLL.setOnClickListener {
             phoneTV.setText(phoneTV.getText().toString() + 1)
         }
