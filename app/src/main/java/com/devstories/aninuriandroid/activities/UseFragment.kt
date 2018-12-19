@@ -30,6 +30,7 @@ import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_coupon_use.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fra_use.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -59,6 +60,7 @@ class UseFragment : Fragment() {
     lateinit var pointTV: TextView
     lateinit var phoneTV: TextView
     lateinit var save_pointTV: TextView
+    lateinit var typeTV: TextView
     lateinit var couponListLV: ListView
 
     var phone = ""
@@ -89,6 +91,7 @@ class UseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        typeTV = view.findViewById(R.id.typeTV)
         save_pointTV = view.findViewById(R.id.save_pointTV)
         backLL = view.findViewById(R.id.backLL)
         oneLL = view.findViewById(R.id.oneLL)
@@ -121,7 +124,7 @@ class UseFragment : Fragment() {
         company_id = PrefUtils.getIntPreference(context, "company_id")
 
         save_point = save_pointTV.text.toString()
-
+        typeTV.text = "조회"
         oneLL.setOnClickListener {
             phoneTV.setText(phoneTV.getText().toString() + 1)
         }
