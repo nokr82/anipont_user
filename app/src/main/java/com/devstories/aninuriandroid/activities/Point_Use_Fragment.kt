@@ -393,13 +393,13 @@ class Point_Use_Fragment : Fragment() {
                             left_pointTV.text = balance
                             if (step == 3) {
                                 val intent = Intent(myContext, UseActivity::class.java)
-                                type = 3
+                                type = 4
                                 intent.putExtra("type", type)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 startActivity(intent)
                             } else if (step == 6) {
                                 val intent = Intent(myContext, UseActivity::class.java)
-                                type = 3
+                                type = 4
                                 intent.putExtra("type", type)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 startActivity(intent)

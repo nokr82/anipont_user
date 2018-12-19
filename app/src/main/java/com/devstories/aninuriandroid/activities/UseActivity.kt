@@ -113,8 +113,9 @@ class UseActivity : FragmentActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, StackFragment).commit()
             use_op_LL.visibility = View.GONE
         } else {
+            titleTV.text = "적립/사용\n완료"
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
-            use_op_LL.visibility = View.VISIBLE
+            use_op_LL.visibility = View.GONE
         }
 
       /*  useLL.setOnClickListener {
