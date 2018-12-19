@@ -183,9 +183,7 @@ class MainActivity : RootActivity() {
 
         handler = object : Handler() {
             override fun handleMessage(msg: Message) {
-
                 time++
-
                 val index = imageVP.getCurrentItem()
                 val last_index = imagePaths.size - 1
 
@@ -193,7 +191,7 @@ class MainActivity : RootActivity() {
                     if (index < last_index) {
                         imageVP.setCurrentItem(index + 1)
                     } else {
-                        imageVP.setCurrentItem(0)
+                        imageVP.setCurrentItem(0,false)
                     }
                 }
 
