@@ -62,6 +62,7 @@ class UseFragment : Fragment() {
     lateinit var save_pointTV: TextView
     lateinit var typeTV: TextView
     lateinit var couponListLV: ListView
+    lateinit var noticeTV: TextView
 
     var phone = ""
     var type = -1
@@ -106,7 +107,7 @@ class UseFragment : Fragment() {
         nineLL = view.findViewById(R.id.nineLL)
         useLL = view.findViewById(R.id.useLL)
         phoneTV = view.findViewById(R.id.phoneTV)
-
+        noticeTV = view.findViewById(R.id.noticeTV)
         couponListLV = view.findViewById(R.id.couponListLV)
 
         pointTV = view.findViewById(R.id.pointTV)
@@ -124,6 +125,12 @@ class UseFragment : Fragment() {
         company_id = PrefUtils.getIntPreference(context, "company_id")
 
         save_point = save_pointTV.text.toString()
+
+        noticeTV.setOnClickListener {
+            val intent = Intent(myContext, Dlg_Agree_Activity::class.java)
+            startActivity(intent)
+        }
+
         oneLL.setOnClickListener {
             phoneTV.setText(phoneTV.getText().toString() + 1)
         }
