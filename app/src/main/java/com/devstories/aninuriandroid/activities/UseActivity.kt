@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import com.devstories.aninuriandroid.R
 import kotlinx.android.synthetic.main.activity_coupon_use.*
 
@@ -74,6 +75,7 @@ class UseActivity : FragmentActivity() {
 
         this.context = this
         progressDialog = ProgressDialog(context)
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
 
         //인텐트로 전화번호를 받는다

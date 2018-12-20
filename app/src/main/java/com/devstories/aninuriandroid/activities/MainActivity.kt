@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
+import android.view.WindowManager
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
@@ -62,6 +63,7 @@ class MainActivity : RootActivity() {
 
         this.context = this
         progressDialog = ProgressDialog(context)
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         company_id = PrefUtils.getIntPreference(context, "company_id")
         //company_id = 1

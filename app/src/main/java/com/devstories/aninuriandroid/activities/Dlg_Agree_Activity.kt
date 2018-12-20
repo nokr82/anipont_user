@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.view.WindowManager
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.base.Config
@@ -30,6 +31,7 @@ class Dlg_Agree_Activity : RootActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dlg_agree)
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         val url = Config.url + "/agree/view?type=" + 1
 
