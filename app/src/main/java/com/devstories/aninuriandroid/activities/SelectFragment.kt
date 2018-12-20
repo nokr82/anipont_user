@@ -350,7 +350,7 @@ class SelectFragment : Fragment() {
                             if (step == 5) {
 
                                 phonET.setHint("사용할 포인트를 입력하세요.")
-                                titleTV.text = "쿠폰/포인트\n조회"
+                                titleTV.text = "쿠폰/포인트\n사용"
                                 use_op_LL.visibility = View.GONE
 
                             }
