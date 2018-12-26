@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     android:orientation="horizontal">
-    
+
+
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="0.3"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+
+
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_marginLeft="34dp"
             android:layout_height="match_parent"
             android:layout_marginTop="87dp"
@@ -54,7 +61,8 @@
 
     <LinearLayout
         android:layout_marginTop="32dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="0.8"
         android:layout_height="match_parent"
         android:layout_marginRight="19dp"
         android:orientation="vertical">
@@ -140,5 +148,5 @@
            />
 
     </LinearLayout>
-    
+
 </LinearLayout>

@@ -11,7 +11,6 @@ import com.devstories.aninuriandroid.R;
 /**
  * Created by theclub on 1/3/17.
  */
-
 public class RationalLinearLayout extends LinearLayout {
 
     private boolean adjustHeight = true;
