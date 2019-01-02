@@ -26,7 +26,6 @@ class Point_AccurMulaage_Fragment : Fragment() {
     private var progressDialog: ProgressDialog? = null
     lateinit var myContext: Context
     internal lateinit var view: View
-    lateinit var useLL: LinearLayout
     lateinit var left_pointTV: TextView
     lateinit var pointTV: TextView
     lateinit var titleTV: TextView
@@ -45,8 +44,6 @@ class Point_AccurMulaage_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        useLL = view.findViewById(R.id.useLL)
-
         left_pointTV = view.findViewById(R.id.left_pointTV)
         pointTV = view.findViewById(R.id.pointTV)
         titleTV = view.findViewById(R.id.titleTV)
@@ -59,7 +56,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
 
         checkStep()
 
-        useLL.setOnClickListener {
+      /*  useLL.setOnClickListener {
 
             type = 2
 
@@ -68,7 +65,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
 
-        }
+        }*/
 
         timerStart()
 

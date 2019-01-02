@@ -12,7 +12,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:background="#ffff"
             android:gravity="center"
@@ -81,65 +80,6 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:background="#ffff"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:src="@mipmap/img" />
-            <LinearLayout
-                android:layout_marginLeft="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="48sp"
-                android:textColor="#666666"
-                android:letterSpacing="-0.05"
-                android:lineSpacingExtra="-2sp"
-                android:text="아메리카노 교환 가능"
-                />
-                <LinearLayout
-                    android:id="@+id/useLL"
-                    android:layout_marginTop="15dp"
-                    android:layout_width="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:layout_height="60dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.5"
-                        android:layout_height="match_parent"
-                        android:textSize="32sp"
-                        android:gravity="center"
-                        android:background="#bbbbbb"
-                        android:textColor="#ffffff"
-                        android:letterSpacing="-0.05"
-                        android:lineSpacingExtra="-6sp"
-                        android:text="포인트 사용하기"
-                        />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:textSize="32sp"
-                        android:gravity="center"
-                        android:letterSpacing="-0.05"
-                        android:lineSpacingExtra="-6sp"
-
-                        />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
 
     </LinearLayout>
 

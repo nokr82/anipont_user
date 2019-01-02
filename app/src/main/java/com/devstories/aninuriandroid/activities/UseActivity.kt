@@ -96,7 +96,7 @@ class UseActivity : FragmentActivity() {
 
 
         if (type == 1) {
-            titleTV.text = "쿠폰/포인트\n적립"
+            titleTV.text = "포인트 적립"
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
             use_op_LL.visibility = View.GONE
         } else if (type == 2) {
@@ -118,6 +118,8 @@ class UseActivity : FragmentActivity() {
             titleTV.text = "적립/사용\n완료"
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
             use_op_LL.visibility = View.GONE
+            titleLL.visibility = View.GONE
+            usetitle_op_LL.visibility = View.GONE
         }
 
       /*  useLL.setOnClickListener {

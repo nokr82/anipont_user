@@ -44,8 +44,8 @@
                     android:letterSpacing="-0.03"
                     android:lineSpacingExtra="3sp"
                     android:gravity="center_horizontal"
-                    android:text="이용약관과 개인정보 취급방침에 동의하신 후 휴대전화 번호 입력 후
-적립버튼을 터치하세요."
+                    android:text="이용약관과 개인정보 취급방침에 동의하시면 휴대폰 번호 입력 후\n
+적립버튼을 터치해 주세요."
                     />
 
 
@@ -310,6 +310,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
+            android:layout_marginRight="20dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="25dp"
             android:layout_weight="0.5"
