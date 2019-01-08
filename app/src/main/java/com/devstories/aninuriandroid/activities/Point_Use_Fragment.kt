@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
@@ -52,6 +53,7 @@ class Point_Use_Fragment : Fragment() {
     lateinit var pointTV: TextView
     lateinit var use_pointTV: TextView
 
+    lateinit var limit_pointTV: TextView
     lateinit var couponListLV:ListView
 
     var left_point = ""
@@ -65,7 +67,7 @@ class Point_Use_Fragment : Fragment() {
     var phoneNumber = ""
     var selectedCouponID = -1
     var company_id = -1
-
+    var limitpoint = 0
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var couponAdapter : CouponListAdapter
 
@@ -111,6 +113,9 @@ class Point_Use_Fragment : Fragment() {
         use_pointTV = view.findViewById(R.id.use_pointTV)
         couponListLV = view.findViewById(R.id.couponListLV)
 
+        limit_pointTV = view.findViewById(R.id.limit_pointTV)
+
+
         if(arguments != null) {
             phoneNumber = arguments!!.getString("phoneNumber")
             user_left_point(phoneNumber)
@@ -125,6 +130,10 @@ class Point_Use_Fragment : Fragment() {
         //전화번호로 고객의 정보를 조회하고
         /*val filter = IntentFilter("POINT_USE")
         context!!.registerReceiver(getPhoneNumber, filter)*/
+
+        companyInfo()
+
+
 
         oneLL.setOnClickListener {
             use_pointTV.text = use_pointTV.text.toString() + 1
@@ -203,6 +212,14 @@ class Point_Use_Fragment : Fragment() {
         }
 
         useLL.setOnClickListener {
+
+            var usepoint =   Utils.getInt(use_pointTV)
+            if (usepoint<limitpoint){
+                Toast.makeText(myContext,"최소사용포인트는 "+limitpoint.toString()+"입니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+
 
             for (i in 0 until couponData.size) {
                 val data = couponData[i]
@@ -336,6 +353,66 @@ class Point_Use_Fragment : Fragment() {
     }
 
 
+    fun companyInfo() {
+        val params = RequestParams()
+        params.put("company_id", company_id)
+
+        MemberAction.company_info(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+                        var company = response.getJSONObject("company")
+                        limitpoint = Utils.getInt(company,"min_use_point")
+                        limit_pointTV.text = limitpoint.toString()+"P 이상부터 사용 가능"
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+//                if (progressDialog != null) {
+//                    progressDialog!!.show()
+//                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
     fun l_point() {
         point = Utils.getString(pointTV)
         use_point = use_pointTV.text.toString()
