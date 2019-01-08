@@ -52,6 +52,7 @@ class Point_Use_Fragment : Fragment() {
     lateinit var left_pointTV: TextView
     lateinit var pointTV: TextView
     lateinit var use_pointTV: TextView
+    lateinit var use_point_unitTV:TextView
 
     lateinit var limit_pointTV: TextView
     lateinit var couponListLV:ListView
@@ -68,6 +69,7 @@ class Point_Use_Fragment : Fragment() {
     var selectedCouponID = -1
     var company_id = -1
     var limitpoint = 0
+    var use_point_unit = 0
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var couponAdapter : CouponListAdapter
 
@@ -112,7 +114,7 @@ class Point_Use_Fragment : Fragment() {
         left_pointTV = view.findViewById(R.id.left_pointTV)
         use_pointTV = view.findViewById(R.id.use_pointTV)
         couponListLV = view.findViewById(R.id.couponListLV)
-
+        use_point_unitTV =  view.findViewById(R.id.use_point_unitTV)
         limit_pointTV = view.findViewById(R.id.limit_pointTV)
 
 
@@ -216,6 +218,10 @@ class Point_Use_Fragment : Fragment() {
             var usepoint =   Utils.getInt(use_pointTV)
             if (usepoint<limitpoint){
                 Toast.makeText(myContext,"최소사용포인트는 "+limitpoint.toString()+"입니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (usepoint%use_point_unit!=0){
+                Toast.makeText(myContext,"포인트사용단위는 "+use_point_unit.toString()+"입니다.",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -369,9 +375,10 @@ class Point_Use_Fragment : Fragment() {
                     val result = response!!.getString("result")
                     if ("ok" == result) {
                         var company = response.getJSONObject("company")
+                        use_point_unit = Utils.getInt(company,"use_point_unit")
                         limitpoint = Utils.getInt(company,"min_use_point")
                         limit_pointTV.text = limitpoint.toString()+"P 이상부터 사용 가능"
-
+                        use_point_unitTV.text= "포인트사용단위는 "+use_point_unit.toString()+"P입니다."
                     }
 
                 } catch (e: JSONException) {
