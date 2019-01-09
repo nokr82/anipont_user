@@ -116,8 +116,8 @@ class Point_AccurMulaage_Fragment : Fragment() {
                             titleTV.text = "사용완료"
                         }
                         send_alram()
-                        left_pointTV.text = balance.toString() + "P"
-                        pointTV.text = point.toString() + "P"
+                        left_pointTV.text = Utils.comma(balance.toString()) + "P"
+                        pointTV.text = Utils.comma(point.toString()) + "P"
 
                     }
 
