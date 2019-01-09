@@ -20,6 +20,7 @@ import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
 
 class Point_AccurMulaage_Fragment : Fragment() {
@@ -29,6 +30,13 @@ class Point_AccurMulaage_Fragment : Fragment() {
     lateinit var left_pointTV: TextView
     lateinit var pointTV: TextView
     lateinit var titleTV: TextView
+
+    var point =-1
+    var balance = -1
+    var member_point = ""
+
+    var member_id = ""
+
 
     var type = -1
     private var timer: Timer? = null
@@ -92,9 +100,13 @@ class Point_AccurMulaage_Fragment : Fragment() {
                         var member = response.getJSONObject("Member")
                         var point_o = response.getJSONObject("Point")
 
-                        val type = Utils.getInt(point_o, "type")
-                        val point = Utils.getString(point_o, "point")
-                        val balance = Utils.getString(point_o, "balance")
+                        Log.d("결과",response.toString())
+
+                        member_id = Utils.getString(member, "id")
+
+                        type = Utils.getInt(point_o, "type")
+                         point = Utils.getInt(point_o, "point")
+                         balance = Utils.getInt(point_o, "balance")
 
                         Log.d("type", type.toString())
 
@@ -103,9 +115,9 @@ class Point_AccurMulaage_Fragment : Fragment() {
                         } else if (type == 2) {
                             titleTV.text = "사용완료"
                         }
-
-                        left_pointTV.text = balance + "P"
-                        pointTV.text = point + "P"
+                        send_alram()
+                        left_pointTV.text = balance.toString() + "P"
+                        pointTV.text = point.toString() + "P"
 
                     }
 
@@ -150,7 +162,75 @@ class Point_AccurMulaage_Fragment : Fragment() {
         })
     }
 
+    // 알람톡보내기
+    fun send_alram() {
+        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
+        val str_date = df.format(Date())
 
+        val params = RequestParams()
+        params.put("company_id", company_id)
+        params.put("member_id", member_id)
+        params.put("use_point", Utils.comma(point.toString()))
+        params.put("stack_point", Utils.comma(point.toString()))
+        params.put("left_point", Utils.comma(balance.toString()))
+        params.put("point", Utils.comma((balance+point).toString()))
+        params.put("today", str_date)
+        params.put("type", type)
+
+        RequestStepAction.send_alram(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+
+                    }
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
     fun timerStart() {
         val task = object : TimerTask() {
             override fun run() {
