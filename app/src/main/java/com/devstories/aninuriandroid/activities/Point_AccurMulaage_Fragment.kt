@@ -164,7 +164,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
 
     // 알람톡보내기
     fun send_alram() {
-        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
+        val df = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.KOREA)
         val str_date = df.format(Date())
 
         val params = RequestParams()
@@ -174,7 +174,6 @@ class Point_AccurMulaage_Fragment : Fragment() {
         params.put("stack_point", Utils.comma(point.toString()))
         params.put("left_point", Utils.comma(balance.toString()))
         params.put("point", Utils.comma((balance+point).toString()))
-        params.put("today", str_date)
         params.put("type", type)
 
         RequestStepAction.send_alram(params, object : JsonHttpResponseHandler() {
