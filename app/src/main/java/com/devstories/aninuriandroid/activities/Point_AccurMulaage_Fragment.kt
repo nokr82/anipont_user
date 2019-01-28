@@ -18,6 +18,7 @@ import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
+import kotlinx.android.synthetic.main.fra_point_accumulate.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -34,7 +35,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
     var point =-1
     var balance = -1
     var member_point = ""
-
+ var stack_point = -1
     var member_id = ""
 
 
@@ -107,10 +108,19 @@ class Point_AccurMulaage_Fragment : Fragment() {
                         type = Utils.getInt(point_o, "type")
                          point = Utils.getInt(point_o, "point")
                          balance = Utils.getInt(point_o, "balance")
-
+                        stack_point = Utils.getInt(point_o, "stack_point")
                         Log.d("type", type.toString())
 
+                        if (stack_point != -1){
+                            stack_pointTV.visibility = View.VISIBLE
+                            stack_titleTV.visibility = View.VISIBLE
+                            stack_pointTV.text =Utils.comma(stack_point.toString()) + "P"
+                        }
+
+
                         if (type == 1) {
+                            stack_pointTV.visibility = View.GONE
+                            stack_titleTV.visibility = View.GONE
                             titleTV.text = "적립완료"
                         } else if (type == 2) {
                             titleTV.text = "사용완료"
@@ -240,7 +250,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
         }
 
         timer = Timer()
-        timer!!.schedule(task, 2500)
+        timer!!.schedule(task, 5000)
     }
 
 
