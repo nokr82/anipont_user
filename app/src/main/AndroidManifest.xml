@@ -28,16 +28,16 @@
             android:screenOrientation="landscape"
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity
-            android:name=".activities.PointActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/NoTitleDialog"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+
         <activity
             android:name=".activities.UseActivity"
             android:screenOrientation="landscape"
             android:theme="@style/NoTitleDialog"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".activities.Dlg_Agree_Activity"
+            android:screenOrientation="landscape"
+            android:theme="@style/full_screen_dialog1" />
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="landscape"

@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
@@ -51,7 +52,9 @@ class Point_Use_Fragment : Fragment() {
     lateinit var left_pointTV: TextView
     lateinit var pointTV: TextView
     lateinit var use_pointTV: TextView
+    lateinit var use_point_unitTV:TextView
 
+    lateinit var limit_pointTV: TextView
     lateinit var couponListLV:ListView
 
     var left_point = ""
@@ -65,7 +68,8 @@ class Point_Use_Fragment : Fragment() {
     var phoneNumber = ""
     var selectedCouponID = -1
     var company_id = -1
-
+    var limitpoint = 0
+    var use_point_unit = 0
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var couponAdapter : CouponListAdapter
 
@@ -110,6 +114,9 @@ class Point_Use_Fragment : Fragment() {
         left_pointTV = view.findViewById(R.id.left_pointTV)
         use_pointTV = view.findViewById(R.id.use_pointTV)
         couponListLV = view.findViewById(R.id.couponListLV)
+        use_point_unitTV =  view.findViewById(R.id.use_point_unitTV)
+        limit_pointTV = view.findViewById(R.id.limit_pointTV)
+
 
         if(arguments != null) {
             phoneNumber = arguments!!.getString("phoneNumber")
@@ -125,6 +132,10 @@ class Point_Use_Fragment : Fragment() {
         //전화번호로 고객의 정보를 조회하고
         /*val filter = IntentFilter("POINT_USE")
         context!!.registerReceiver(getPhoneNumber, filter)*/
+
+        companyInfo()
+
+
 
         oneLL.setOnClickListener {
             use_pointTV.text = use_pointTV.text.toString() + 1
@@ -203,6 +214,18 @@ class Point_Use_Fragment : Fragment() {
         }
 
         useLL.setOnClickListener {
+
+            var usepoint =   Utils.getInt(use_pointTV)
+            if (usepoint<limitpoint){
+                Toast.makeText(myContext,"최소사용포인트는 "+limitpoint.toString()+"입니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (usepoint%use_point_unit!=0){
+                Toast.makeText(myContext,"포인트사용단위는 "+use_point_unit.toString()+"입니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+
 
             for (i in 0 until couponData.size) {
                 val data = couponData[i]
@@ -336,6 +359,67 @@ class Point_Use_Fragment : Fragment() {
     }
 
 
+    fun companyInfo() {
+        val params = RequestParams()
+        params.put("company_id", company_id)
+
+        MemberAction.company_info(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+                        var company = response.getJSONObject("company")
+                        use_point_unit = Utils.getInt(company,"use_point_unit")
+                        limitpoint = Utils.getInt(company,"min_use_point")
+                        limit_pointTV.text = limitpoint.toString()+"P 이상부터 사용 가능"
+                        use_point_unitTV.text= "포인트사용단위는 "+use_point_unit.toString()+"P입니다."
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+//                if (progressDialog != null) {
+//                    progressDialog!!.show()
+//                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
     fun l_point() {
         point = Utils.getString(pointTV)
         use_point = use_pointTV.text.toString()
@@ -393,13 +477,13 @@ class Point_Use_Fragment : Fragment() {
                             left_pointTV.text = balance
                             if (step == 3) {
                                 val intent = Intent(myContext, UseActivity::class.java)
-                                type = 3
+                                type = 4
                                 intent.putExtra("type", type)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 startActivity(intent)
                             } else if (step == 6) {
                                 val intent = Intent(myContext, UseActivity::class.java)
-                                type = 3
+                                type = 4
                                 intent.putExtra("type", type)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 startActivity(intent)

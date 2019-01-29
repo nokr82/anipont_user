@@ -26,6 +26,7 @@
                 android:orientation="vertical"
                 >
                 <TextView
+                    android:id="@+id/limit_pointTV"
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,6 +65,18 @@
                         android:text="P"
                         />
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/use_point_unitTV"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="#c2c2c2"
+                    android:letterSpacing="-0.08"
+                    android:lineSpacingExtra="1sp"
+                    android:gravity="center_horizontal"
+                    android:text="포인트사용단위는 500P입니다."
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -321,6 +334,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_marginLeft="25dp"
+            android:layout_marginRight="20dp"
             android:layout_width="0dp"
             android:layout_weight="0.5"
             android:orientation="vertical"

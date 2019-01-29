@@ -9,7 +9,9 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
+import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import com.devstories.aninuriandroid.R
 import kotlinx.android.synthetic.main.activity_coupon_use.*
 
@@ -21,6 +23,8 @@ class UseActivity : FragmentActivity() {
     var save_point: String? = null
 
     val UseFragment = UseFragment()
+    val SelectFragment = SelectFragment()
+    val StackFragment = StackFragment()
     val Point_Use_Fragment = Point_Use_Fragment()
     val Point_AccurMulaage_Fragment = Point_AccurMulaage_Fragment()
 
@@ -37,10 +41,9 @@ class UseActivity : FragmentActivity() {
                 Point_Use_Fragment.arguments = bundle
 
                 phonET.setHint("사용할 포인트를 입력하세요.")
-                titleTV.text = "쿠폰/포인트\n조회"
+                titleTV.text = "쿠폰/포인트\n사용"
 
                 use_op_LL.visibility = View.GONE
-                couponLL.setBackgroundResource(R.drawable.background_strock_707070)
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
 
             }
@@ -72,6 +75,7 @@ class UseActivity : FragmentActivity() {
 
         this.context = this
         progressDialog = ProgressDialog(context)
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
 
         //인텐트로 전화번호를 받는다
@@ -92,39 +96,40 @@ class UseActivity : FragmentActivity() {
 
 
         if (type == 1) {
-            useLL.setBackgroundResource(R.drawable.background_strock_707070)
+            titleTV.text = "포인트 적립"
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
-            use_op_LL.visibility = View.VISIBLE
+            use_op_LL.visibility = View.GONE
         } else if (type == 2) {
             setmenu()
             phonET.setHint("사용할 포인트를 입력하세요.")
             titleTV.text = "쿠폰/포인트\n조회"
-//            use_op_LL.visibility = View.GONE
-//            couponLL.setBackgroundResource(R.drawable.background_strock_707070)
-//            supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
 
             val bundle = Bundle()
             bundle.putInt("type", type)
-            UseFragment.arguments = bundle
+            SelectFragment.arguments = bundle
 
-            useLL.setBackgroundResource(R.drawable.background_strock_707070)
-            supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
-            use_op_LL.visibility = View.VISIBLE
-
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, SelectFragment).commit()
+            use_op_LL.visibility = View.GONE
+        }else if (type == 3) {
+            titleTV.text = "쿠폰/포인트\n사용"
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, StackFragment).commit()
+            use_op_LL.visibility = View.GONE
         } else {
-            useLL.setBackgroundResource(R.drawable.background_strock_707070)
+            titleTV.text = "적립/사용\n완료"
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
-            use_op_LL.visibility = View.VISIBLE
+            use_op_LL.visibility = View.GONE
+            titleLL.visibility = View.GONE
+            usetitle_op_LL.visibility = View.GONE
         }
 
-        useLL.setOnClickListener {
+      /*  useLL.setOnClickListener {
             setmenu()
             phonET.setHint("휴대전화번호를 눌러주세요")
             titleTV.text = "사용/조회"
             use_op_LL.visibility = View.VISIBLE
             useLL.setBackgroundResource(R.drawable.background_strock_707070)
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
-        }
+        }*/
 
 
 

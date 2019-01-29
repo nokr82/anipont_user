@@ -36,15 +36,16 @@
                     android:text=""
                     />
                 <TextView
+                    android:id="@+id/noticeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     android:textColor="#9a9a9a"
                     android:letterSpacing="-0.03"
                     android:lineSpacingExtra="3sp"
                     android:gravity="center_horizontal"
-                    android:text="이용약관과 개인정보 취급방침에 동의하신 후 휴대전화 번호 입력 후
-적립버튼을 터치하세요."
+                    android:text="이용약관과 개인정보 취급방침에 동의하시면 휴대폰 번호 입력 후\n
+적립버튼을 터치해 주세요."
                     />
 
 
@@ -285,6 +286,7 @@
                         android:background="#00d1ce"
                         android:layout_height="match_parent">
                         <TextView
+                            android:id="@+id/typeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="42sp"
@@ -304,84 +306,87 @@
 
 
         </LinearLayout>
+
+
         <LinearLayout
-            android:layout_marginLeft="25dp"
             android:layout_width="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
             android:layout_weight="0.5"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:background="#ffff"
                 android:gravity="center_vertical"
-                android:background="#ffff">
+                android:visibility="gone">
+
                 <TextView
                     android:id="@+id/save_pointTV"
-                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="40sp"
-                    android:textColor="#0066b0"
+                    android:layout_marginLeft="20dp"
                     android:letterSpacing="-0.05"
                     android:lineSpacingExtra="-11sp"
                     android:text="100"
-                    />
+                    android:textColor="#0066b0"
+                    android:textSize="40sp" />
+
                 <TextView
-                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="40sp"
-                    android:textColor="#0066b0"
+                    android:layout_marginLeft="20dp"
                     android:letterSpacing="-0.05"
                     android:lineSpacingExtra="-11sp"
                     android:text="P "
-                    />
+                    android:textColor="#0066b0"
+                    android:textSize="40sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="40sp"
-                    android:textColor="#666666"
                     android:letterSpacing="-0.05"
                     android:lineSpacingExtra="-11sp"
                     android:text="적립"
-                    />
+                    android:textColor="#666666"
+                    android:textSize="40sp" />
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:background="#f3f3f3"
-                android:layout_height="120dp">
+                android:layout_height="130dp"
+                android:layout_marginTop="20dp"
+                android:background="#f3f3f3">
 
                 <ImageView
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
                     android:layout_width="50dp"
                     android:layout_height="40sp"
-                    android:src="@mipmap/bubble_katalk"/>
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@mipmap/bubble_katalk" />
+
                 <ImageView
-                    android:layout_marginTop="23dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_width="100dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/t_kakao"/>
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="23dp"
+                    android:src="@mipmap/t_kakao" />
 
                 <TextView
-                    android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="19dp"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginBottom="24dp"
-                    android:textSize="14sp"
-                    android:textColor="#2a2a2a"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginTop="20dp"
                     android:letterSpacing="-0.05"
                     android:lineSpacingExtra="2sp"
                     android:text="입력하신 휴대전화번호로 매장의
 카카오톡 알림톡이 전송됩니다."
-                    />
+                    android:textColor="#2a2a2a"
+                    android:textSize="14sp" />
 
 
             </RelativeLayout>
@@ -396,24 +401,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_marginLeft="9.5dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="vertical"
                     android:background="#ffff"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
                     android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="8sp"
                         android:layout_marginLeft="10dp"
-                        android:textColor="#cbcbcb"
                         android:letterSpacing="-0.05"
                         android:lineSpacingExtra="1sp"
                         android:text="내포인트"
-                        />
+                        android:textColor="#cbcbcb"
+                        android:textSize="16dp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -422,27 +425,25 @@
 
                         <TextView
                             android:id="@+id/pointTV"
-                            android:layout_marginTop="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
                             android:layout_marginLeft="10dp"
-                            android:textColor="#303030"
+                            android:layout_marginTop="10dp"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-9sp"
                             android:text="0"
-                            />
+                            android:textColor="#303030"
+                            android:textSize="36dp" />
 
                         <TextView
-                            android:layout_marginTop="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:textColor="#303030"
+                            android:layout_marginTop="10dp"
                             android:letterSpacing="-0.05"
                             android:lineSpacingExtra="-9sp"
                             android:text="P"
-                            />
+                            android:textColor="#303030"
+                            android:textSize="36dp" />
 
                     </LinearLayout>
 
@@ -451,14 +452,14 @@
                 <ListView
                     android:id="@+id/couponListLV"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                 </ListView>
 
             </LinearLayout>
 
         </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>

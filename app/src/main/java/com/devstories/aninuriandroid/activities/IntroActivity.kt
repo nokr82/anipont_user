@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.view.WindowManager
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.base.PrefUtils
@@ -40,6 +41,7 @@ class IntroActivity : RootActivity() {
 
         this.context = this
         progressDialog = ProgressDialog(context)
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         //초기화
         //PrefUtils.clear(context)

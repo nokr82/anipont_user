@@ -6,7 +6,11 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentStatePagerAdapter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +22,7 @@ import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.adapter.CouponListAdapter
+import com.devstories.aninuriandroid.base.HttpClient
 import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -32,7 +37,7 @@ import org.json.JSONObject
 import java.util.*
 
 
-class UseFragment : Fragment() {
+class StackFragment : Fragment() {
 
     private var progressDialog: ProgressDialog? = null
     lateinit var myContext: Context
@@ -103,6 +108,7 @@ class UseFragment : Fragment() {
         useLL = view.findViewById(R.id.useLL)
         phoneTV = view.findViewById(R.id.phoneTV)
         noticeTV = view.findViewById(R.id.noticeTV)
+
         couponListLV = view.findViewById(R.id.couponListLV)
 
         pointTV = view.findViewById(R.id.pointTV)
@@ -121,11 +127,11 @@ class UseFragment : Fragment() {
 
         save_point = save_pointTV.text.toString()
 
+        typeTV.text = "조회"
         noticeTV.setOnClickListener {
             val intent = Intent(myContext, Dlg_Agree_Activity::class.java)
             startActivity(intent)
         }
-
         oneLL.setOnClickListener {
             phoneTV.setText(phoneTV.getText().toString() + 1)
         }
@@ -344,7 +350,7 @@ class UseFragment : Fragment() {
                             if (step == 5) {
 
                                 phonET.setHint("사용할 포인트를 입력하세요.")
-                                titleTV.text = "쿠폰/포인트\n조회"
+                                titleTV.text = "쿠폰/포인트\n사용"
                                 use_op_LL.visibility = View.GONE
 
                             }

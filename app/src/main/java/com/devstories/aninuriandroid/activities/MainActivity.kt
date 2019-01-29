@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
+import android.view.WindowManager
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
@@ -62,6 +63,7 @@ class MainActivity : RootActivity() {
 
         this.context = this
         progressDialog = ProgressDialog(context)
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         company_id = PrefUtils.getIntPreference(context, "company_id")
         //company_id = 1
@@ -119,7 +121,8 @@ class MainActivity : RootActivity() {
                     if ("ok" == result) {
                         var company = response.getJSONObject("company")
                         val images = response.getJSONArray("images")
-
+                        Log.d("이미지",images.toString())
+                        imagePaths.clear()
                         for(i in 0 until images.length()) {
                             val image:JSONObject = images[i] as JSONObject
                             val companyImage = image.getJSONObject("CompanyImage")
@@ -182,9 +185,7 @@ class MainActivity : RootActivity() {
 
         handler = object : Handler() {
             override fun handleMessage(msg: Message) {
-
                 time++
-
                 val index = imageVP.getCurrentItem()
                 val last_index = imagePaths.size - 1
 
@@ -192,7 +193,7 @@ class MainActivity : RootActivity() {
                     if (index < last_index) {
                         imageVP.setCurrentItem(index + 1)
                     } else {
-                        imageVP.setCurrentItem(0)
+                        imageVP.setCurrentItem(0,false)
                     }
                 }
 
@@ -238,17 +239,17 @@ class MainActivity : RootActivity() {
                                 startActivity(intent)
                             } else if (step == 3) {
                                 val intent = Intent(context, UseActivity::class.java)
-                                intent.putExtra("type", 3)
+                                intent.putExtra("type", 4)
                                 intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
                                 startActivityForResult(intent, USE_ACTIVITY)
                             } else if (step == 4) {
-                                type = 1
+                                type = 3
                                 val intent = Intent(context, UseActivity::class.java)
                                 intent.putExtra("type", type)
                                 startActivity(intent)
                             } else if (step == 6) {
                                 val intent = Intent(context, UseActivity::class.java)
-                                intent.putExtra("type", 3)
+                                intent.putExtra("type", 4)
                                 intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
                                 startActivityForResult(intent, USE_ACTIVITY)
                             }
