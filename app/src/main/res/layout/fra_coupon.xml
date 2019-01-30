@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:background="#ffffff"
             android:orientation="vertical">
 
@@ -357,7 +357,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:text="포인트 적립"
+                android:text="쿠폰/포인트\n사용"
                 android:textColor="#fff"
                 android:textSize="48dp" />
 
