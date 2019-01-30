@@ -27,7 +27,6 @@ class Dlg_Agree_Activity : RootActivity() {
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dlg_agree)
@@ -41,7 +40,6 @@ class Dlg_Agree_Activity : RootActivity() {
 
         web2WV.settings.javaScriptEnabled = true
         web2WV.loadUrl(url2)
-
 
     }
 
