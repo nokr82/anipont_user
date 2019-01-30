@@ -63,6 +63,7 @@ class StackFragment : Fragment() {
     lateinit var typeTV: TextView
     lateinit var couponListLV: ListView
     lateinit var noticeTV: TextView
+    lateinit var fraTitleTV: TextView
 
     var phone = ""
     var type = -1
@@ -108,6 +109,7 @@ class StackFragment : Fragment() {
         useLL = view.findViewById(R.id.useLL)
         phoneTV = view.findViewById(R.id.phoneTV)
         noticeTV = view.findViewById(R.id.noticeTV)
+        fraTitleTV = view.findViewById(R.id.fraTitleTV)
 
         couponListLV = view.findViewById(R.id.couponListLV)
 
@@ -127,6 +129,8 @@ class StackFragment : Fragment() {
 
         save_point = save_pointTV.text.toString()
 
+
+        fraTitleTV.text = "쿠폰/포인트\n사용"
         typeTV.text = "조회"
         noticeTV.setOnClickListener {
             val intent = Intent(myContext, Dlg_Agree_Activity::class.java)
@@ -351,6 +355,7 @@ class StackFragment : Fragment() {
 
                                 phonET.setHint("사용할 포인트를 입력하세요.")
                                 titleTV.text = "쿠폰/포인트\n사용"
+                                fraTitleTV.text = "쿠폰/포인트\n사용"
                                 use_op_LL.visibility = View.GONE
 
                             }
