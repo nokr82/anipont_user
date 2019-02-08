@@ -409,7 +409,7 @@ class StackFragment : Fragment() {
         val params = RequestParams()
         params.put("company_id", company_id)
         params.put("phone", phone)
-
+        params.put("use", "Y")
         MemberAction.is_member(params, object : JsonHttpResponseHandler() {
 
             @SuppressLint("ResourceType")
@@ -422,10 +422,16 @@ class StackFragment : Fragment() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
-
+                        Log.d("결과",response.toString())
                         if(frame_type != 2) {
                             new_member_yn = Utils.getString(response, "new_member_yn")
                             member_id = Utils.getInt(response, "member_id")
+
+                            if (new_member_yn=="Y"){
+                            Toast.makeText(myContext,"일치하는 회원이 없습니다.",Toast.LENGTH_SHORT).show()
+                                return
+                            }
+
 
                             if (step == 1) {
                                 step = 2
@@ -458,7 +464,7 @@ class StackFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(context, "일치하는 회원이 없습니다.")
             }
 
             override fun onFailure(

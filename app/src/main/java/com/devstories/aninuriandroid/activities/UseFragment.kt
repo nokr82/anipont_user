@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -415,6 +416,7 @@ class UseFragment : Fragment() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
+
 
                         if(frame_type != 2) {
                             new_member_yn = Utils.getString(response, "new_member_yn")
