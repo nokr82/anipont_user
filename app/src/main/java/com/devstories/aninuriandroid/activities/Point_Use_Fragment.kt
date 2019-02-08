@@ -128,6 +128,7 @@ class Point_Use_Fragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
         //인텐트로 전화번호를 받는다
         //전화번호로 고객의 정보를 조회하고
         /*val filter = IntentFilter("POINT_USE")
@@ -215,8 +216,11 @@ class Point_Use_Fragment : Fragment() {
 
         useLL.setOnClickListener {
 
-            var usepoint = Utils.getInt(use_pointTV)
-            var mypoint = Utils.getInt(pointTV)
+            var usepoint_p = Utils.getString(use_pointTV).replace(",","")
+            var mypoint_p = Utils.getString(pointTV).replace(",","")
+
+            var usepoint = usepoint_p.toInt()
+            var mypoint = mypoint_p.toInt()
             if (usepoint<limitpoint){
                 Toast.makeText(myContext,"최소사용포인트는 "+limitpoint.toString()+"입니다.",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -272,8 +276,8 @@ class Point_Use_Fragment : Fragment() {
 
                         var point = response.getString("point")
 
-                        pointTV.text = point
-                        left_pointTV.text = point
+                        pointTV.text = Utils.comma(point)
+                        left_pointTV.text = Utils.comma(point)
 
                         couponData.clear()
 
@@ -426,9 +430,9 @@ class Point_Use_Fragment : Fragment() {
         })
     }
     fun l_point() {
-        point = Utils.getString(pointTV)
-        use_point = use_pointTV.text.toString()
-        left_point = pointTV.text.toString()
+        point = Utils.getString(pointTV).replace(",","")
+        use_point = use_pointTV.text.toString().replace(",","")
+        left_point = pointTV.text.toString().replace(",","")
 
         if (use_point.equals("")) {
             use_point = "0"
@@ -444,9 +448,9 @@ class Point_Use_Fragment : Fragment() {
 
 
 
-        pointTV.text =numpoint.toString()
-        use_pointTV.text = n_use_point.toString()
-        left_pointTV.text = n_left_point.toString()
+        pointTV.text = Utils.comma(numpoint.toString())
+        use_pointTV.text = Utils.comma(n_use_point.toString())
+        left_pointTV.text = Utils.comma(n_left_point.toString())
     }
 
     // 요청 체크
@@ -481,8 +485,8 @@ class Point_Use_Fragment : Fragment() {
                         if (step != result_step) {
                             step = result_step
                             Log.d("스텝", step.toString())
-                            pointTV.text = balance
-                            left_pointTV.text = balance
+                            pointTV.text = Utils.comma(balance)
+                            left_pointTV.text =Utils.comma(balance)
                             if (step == 3) {
                                 val intent = Intent(myContext, UseActivity::class.java)
                                 type = 4
@@ -548,7 +552,7 @@ class Point_Use_Fragment : Fragment() {
         params.put("member_id", member_id)
         params.put("new_member_yn", new_member_yn)
         params.put("member_coupon_id", selectedCouponID)
-        params.put("point", use_point)
+        params.put("point", use_point.replace(",",""))
         params.put("step", step)
 
         RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {
