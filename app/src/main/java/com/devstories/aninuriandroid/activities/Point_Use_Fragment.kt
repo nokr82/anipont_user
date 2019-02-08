@@ -386,8 +386,8 @@ class Point_Use_Fragment : Fragment() {
                         var company = response.getJSONObject("company")
                         use_point_unit = Utils.getInt(company,"use_point_unit")
                         limitpoint = Utils.getInt(company,"min_use_point")
-                        limit_pointTV.text = limitpoint.toString()+"P 이상부터 사용 가능"
-                        use_point_unitTV.text= "포인트사용단위는 "+use_point_unit.toString()+"P입니다."
+                        limit_pointTV.text = Utils.comma(limitpoint.toString())+"P 이상부터 사용 가능"
+                        use_point_unitTV.text= "포인트사용단위는 "+Utils.comma(use_point_unit.toString())+"P입니다."
                     }
 
                 } catch (e: JSONException) {
