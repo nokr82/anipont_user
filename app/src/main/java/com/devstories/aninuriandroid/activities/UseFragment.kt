@@ -532,7 +532,7 @@ class UseFragment : Fragment() {
 
                         myPointLL.visibility = View.VISIBLE
 
-                        pointTV.text = point
+                        pointTV.text = Utils.comma(point)
 
                         couponData.clear()
 

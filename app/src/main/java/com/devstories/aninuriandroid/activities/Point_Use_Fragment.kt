@@ -215,13 +215,18 @@ class Point_Use_Fragment : Fragment() {
 
         useLL.setOnClickListener {
 
-            var usepoint =   Utils.getInt(use_pointTV)
+            var usepoint = Utils.getInt(use_pointTV)
+            var mypoint = Utils.getInt(pointTV)
             if (usepoint<limitpoint){
                 Toast.makeText(myContext,"최소사용포인트는 "+limitpoint.toString()+"입니다.",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (usepoint%use_point_unit!=0){
                 Toast.makeText(myContext,"포인트사용단위는 "+use_point_unit.toString()+"입니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (usepoint>mypoint){
+                Toast.makeText(myContext,"포인트 한도초과",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -434,9 +439,12 @@ class Point_Use_Fragment : Fragment() {
         n_left_point = Integer.parseInt(left_point)
 
 
-        n_left_point = numpoint - n_use_point
+            n_left_point = numpoint - n_use_point
 
-        pointTV.text = numpoint.toString()
+
+
+
+        pointTV.text =numpoint.toString()
         use_pointTV.text = n_use_point.toString()
         left_pointTV.text = n_left_point.toString()
     }
