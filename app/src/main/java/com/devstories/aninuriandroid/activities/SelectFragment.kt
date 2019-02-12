@@ -127,7 +127,7 @@ class SelectFragment : Fragment() {
         company_id = PrefUtils.getIntPreference(context, "company_id")
 
 
-        fraTitleTV.text = "쿠폰/포인트\n조회"
+        fraTitleTV.visibility = View.GONE
 
         save_point = save_pointTV.text.toString()
         typeTV.text = "조회"
@@ -410,6 +410,7 @@ class SelectFragment : Fragment() {
         val params = RequestParams()
         params.put("company_id", company_id)
         params.put("phone", phone)
+        params.put("use", "Y")
 
         MemberAction.is_member(params, object : JsonHttpResponseHandler() {
 
@@ -423,9 +424,12 @@ class SelectFragment : Fragment() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
-
+                        new_member_yn = Utils.getString(response, "new_member_yn")
+                        if (new_member_yn=="Y"){
+                            Toast.makeText(myContext,"일치하는 회원이 없습니다.",Toast.LENGTH_SHORT).show()
+                            return
+                        }
                         if(frame_type != 2) {
-                            new_member_yn = Utils.getString(response, "new_member_yn")
                             member_id = Utils.getInt(response, "member_id")
 
                             if (step == 1) {
