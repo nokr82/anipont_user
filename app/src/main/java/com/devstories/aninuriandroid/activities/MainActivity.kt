@@ -94,6 +94,16 @@ class MainActivity : RootActivity() {
         imageAdater = FullScreenImageAdapter(this, imagePaths)
         imageVP.adapter = imageAdater
 
+
+        logoutTV.setOnClickListener {
+            PrefUtils.clear(context)
+            val intent = Intent(context, LoginActivity::class.java)
+            PrefUtils.setPreference(context,"autoLogin", false)
+            intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+
         useLL.setOnClickListener {
             if (timer != null) {
                 timer!!.cancel()
