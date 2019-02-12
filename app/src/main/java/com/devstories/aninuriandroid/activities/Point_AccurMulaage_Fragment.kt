@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.base.PrefUtils
@@ -111,6 +113,11 @@ class Point_AccurMulaage_Fragment : Fragment() {
                         stack_point = Utils.getInt(point_o, "stack_point")
                         Log.d("type", type.toString())
 
+                        if (balance<100){
+                            membership_point()
+                        }
+
+
                         if (stack_point != -1){
                             stack_pointTV.visibility = View.VISIBLE
                             stack_titleTV.visibility = View.VISIBLE
@@ -130,6 +137,70 @@ class Point_AccurMulaage_Fragment : Fragment() {
                         pointTV.text = Utils.comma(point.toString()) + "P"
 
                     }
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+            override fun onStart() {
+                // show dialog
+                if (progressDialog != null) {
+                    progressDialog!!.show()
+                }
+            }
+
+            override fun onFinish() {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+            }
+        })
+    }
+
+    fun membership_point() {
+        val params = RequestParams()
+        params.put("company_id", company_id)
+        params.put("member_id", member_id)
+
+        MemberAction.membership_point(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+
+                try {
+
+                    val result = response!!.getString("result")
+                    val membership_point  = response!!.getString("membership_point")
+                    Log.d("membership",membership_point)
+                    if ("ok" == result) {
+                        Toast.makeText(myContext,"멤버쉽결제로 인한"+Utils.comma(membership_point)+"P가 적립되었습니다.",Toast.LENGTH_SHORT).show()
+
+                    }
+
 
 
                 } catch (e: JSONException) {

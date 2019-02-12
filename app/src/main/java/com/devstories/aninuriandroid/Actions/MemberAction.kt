@@ -14,6 +14,10 @@ object MemberAction {
     fun login(params: RequestParams, handler: JsonHttpResponseHandler) {
         HttpClient.post("/login/index.json", params, handler)
     }
+    // 로그인
+    fun membership_point(params: RequestParams, handler: JsonHttpResponseHandler) {
+        HttpClient.post("/member/membership_point.json", params, handler)
+    }
 
     // 업체 정보
     fun company_info(params: RequestParams, handler: JsonHttpResponseHandler) {
