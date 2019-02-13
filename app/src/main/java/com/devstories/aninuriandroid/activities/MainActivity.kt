@@ -1,8 +1,10 @@
 package com.devstories.aninuriandroid.activities
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +13,7 @@ import android.os.Message
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
@@ -96,11 +99,27 @@ class MainActivity : RootActivity() {
 
 
         logoutTV.setOnClickListener {
-            PrefUtils.clear(context)
-            val intent = Intent(context, LoginActivity::class.java)
-            PrefUtils.setPreference(context,"autoLogin", false)
-            intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            val builder = AlertDialog.Builder(context)
+                builder.setMessage("정말 로그아웃 하시겠습니까?")
+            var yes = "예"
+            var no ="아니요"
+            builder
+                    .setPositiveButton(yes, DialogInterface.OnClickListener { dialog, id ->
+                        dialog.cancel()
+                        PrefUtils.clear(context)
+                        val intent = Intent(context, LoginActivity::class.java)
+                        PrefUtils.setPreference(context,"autoLogin", false)
+                        intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    })
+                    .setNegativeButton(no, DialogInterface.OnClickListener { dialog, id ->
+                        dialog.cancel()
+                    })
+
+
+            val alert = builder.create()
+            alert.show()
+
         }
 
 
