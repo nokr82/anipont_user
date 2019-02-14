@@ -72,6 +72,7 @@ class Point_Use_Fragment : Fragment() {
     var use_point_unit = 0
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var couponAdapter : CouponListAdapter
+    var coupon_yn = "N"
 
     internal var checkHandler: Handler = object : Handler() {
         override fun handleMessage(msg: android.os.Message) {
@@ -199,14 +200,16 @@ class Point_Use_Fragment : Fragment() {
             val check_yn = Utils.getString(data, "check_yn")
 
             if(check_yn == "Y") {
+                coupon_yn="N"
                 data.put("check_yn" , "N")
             } else {
 
                 for(i in 0 until couponData.size) {
                     var data = couponData.get(i)
+                    coupon_yn="Y"
                     data.put("check_yn", "N")
                 }
-
+                coupon_yn="Y"
                 data.put("check_yn" , "Y")
             }
 
@@ -221,18 +224,21 @@ class Point_Use_Fragment : Fragment() {
 
             var usepoint = usepoint_p.toInt()
             var mypoint = mypoint_p.toInt()
-            if (usepoint<limitpoint){
-                Toast.makeText(myContext,"최소사용포인트는 "+limitpoint.toString()+"입니다.",Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            if (coupon_yn=="N"){
+                if (usepoint<limitpoint){
+                    Toast.makeText(myContext,"최소사용포인트는 "+limitpoint.toString()+"입니다.",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                if (usepoint%use_point_unit!=0){
+                    Toast.makeText(myContext,"포인트사용단위는 "+use_point_unit.toString()+"입니다.",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                if (usepoint>mypoint){
+                    Toast.makeText(myContext,"포인트 한도초과",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
             }
-            if (usepoint%use_point_unit!=0){
-                Toast.makeText(myContext,"포인트사용단위는 "+use_point_unit.toString()+"입니다.",Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            if (usepoint>mypoint){
-                Toast.makeText(myContext,"포인트 한도초과",Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+
 
 
 
