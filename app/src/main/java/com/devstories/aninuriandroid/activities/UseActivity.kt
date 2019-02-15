@@ -32,7 +32,7 @@ class UseActivity : FragmentActivity() {
     internal var getPhoneNumber: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent != null) {
-
+                title2LL.visibility = View.GONE
                 setmenu()
                 type = intent.getIntExtra("type", -1)
                 var phoneNumber = intent.getStringExtra("phone")
@@ -133,6 +133,7 @@ class UseActivity : FragmentActivity() {
             use_op_LL.visibility = View.GONE
         } else {
             titleTV.text = "적립/사용\n완료"
+            title2LL.visibility = View.GONE
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
             use_op_LL.visibility = View.GONE
             titleLL.visibility = View.GONE
