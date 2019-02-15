@@ -31,22 +31,20 @@
                     android:inputType="phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="42sp"
+                    android:textSize="50dp"
                     android:textColor="#6c6c6c"
-                    android:lineSpacingExtra="14sp"
                     android:text=""
                     />
-                <TextView
+                <me.grantland.widget.AutofitTextView
+                    android:padding="10dp"
+                    android:maxLines="1"
                     android:id="@+id/noticeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14dp"
                     android:textColor="#9a9a9a"
-                    android:letterSpacing="-0.03"
-                    android:lineSpacingExtra="3sp"
                     android:gravity="center_horizontal"
-                    android:text="이용약관과 개인정보 취급방침에 동의하시면 휴대폰 번호 입력 후\n
-적립버튼을 터치해 주세요."
+                    android:text="이용약관과 개인정보 취급방침에 동의하시면 휴대폰 번호 입력 후 적립버튼을 터치해 주세요."
                     />
 
 

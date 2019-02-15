@@ -16,7 +16,7 @@
 
     <LinearLayout
         android:id="@+id/LL"
-        android:layout_width="270dp"
+        android:layout_width="match_parent"
         android:layout_height="90dp"
         android:padding="5dp"
         android:layout_margin="5dp" >
