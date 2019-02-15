@@ -132,7 +132,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
                         } else if (type == 2) {
                             titleTV.text = "사용완료"
                         }
-//                        send_alram()
+                        send_alram()
                         left_pointTV.text = Utils.comma(balance.toString()) + "P"
                         pointTV.text = Utils.comma(point.toString()) + "P"
 

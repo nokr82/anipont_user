@@ -6,10 +6,11 @@
     android:background="@drawable/background_gradient">
 
     <LinearLayout
-        android:layout_marginTop="19dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="9.5dp"
+        android:layout_marginLeft="9.5dp"
+        android:layout_marginBottom="9.5dp"
         android:orientation="horizontal"
         >
 
