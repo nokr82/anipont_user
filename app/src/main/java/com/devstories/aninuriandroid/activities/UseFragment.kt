@@ -27,6 +27,7 @@ import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_coupon_use.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fra_use.*
+import me.grantland.widget.AutofitTextView
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -58,7 +59,7 @@ class UseFragment : Fragment() {
     lateinit var save_pointTV: TextView
     lateinit var typeTV: TextView
     lateinit var couponListLV: ListView
-    lateinit var noticeTV: TextView
+    lateinit var noticeTV: AutofitTextView
 //    lateinit var fraTitleTV: TextView
 
     var phone = ""
