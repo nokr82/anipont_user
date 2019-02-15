@@ -32,7 +32,8 @@ class UseActivity : FragmentActivity() {
     internal var getPhoneNumber: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent != null) {
-                title2LL.visibility = View.GONE
+                title2LL.visibility = View.VISIBLE
+                phoneTV.text = "사용할 포인트를 입력해주세요."
                 setmenu()
                 type = intent.getIntExtra("type", -1)
                 var phoneNumber = intent.getStringExtra("phone")
