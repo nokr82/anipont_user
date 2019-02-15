@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:background="#ffffff"
             android:layout_height="match_parent">
@@ -317,14 +317,14 @@
             android:layout_weight="0.5"
             android:orientation="vertical">
 
-            <me.grantland.widget.AutofitTextView
+      <!--      <me.grantland.widget.AutofitTextView
                 android:maxLines="2"
                 android:id="@+id/fraTitleTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="포인트 적립"
                 android:textColor="#fff"
-                android:textSize="48dp" />
+                android:textSize="48dp" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -367,7 +367,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:layout_marginTop="20dp"
                 android:background="#f3f3f3">
 
                 <ImageView

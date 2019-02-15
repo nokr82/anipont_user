@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:id="@+id/titleLL"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_weight="0.2"
         android:layout_height="match_parent"
@@ -70,6 +70,7 @@
         <!--android:layout_marginRight="20dp"-->
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/usetitle_op_LL"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="19dp"

@@ -63,7 +63,7 @@ class SelectFragment : Fragment() {
     lateinit var typeTV: TextView
     lateinit var couponListLV: ListView
     lateinit var noticeTV: TextView
-    lateinit var fraTitleTV: TextView
+//    lateinit var fraTitleTV: TextView
 
     var phone = ""
     var type = -1
@@ -109,7 +109,7 @@ class SelectFragment : Fragment() {
         useLL = view.findViewById(R.id.useLL)
         phoneTV = view.findViewById(R.id.phoneTV)
         noticeTV = view.findViewById(R.id.noticeTV)
-        fraTitleTV = view.findViewById(R.id.fraTitleTV)
+//        fraTitleTV = view.findViewById(R.id.fraTitleTV)
         couponListLV = view.findViewById(R.id.couponListLV)
 
         pointTV = view.findViewById(R.id.pointTV)
@@ -127,7 +127,7 @@ class SelectFragment : Fragment() {
         company_id = PrefUtils.getIntPreference(context, "company_id")
 
 
-        fraTitleTV.visibility = View.GONE
+//        fraTitleTV.visibility = View.GONE
 
         save_point = save_pointTV.text.toString()
         typeTV.text = "조회"
@@ -355,8 +355,8 @@ class SelectFragment : Fragment() {
                             if (step == 5) {
 
                                 phonET.setHint("사용할 포인트를 입력하세요.")
-                                titleTV.text = "쿠폰/포인트\n사용"
-                                fraTitleTV.text = "쿠폰/포인트\n사용"
+//                                titleTV.text = "쿠폰/포인트\n사용"
+//                                fraTitleTV.text = "쿠폰/포인트\n사용"
                                 use_op_LL.visibility = View.GONE
 
                             }
