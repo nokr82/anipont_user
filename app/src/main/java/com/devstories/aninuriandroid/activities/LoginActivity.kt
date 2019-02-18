@@ -1,5 +1,6 @@
 package com.devstories.aninuriandroid.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -31,6 +32,8 @@ class LoginActivity : RootActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val uiOptions = window.decorView.systemUiVisibility
+
+        hideNavigations(this)
         var newUiOptions = uiOptions
         val isImmersiveModeEnabled = uiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY == uiOptions
         if (isImmersiveModeEnabled) {
@@ -73,7 +76,19 @@ class LoginActivity : RootActivity() {
             login(getName, getPW)
         }
     }
-
+    override fun onResume() {
+        super.onResume()
+        hideNavigations(this)
+    }
+    fun hideNavigations(context: Activity) {
+        val decorView = context.window.decorView
+        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
     fun login(email:String, passwd:String){
 
         val params = RequestParams()

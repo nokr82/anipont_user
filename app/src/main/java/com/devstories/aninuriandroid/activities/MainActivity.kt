@@ -80,10 +80,14 @@ class MainActivity : RootActivity() {
             w.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 //            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
+        hideNavigations(this)
+
         setContentView(R.layout.activity_main)
 
         this.context = this
         progressDialog = ProgressDialog(context)
+
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         company_id = PrefUtils.getIntPreference(context, "company_id")
@@ -151,6 +155,20 @@ class MainActivity : RootActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        hideNavigations(this)
+    }
+
+    fun hideNavigations(context: Activity) {
+        val decorView = context.window.decorView
+        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
     fun companyInfo() {
         val params = RequestParams()
         params.put("company_id", company_id)
