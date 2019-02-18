@@ -248,11 +248,19 @@ class Point_AccurMulaage_Fragment : Fragment() {
         val df = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.KOREA)
         val str_date = df.format(Date())
 
+        if (point == -1){
+            point = 0
+        }
+        if (stack_point == -1){
+            stack_point = 0
+        }
+
+
         val params = RequestParams()
         params.put("company_id", company_id)
         params.put("member_id", member_id)
         params.put("use_point", Utils.comma(point.toString()))
-        params.put("stack_point", Utils.comma(point.toString()))
+        params.put("stack_point", Utils.comma(stack_point.toString()))
         params.put("left_point", Utils.comma(balance.toString()))
         params.put("point", Utils.comma((balance+point).toString()))
         params.put("type", type)

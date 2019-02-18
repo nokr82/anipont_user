@@ -43,7 +43,7 @@ class UseActivity : FragmentActivity() {
                 Point_Use_Fragment.arguments = bundle
 
                 phonET.setHint("사용할 포인트를 입력하세요.")
-                titleTV.text = "쿠폰/포인트\n사용"
+                titleTV.text = "쿠폰/포인트 사용"
 
                 use_op_LL.visibility = View.GONE
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
@@ -120,7 +120,7 @@ class UseActivity : FragmentActivity() {
         } else if (type == 2) {
             setmenu()
             phonET.setHint("사용할 포인트를 입력하세요.")
-            titleTV.text = "쿠폰/포인트\n조회"
+            titleTV.text = "쿠폰/포인트 조회"
 
             val bundle = Bundle()
             bundle.putInt("type", type)
@@ -129,11 +129,11 @@ class UseActivity : FragmentActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, SelectFragment).commit()
             use_op_LL.visibility = View.GONE
         }else if (type == 3) {
-            titleTV.text = "쿠폰/포인트\n사용"
+            titleTV.text = "쿠폰/포인트 사용"
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, StackFragment).commit()
             use_op_LL.visibility = View.GONE
         } else {
-            titleTV.text = "적립/사용\n완료"
+            titleTV.text = "적립/사용 완료"
             title2LL.visibility = View.GONE
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
             use_op_LL.visibility = View.GONE

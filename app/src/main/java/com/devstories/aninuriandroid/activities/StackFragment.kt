@@ -131,7 +131,7 @@ class StackFragment : Fragment() {
         save_point = save_pointTV.text.toString()
 
 
-        fraTitleTV.text = "쿠폰/포인트\n사용"
+        fraTitleTV.text = "쿠폰/포인트 사용"
         typeTV.text = "조회"
         noticeTV.setOnClickListener {
             val intent = Intent(myContext, Dlg_Agree_Activity::class.java)
@@ -355,8 +355,8 @@ class StackFragment : Fragment() {
                             if (step == 5) {
 
                                 phonET.setHint("사용할 포인트를 입력하세요.")
-                                titleTV.text = "쿠폰/포인트\n사용"
-                                fraTitleTV.text = "쿠폰/포인트\n사용"
+                                titleTV.text = "쿠폰/포인트 사용"
+                                fraTitleTV.text = "쿠폰/포인트 사용"
                                 use_op_LL.visibility = View.GONE
 
                             }
