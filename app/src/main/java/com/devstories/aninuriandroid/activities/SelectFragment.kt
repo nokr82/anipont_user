@@ -10,6 +10,8 @@ import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -172,14 +174,46 @@ class SelectFragment : Fragment() {
         backLL.setOnClickListener {
             val text = phoneTV.getText().toString()
             if (text.length > 0) {
-                phoneTV.setText(text.substring(0, text.length - 1))
+                if (text.length==4){
+                    phoneTV.setText(text.substring(0, text.length - 2))
+                    Log.d("테스트","33")
+                }
+                else if (text.length==9){
+                    phoneTV.setText(text.substring(0, text.length - 2))
+                    Log.d("테스트","77")
+                }else{
+                    phoneTV.setText(text.substring(0, text.length - 1))
+                }
+
             } else {
             }
         }
+        phoneTV.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.length==3){
+                    phoneTV.setText(phoneTV.getText().toString() + "-")
+                    Log.d("테스트","3")
+                }
+                if (s.length==8){
+                    phoneTV.setText(phoneTV.getText().toString() + "-")
+                    Log.d("테스트","7")
+                }
+
+
+            }
+        })
 
         useLL.setOnClickListener {
 
-            phone = Utils.getString(phoneTV)
+            phone = Utils.getString(phoneTV).replace("-","")
 
             if (phone == "") {
                 Toast.makeText(context, "핸드폰 번호를 입력해주세요", Toast.LENGTH_LONG).show()
