@@ -239,9 +239,6 @@ class Point_Use_Fragment : Fragment() {
                 }
             }
 
-
-
-
             for (i in 0 until couponData.size) {
                 val data = couponData[i]
                 val check_yn = Utils.getString(data, "check_yn")
@@ -500,11 +497,7 @@ class Point_Use_Fragment : Fragment() {
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 startActivity(intent)
                             } else if (step == 6) {
-                                val intent = Intent(myContext, UseActivity::class.java)
-                                type = 4
-                                intent.putExtra("type", type)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                startActivity(intent)
+
                             }
 
                         }

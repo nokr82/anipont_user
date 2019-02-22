@@ -114,7 +114,7 @@ class UseActivity : FragmentActivity() {
         type = intent.getIntExtra("type", -1)
         request_step_id = intent.getIntExtra("request_step_id", -1)
 
-
+Log.d("타입",type.toString())
         if (type == 1) {
             titleTV.text = "포인트 적립"
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
