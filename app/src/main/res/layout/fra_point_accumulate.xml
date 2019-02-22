@@ -17,7 +17,29 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/use_couponTV"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:letterSpacing="-0.01"
+                android:lineSpacingExtra="-40sp"
+                android:text="쿠폰이름"
+                android:textColor="#0078ce"
+                android:textSize="100dp" />
 
+            <TextView
+                android:id="@+id/couponTV"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:letterSpacing="-0.03"
+                android:lineSpacingExtra="-16sp"
+                android:text="쿠폰사용"
+                android:textColor="#676767"
+                android:textSize="51dp" />
             <TextView
                 android:id="@+id/stack_pointTV"
                 android:visibility="gone"

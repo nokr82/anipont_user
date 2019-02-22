@@ -113,10 +113,21 @@ class Point_AccurMulaage_Fragment : Fragment() {
                         stack_point = Utils.getInt(point_o, "stack_point")
                         Log.d("type", type.toString())
 
+                        var member_coupon_id =  Utils.getInt(requestStep, "member_coupon_id")
+
+
                         if (balance<100){
                             membership_point()
                         }
 
+                        if (member_coupon_id != -1){
+                            var coupon = response.getJSONObject("Coupon")
+                            var coupon_name =Utils.getString(coupon, "name")
+                            Log.d("쿠폰이름",coupon_name)
+                            use_couponTV.visibility = View.VISIBLE
+                            couponTV.visibility = View.VISIBLE
+                            use_couponTV.text = coupon_name
+                        }
 
                         if (stack_point != -1){
                             stack_pointTV.visibility = View.VISIBLE
@@ -134,6 +145,13 @@ class Point_AccurMulaage_Fragment : Fragment() {
                         }
                         send_alram()
                         left_pointTV.text = Utils.comma(balance.toString()) + "P"
+                        if (point == 0 ){
+                            pointTV.visibility = View.GONE
+                            titleTV.visibility = View.GONE
+                        }else{
+                            pointTV.visibility = View.VISIBLE
+                            titleTV.visibility = View.VISIBLE
+                        }
                         pointTV.text = Utils.comma(point.toString()) + "P"
 
                     }
@@ -276,6 +294,9 @@ class Point_AccurMulaage_Fragment : Fragment() {
 
                     val result = response!!.getString("result")
                     if ("ok" == result) {
+
+
+
 
                     }
 
