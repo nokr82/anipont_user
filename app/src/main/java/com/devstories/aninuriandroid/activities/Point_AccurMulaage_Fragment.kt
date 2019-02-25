@@ -165,10 +165,19 @@ class Point_AccurMulaage_Fragment : Fragment() {
                             pointTV.visibility = View.GONE
                             titleTV.visibility = View.GONE
                         }else{
+
                             pointTV.visibility = View.VISIBLE
                             titleTV.visibility = View.VISIBLE
                         }
-                        pointTV.text = Utils.comma(point.toString()) + "P"
+                        if (membership_per!=-1){
+                            var b_stackpoint = price * per / 100
+                            var m_stackpoint = price * membership_per / 100
+                            pointTV.text ="기본적립 "+Utils.comma(b_stackpoint.toString()) + "P +"+" 추가적립 "+Utils.comma(m_stackpoint.toString())
+                        }else{
+                            pointTV.text =Utils.comma(point.toString()) + "P"
+
+                        }
+//                        pointTV.text = Utils.comma(point.toString()) + "P"
 
                     }
 
