@@ -157,6 +157,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
                         if (type == 1) {
                             stack_pointTV.visibility = View.GONE
                             stack_titleTV.visibility = View.GONE
+                            membership_per2TV.visibility= View.GONE
                             titleTV.text = "적립완료"
                         } else if (type == 2) {
                             titleTV.text = "사용완료"
