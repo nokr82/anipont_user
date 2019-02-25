@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
+import com.devstories.aninuriandroid.Actions.MemberAction.membership_point
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.base.PrefUtils
@@ -36,9 +37,13 @@ class Point_AccurMulaage_Fragment : Fragment() {
 
     var point =-1
     var balance = -1
+    var price = -1
     var member_point = ""
  var stack_point = -1
+
+    var per = -1
     var member_id = ""
+    var membership_per = -1
 
 
     var type = -1
@@ -111,14 +116,17 @@ class Point_AccurMulaage_Fragment : Fragment() {
                          point = Utils.getInt(point_o, "point")
                          balance = Utils.getInt(point_o, "balance")
                         stack_point = Utils.getInt(point_o, "stack_point")
-                        Log.d("type", type.toString())
+                        membership_per = Utils.getInt(point_o, "membership_per")
+                        per = Utils.getInt(point_o, "per")
+                        price = Utils.getInt(point_o, "price")
+                        Log.d("멤버적립", membership_per.toString())
 
                         var member_coupon_id =  Utils.getInt(requestStep, "member_coupon_id")
 
 
-                        if (balance<100){
+                        /*if (balance<100){
                             membership_point()
-                        }
+                        }*/
 
                         if (member_coupon_id != -1){
                             var coupon = response.getJSONObject("Coupon")
@@ -132,7 +140,15 @@ class Point_AccurMulaage_Fragment : Fragment() {
                         if (stack_point != -1){
                             stack_pointTV.visibility = View.VISIBLE
                             stack_titleTV.visibility = View.VISIBLE
-                            stack_pointTV.text =Utils.comma(stack_point.toString()) + "P"
+                            if (membership_per!=-1){
+                               var b_stackpoint = price * per / 100
+                                var m_stackpoint = price * membership_per / 100
+                                stack_pointTV.text ="기본적립 "+Utils.comma(b_stackpoint.toString()) + "P +"+" 추가적립 "+Utils.comma(m_stackpoint.toString())
+                            }else{
+                                stack_pointTV.text =Utils.comma(stack_point.toString()) + "P"
+
+                            }
+
                         }
 
 
@@ -197,7 +213,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
         })
     }
 
-    fun membership_point() {
+   /* fun membership_point() {
         val params = RequestParams()
         params.put("company_id", company_id)
         params.put("member_id", member_id)
@@ -259,7 +275,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
                 }
             }
         })
-    }
+    }*/
 
     // 알람톡보내기
     fun send_alram() {
