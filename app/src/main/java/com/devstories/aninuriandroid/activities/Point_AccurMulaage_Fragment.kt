@@ -143,7 +143,9 @@ class Point_AccurMulaage_Fragment : Fragment() {
                             if (membership_per!=-1){
                                var b_stackpoint = price * per / 100
                                 var m_stackpoint = price * membership_per / 100
-                                stack_pointTV.text ="기본적립 "+Utils.comma(b_stackpoint.toString()) + "P +"+" 추가적립 "+Utils.comma(m_stackpoint.toString())
+                                membership_per2TV.visibility = View.VISIBLE
+                                membership_per2TV.text ="기본적립 "+Utils.comma(b_stackpoint.toString()) + "P +"+" 추가적립 "+Utils.comma(m_stackpoint.toString())+"P"
+                                stack_pointTV.text =Utils.comma(stack_point.toString()) + "P"
                             }else{
                                 stack_pointTV.text =Utils.comma(stack_point.toString()) + "P"
 
@@ -169,13 +171,16 @@ class Point_AccurMulaage_Fragment : Fragment() {
                             pointTV.visibility = View.VISIBLE
                             titleTV.visibility = View.VISIBLE
                         }
+
+                            pointTV.text =Utils.comma(point.toString()) + "P"
                         if (membership_per!=-1){
+
                             var b_stackpoint = price * per / 100
                             var m_stackpoint = price * membership_per / 100
-                            pointTV.text ="기본적립 "+Utils.comma(b_stackpoint.toString()) + "P +"+" 추가적립 "+Utils.comma(m_stackpoint.toString())
-                        }else{
-                            pointTV.text =Utils.comma(point.toString()) + "P"
-
+                            if (type !=2){
+                                membership_perTV.visibility = View.VISIBLE
+                                membership_perTV.text ="기본적립 "+Utils.comma(b_stackpoint.toString()) + "P +"+" 추가적립 "+Utils.comma(m_stackpoint.toString())+"P"
+                            }
                         }
 //                        pointTV.text = Utils.comma(point.toString()) + "P"
 
