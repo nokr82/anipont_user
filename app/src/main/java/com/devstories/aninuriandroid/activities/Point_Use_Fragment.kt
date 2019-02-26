@@ -72,6 +72,7 @@ class Point_Use_Fragment : Fragment() {
     var use_point_unit = 0
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var couponAdapter : CouponListAdapter
+    var coupon_yn = "N"
 
     internal var checkHandler: Handler = object : Handler() {
         override fun handleMessage(msg: android.os.Message) {
@@ -127,6 +128,7 @@ class Point_Use_Fragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
 
         //인텐트로 전화번호를 받는다
         //전화번호로 고객의 정보를 조회하고
@@ -198,14 +200,16 @@ class Point_Use_Fragment : Fragment() {
             val check_yn = Utils.getString(data, "check_yn")
 
             if(check_yn == "Y") {
+                coupon_yn="N"
                 data.put("check_yn" , "N")
             } else {
 
                 for(i in 0 until couponData.size) {
                     var data = couponData.get(i)
+                    coupon_yn="Y"
                     data.put("check_yn", "N")
                 }
-
+                coupon_yn="Y"
                 data.put("check_yn" , "Y")
             }
 
@@ -215,17 +219,25 @@ class Point_Use_Fragment : Fragment() {
 
         useLL.setOnClickListener {
 
-            var usepoint =   Utils.getInt(use_pointTV)
-            if (usepoint<limitpoint){
-                Toast.makeText(myContext,"최소사용포인트는 "+limitpoint.toString()+"입니다.",Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            if (usepoint%use_point_unit!=0){
-                Toast.makeText(myContext,"포인트사용단위는 "+use_point_unit.toString()+"입니다.",Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+            var usepoint_p = Utils.getString(use_pointTV).replace(",","")
+            var mypoint_p = Utils.getString(pointTV).replace(",","")
 
-
+            var usepoint = usepoint_p.toInt()
+            var mypoint = mypoint_p.toInt()
+            if (coupon_yn=="N"){
+                if (usepoint<limitpoint){
+                    Toast.makeText(myContext,"최소사용포인트는 "+limitpoint.toString()+"입니다.",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                if (usepoint%use_point_unit!=0){
+                    Toast.makeText(myContext,"포인트사용단위는 "+use_point_unit.toString()+"입니다.",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                if (usepoint>mypoint){
+                    Toast.makeText(myContext,"포인트 한도초과",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            }
 
             for (i in 0 until couponData.size) {
                 val data = couponData[i]
@@ -267,8 +279,8 @@ class Point_Use_Fragment : Fragment() {
 
                         var point = response.getString("point")
 
-                        pointTV.text = point
-                        left_pointTV.text = point
+                        pointTV.text = Utils.comma(point)
+                        left_pointTV.text = Utils.comma(point)
 
                         couponData.clear()
 
@@ -377,8 +389,8 @@ class Point_Use_Fragment : Fragment() {
                         var company = response.getJSONObject("company")
                         use_point_unit = Utils.getInt(company,"use_point_unit")
                         limitpoint = Utils.getInt(company,"min_use_point")
-                        limit_pointTV.text = limitpoint.toString()+"P 이상부터 사용 가능"
-                        use_point_unitTV.text= "포인트사용단위는 "+use_point_unit.toString()+"P입니다."
+                        limit_pointTV.text = Utils.comma(limitpoint.toString())+"P 이상부터 사용 가능"
+                        use_point_unitTV.text= "포인트사용단위는 "+Utils.comma(use_point_unit.toString())+"P입니다."
                     }
 
                 } catch (e: JSONException) {
@@ -421,9 +433,9 @@ class Point_Use_Fragment : Fragment() {
         })
     }
     fun l_point() {
-        point = Utils.getString(pointTV)
-        use_point = use_pointTV.text.toString()
-        left_point = pointTV.text.toString()
+        point = Utils.getString(pointTV).replace(",","")
+        use_point = use_pointTV.text.toString().replace(",","")
+        left_point = pointTV.text.toString().replace(",","")
 
         if (use_point.equals("")) {
             use_point = "0"
@@ -434,11 +446,14 @@ class Point_Use_Fragment : Fragment() {
         n_left_point = Integer.parseInt(left_point)
 
 
-        n_left_point = numpoint - n_use_point
+            n_left_point = numpoint - n_use_point
 
-        pointTV.text = numpoint.toString()
-        use_pointTV.text = n_use_point.toString()
-        left_pointTV.text = n_left_point.toString()
+
+
+
+        pointTV.text = Utils.comma(numpoint.toString())
+        use_pointTV.text = Utils.comma(n_use_point.toString())
+        left_pointTV.text = Utils.comma(n_left_point.toString())
     }
 
     // 요청 체크
@@ -473,8 +488,8 @@ class Point_Use_Fragment : Fragment() {
                         if (step != result_step) {
                             step = result_step
                             Log.d("스텝", step.toString())
-                            pointTV.text = balance
-                            left_pointTV.text = balance
+                            pointTV.text = Utils.comma(balance)
+                            left_pointTV.text =Utils.comma(balance)
                             if (step == 3) {
                                 val intent = Intent(myContext, UseActivity::class.java)
                                 type = 4
@@ -482,11 +497,7 @@ class Point_Use_Fragment : Fragment() {
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 startActivity(intent)
                             } else if (step == 6) {
-                                val intent = Intent(myContext, UseActivity::class.java)
-                                type = 4
-                                intent.putExtra("type", type)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                startActivity(intent)
+
                             }
 
                         }
@@ -540,7 +551,7 @@ class Point_Use_Fragment : Fragment() {
         params.put("member_id", member_id)
         params.put("new_member_yn", new_member_yn)
         params.put("member_coupon_id", selectedCouponID)
-        params.put("point", use_point)
+        params.put("point", use_point.replace(",",""))
         params.put("step", step)
 
         RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {

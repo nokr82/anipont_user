@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.util.Log
@@ -31,7 +32,8 @@ class UseActivity : FragmentActivity() {
     internal var getPhoneNumber: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent != null) {
-
+                title2LL.visibility = View.VISIBLE
+                phoneTV.text = "사용할 포인트를 입력해주세요."
                 setmenu()
                 type = intent.getIntExtra("type", -1)
                 var phoneNumber = intent.getStringExtra("phone")
@@ -41,7 +43,7 @@ class UseActivity : FragmentActivity() {
                 Point_Use_Fragment.arguments = bundle
 
                 phonET.setHint("사용할 포인트를 입력하세요.")
-                titleTV.text = "쿠폰/포인트\n사용"
+                titleTV.text = "쿠폰/포인트 사용"
 
                 use_op_LL.visibility = View.GONE
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_Use_Fragment).commit()
@@ -71,7 +73,25 @@ class UseActivity : FragmentActivity() {
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val uiOptions = window.decorView.systemUiVisibility
+        var newUiOptions = uiOptions
+        val isImmersiveModeEnabled = uiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY == uiOptions
+        if (isImmersiveModeEnabled) {
+            Log.i("Is on?", "Turning immersive mode mode off. ")
+        } else {
+            Log.i("Is on?", "Turning immersive mode mode on.")
+        }
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val w = window // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+//            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        }
         setContentView(R.layout.activity_coupon_use)
+        hideNavigations(this)
+
 
         this.context = this
         progressDialog = ProgressDialog(context)
@@ -94,7 +114,7 @@ class UseActivity : FragmentActivity() {
         type = intent.getIntExtra("type", -1)
         request_step_id = intent.getIntExtra("request_step_id", -1)
 
-
+Log.d("타입",type.toString())
         if (type == 1) {
             titleTV.text = "포인트 적립"
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, UseFragment).commit()
@@ -102,7 +122,7 @@ class UseActivity : FragmentActivity() {
         } else if (type == 2) {
             setmenu()
             phonET.setHint("사용할 포인트를 입력하세요.")
-            titleTV.text = "쿠폰/포인트\n조회"
+            titleTV.text = "쿠폰/포인트 조회"
 
             val bundle = Bundle()
             bundle.putInt("type", type)
@@ -111,11 +131,12 @@ class UseActivity : FragmentActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, SelectFragment).commit()
             use_op_LL.visibility = View.GONE
         }else if (type == 3) {
-            titleTV.text = "쿠폰/포인트\n사용"
+            titleTV.text = "쿠폰/포인트 사용"
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, StackFragment).commit()
             use_op_LL.visibility = View.GONE
         } else {
-            titleTV.text = "적립/사용\n완료"
+            titleTV.text = "적립/사용 완료"
+            title2LL.visibility = View.GONE
             supportFragmentManager.beginTransaction().replace(R.id.main_frame, Point_AccurMulaage_Fragment).commit()
             use_op_LL.visibility = View.GONE
             titleLL.visibility = View.GONE
@@ -139,6 +160,22 @@ class UseActivity : FragmentActivity() {
 
     }
 
+
+
+
+    fun hideNavigations(context: Activity) {
+        val decorView = context.window.decorView
+        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
+    override fun onResume() {
+        super.onResume()
+        hideNavigations(this)
+    }
     fun setmenu() {
         couponLL.setBackgroundResource(R.drawable.background_strock_null)
         useLL.setBackgroundResource(R.drawable.background_strock_null)

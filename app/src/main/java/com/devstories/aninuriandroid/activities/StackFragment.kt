@@ -10,6 +10,8 @@ import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +33,7 @@ import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_coupon_use.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fra_use.*
+import me.grantland.widget.AutofitTextView
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -62,7 +65,7 @@ class StackFragment : Fragment() {
     lateinit var save_pointTV: TextView
     lateinit var typeTV: TextView
     lateinit var couponListLV: ListView
-    lateinit var noticeTV: TextView
+    lateinit var noticeTV: AutofitTextView
     lateinit var fraTitleTV: TextView
 
     var phone = ""
@@ -130,7 +133,7 @@ class StackFragment : Fragment() {
         save_point = save_pointTV.text.toString()
 
 
-        fraTitleTV.text = "쿠폰/포인트\n사용"
+        fraTitleTV.text = "쿠폰/포인트 사용"
         typeTV.text = "조회"
         noticeTV.setOnClickListener {
             val intent = Intent(myContext, Dlg_Agree_Activity::class.java)
@@ -169,14 +172,46 @@ class StackFragment : Fragment() {
         backLL.setOnClickListener {
             val text = phoneTV.getText().toString()
             if (text.length > 0) {
-                phoneTV.setText(text.substring(0, text.length - 1))
+                if (text.length==4){
+                    phoneTV.setText(text.substring(0, text.length - 2))
+                    Log.d("테스트","33")
+                }
+                else if (text.length==9){
+                    phoneTV.setText(text.substring(0, text.length - 2))
+                    Log.d("테스트","77")
+                }else{
+                    phoneTV.setText(text.substring(0, text.length - 1))
+                }
+
             } else {
             }
         }
+        phoneTV.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.length==3){
+                    phoneTV.setText(phoneTV.getText().toString() + "-")
+                    Log.d("테스트","3")
+                }
+                if (s.length==8){
+                    phoneTV.setText(phoneTV.getText().toString() + "-")
+                    Log.d("테스트","7")
+                }
+
+
+            }
+        })
 
         useLL.setOnClickListener {
 
-            phone = Utils.getString(phoneTV)
+            phone = Utils.getString(phoneTV).replace("-","")
 
             if (phone == "") {
                 Toast.makeText(context, "핸드폰 번호를 입력해주세요", Toast.LENGTH_LONG).show()
@@ -354,8 +389,8 @@ class StackFragment : Fragment() {
                             if (step == 5) {
 
                                 phonET.setHint("사용할 포인트를 입력하세요.")
-                                titleTV.text = "쿠폰/포인트\n사용"
-                                fraTitleTV.text = "쿠폰/포인트\n사용"
+                                titleTV.text = "쿠폰/포인트 사용"
+                                fraTitleTV.text = "쿠폰/포인트 사용"
                                 use_op_LL.visibility = View.GONE
 
                             }
@@ -409,7 +444,7 @@ class StackFragment : Fragment() {
         val params = RequestParams()
         params.put("company_id", company_id)
         params.put("phone", phone)
-
+        params.put("use", "Y")
         MemberAction.is_member(params, object : JsonHttpResponseHandler() {
 
             @SuppressLint("ResourceType")
@@ -422,10 +457,16 @@ class StackFragment : Fragment() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
-
+                        Log.d("결과",response.toString())
                         if(frame_type != 2) {
                             new_member_yn = Utils.getString(response, "new_member_yn")
                             member_id = Utils.getInt(response, "member_id")
+
+                            if (new_member_yn=="Y"){
+                            Toast.makeText(myContext,"일치하는 회원이 없습니다.",Toast.LENGTH_SHORT).show()
+                                return
+                            }
+
 
                             if (step == 1) {
                                 step = 2
@@ -458,7 +499,7 @@ class StackFragment : Fragment() {
             }
 
             private fun error() {
-                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+                Utils.alert(context, "일치하는 회원이 없습니다.")
             }
 
             override fun onFailure(

@@ -1,12 +1,16 @@
 package com.devstories.aninuriandroid.activities
 
+import android.app.Activity
 import android.app.NotificationManager
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.R
@@ -37,8 +41,24 @@ class IntroActivity : RootActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val uiOptions = window.decorView.systemUiVisibility
+        var newUiOptions = uiOptions
+        val isImmersiveModeEnabled = uiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY == uiOptions
+        if (isImmersiveModeEnabled) {
+            Log.i("Is on?", "Turning immersive mode mode off. ")
+        } else {
+            Log.i("Is on?", "Turning immersive mode mode on.")
+        }
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val w = window // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+//            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        }
         setContentView(R.layout.activity_intro)
-
+        hideNavigations(this)
         this.context = this
         progressDialog = ProgressDialog(context)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -99,7 +119,20 @@ class IntroActivity : RootActivity() {
             login()
         }
     }
+    override fun onResume() {
+        super.onResume()
+        hideNavigations(this)
+    }
 
+    fun hideNavigations(context: Activity) {
+        val decorView = context.window.decorView
+        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
     private fun login() {
 
         val params = RequestParams()

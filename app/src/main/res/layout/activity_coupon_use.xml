@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:id="@+id/titleLL"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_weight="0.2"
         android:layout_height="match_parent"
@@ -60,7 +60,6 @@
 
 
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/mainLL"
         android:layout_width="0dp"
@@ -70,6 +69,7 @@
         <!--android:layout_marginRight="20dp"-->
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/usetitle_op_LL"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="19dp"
@@ -145,6 +145,32 @@
 
 
         </LinearLayout>
+        <RelativeLayout
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="9.5dp"
+            android:layout_marginLeft="9.5dp"
+            android:id="@+id/title2LL"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:background="#90000000"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/phoneTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:lineSpacingExtra="25sp"
+                android:text="휴대폰 번호를 입력해주세요."
+                android:textColor="#90ffffff"
+                android:textSize="20dp" />
+
+
+
+        </RelativeLayout>
+
         <FrameLayout
             android:id="@+id/main_frame"
             android:layout_width="match_parent"

@@ -41,6 +41,11 @@ class Dlg_Agree_Activity : RootActivity() {
         web2WV.settings.javaScriptEnabled = true
         web2WV.loadUrl(url2)
 
+        closeIV.setOnClickListener {
+            finish()
+        }
+
+
     }
 
     override fun onDestroy() {
