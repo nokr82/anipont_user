@@ -159,10 +159,11 @@ class Point_AccurMulaage_Fragment : Fragment() {
                             stack_titleTV.visibility = View.GONE
                             membership_per2TV.visibility= View.GONE
                             titleTV.text = "적립완료"
+                            send_alram()
                         } else if (type == 2) {
                             titleTV.text = "사용완료"
                         }
-                        send_alram()
+
                         left_pointTV.text = Utils.comma(balance.toString()) + "P"
                         if (point == 0 ){
                             pointTV.visibility = View.GONE
