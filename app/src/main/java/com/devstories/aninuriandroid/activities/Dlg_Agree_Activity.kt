@@ -43,7 +43,6 @@ class Dlg_Agree_Activity : RootActivity() {
 
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
 
