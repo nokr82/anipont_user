@@ -113,6 +113,7 @@ class LoginActivity : RootActivity() {
                         PrefUtils.setPreference(context, "passwd", Utils.getString(company, "passwd"))
                         PrefUtils.setPreference(context, "company_name", Utils.getString(company, "company_name"))
                         PrefUtils.setPreference(context, "autoLogin", true)
+                        Utils.hideKeyboard(context)
 
                         val intent = Intent(context, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
