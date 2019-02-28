@@ -16,6 +16,7 @@ import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.MemberAction.membership_point
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.base.CustomProgressDialog
 import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -28,7 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Point_AccurMulaage_Fragment : Fragment() {
-    private var progressDialog: ProgressDialog? = null
+    private var progressDialog:  CustomProgressDialog? = null
     lateinit var myContext: Context
     internal lateinit var view: View
     lateinit var left_pointTV: TextView

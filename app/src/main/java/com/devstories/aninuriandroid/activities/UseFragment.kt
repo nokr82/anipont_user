@@ -21,6 +21,7 @@ import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.adapter.CouponListAdapter
+import com.devstories.aninuriandroid.base.CustomProgressDialog
 import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -38,7 +39,7 @@ import java.util.*
 
 class UseFragment : Fragment() {
 
-    private var progressDialog: ProgressDialog? = null
+    private var progressDialog: CustomProgressDialog? = null
     lateinit var myContext: Context
 
     internal lateinit var view: View
@@ -82,7 +83,8 @@ class UseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
-        progressDialog = ProgressDialog(myContext)
+        progressDialog = CustomProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
 
         view = inflater.inflate(R.layout.fra_use, container, false)
 

@@ -18,10 +18,7 @@ import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.adapter.FullScreenImageAdapter
-import com.devstories.aninuriandroid.base.Config
-import com.devstories.aninuriandroid.base.PrefUtils
-import com.devstories.aninuriandroid.base.RootActivity
-import com.devstories.aninuriandroid.base.Utils
+import com.devstories.aninuriandroid.base.*
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
@@ -34,7 +31,7 @@ import kotlin.collections.ArrayList
 class MainActivity : RootActivity() {
 
     lateinit var context: Context
-    private var progressDialog: ProgressDialog? = null
+    private var progressDialog:  CustomProgressDialog? = null
 
     var type = -1
 
@@ -85,7 +82,8 @@ class MainActivity : RootActivity() {
         setContentView(R.layout.activity_main)
 
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = CustomProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
 
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

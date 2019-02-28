@@ -18,6 +18,7 @@ import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.adapter.CouponListAdapter
+import com.devstories.aninuriandroid.base.CustomProgressDialog
 import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -32,7 +33,7 @@ import kotlin.collections.ArrayList
 
 class Point_Use_Fragment : Fragment() {
     lateinit var myContext: Context
-    private var progressDialog: ProgressDialog? = null
+    private var progressDialog:  CustomProgressDialog? = null
 
 
     internal lateinit var view: View

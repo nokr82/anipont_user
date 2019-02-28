@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.base.CustomProgressDialog
 import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.RootActivity
 import com.devstories.aninuriandroid.base.Utils
@@ -26,7 +27,7 @@ import org.json.JSONObject
 class LoginActivity : RootActivity() {
 
     lateinit var context: Context
-    private var progressDialog: ProgressDialog? = null
+    private var progressDialog:  CustomProgressDialog? = null
     var autoLogin = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,8 @@ class LoginActivity : RootActivity() {
         setContentView(R.layout.activity_login)
 
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = CustomProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
 
         PrefUtils.clear(context)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

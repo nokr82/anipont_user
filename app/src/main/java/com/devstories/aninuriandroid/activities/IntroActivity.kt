@@ -14,6 +14,7 @@ import android.view.View
 import android.view.WindowManager
 import com.devstories.aninuriandroid.Actions.MemberAction
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.base.CustomProgressDialog
 import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.RootActivity
 import com.devstories.aninuriandroid.base.Utils
@@ -31,7 +32,7 @@ class IntroActivity : RootActivity() {
     private val _active = true
     private var splashThread: Thread? = null
 
-    private var progressDialog: ProgressDialog? = null
+    private var progressDialog:  CustomProgressDialog? = null
 
     private var context: Context? = null
 
@@ -60,7 +61,8 @@ class IntroActivity : RootActivity() {
         setContentView(R.layout.activity_intro)
         hideNavigations(this)
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = CustomProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         //초기화

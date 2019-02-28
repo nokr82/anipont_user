@@ -14,11 +14,12 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.devstories.aninuriandroid.R
+import com.devstories.aninuriandroid.base.CustomProgressDialog
 import kotlinx.android.synthetic.main.activity_coupon_use.*
 
 class UseActivity : FragmentActivity() {
     lateinit var context: Context
-    private var progressDialog: ProgressDialog? = null
+    private var progressDialog: CustomProgressDialog? = null
     var type = -1
     var request_step_id = -1
     var save_point: String? = null
@@ -94,7 +95,8 @@ class UseActivity : FragmentActivity() {
 
 
         this.context = this
-        progressDialog = ProgressDialog(context)
+        progressDialog = CustomProgressDialog(context, R.style.progressDialogTheme)
+        progressDialog!!.setProgressStyle(android.R.style.Widget_DeviceDefault_Light_ProgressBar_Large)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
 
