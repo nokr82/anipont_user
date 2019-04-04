@@ -34,8 +34,8 @@ import kotlin.collections.ArrayList
 class Point_Use_Fragment : Fragment() {
     lateinit var myContext: Context
     private var progressDialog:  CustomProgressDialog? = null
-
-
+    private var splashThread: Thread? = null
+    protected var _splashTime = 5000 // time to display the splash screen in ms
     internal lateinit var view: View
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
@@ -138,7 +138,24 @@ class Point_Use_Fragment : Fragment() {
 
         companyInfo()
 
+        splashThread = object : Thread() {
+            override fun run() {
+                try {
+                    var waited = 0
+                    while (waited < _splashTime) {
+                        Thread.sleep(100)
+                        waited += 100
+                    }
+                } catch (e: InterruptedException) {
 
+                } finally {
+                    val intent = Intent();
+                    intent.action = "FINISH_ACTIVITY"
+                    myContext.sendBroadcast(intent)
+                }
+            }
+        }
+        (splashThread as Thread).start()
 
         oneLL.setOnClickListener {
             use_pointTV.text = use_pointTV.text.toString() + 1

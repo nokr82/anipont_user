@@ -47,6 +47,10 @@ class StackFragment : Fragment() {
     lateinit var myContext: Context
 
     internal lateinit var view: View
+    private var splashThread: Thread? = null
+    protected var _splashTime = 5000 // time to display the splash screen in ms
+    var request_step_id = -1
+
 
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
@@ -135,8 +139,30 @@ class StackFragment : Fragment() {
         save_point = save_pointTV.text.toString()
 
 
+
         fraTitleTV.text = "쿠폰/포인트 사용"
         typeTV.text = "조회"
+        splashThread = object : Thread() {
+            override fun run() {
+                try {
+                    var waited = 0
+                    while (waited < _splashTime) {
+                        Thread.sleep(100)
+                        waited += 100
+                    }
+                } catch (e: InterruptedException) {
+
+                } finally {
+                    val intent = Intent();
+                    intent.action = "FINISH_ACTIVITY"
+                    myContext.sendBroadcast(intent)
+                }
+            }
+        }
+        (splashThread as Thread).start()
+
+
+
         noticeTV.setOnClickListener {
             val intent = Intent(myContext, Dlg_Agree_Activity::class.java)
             startActivity(intent)
@@ -234,6 +260,50 @@ class StackFragment : Fragment() {
         couponListLV.adapter = couponAdapter
 
     }
+
+    // 요청 삭제
+    fun endStep() {
+        val params = RequestParams()
+        params.put("request_step_id", request_step_id)
+
+        RequestStepAction.end_step(params, object : JsonHttpResponseHandler() {
+
+            override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
+
+                try {
+
+                    val result = response!!.getString("result")
+                    if ("ok" == result) {
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            private fun error() {
+                Utils.alert(context, "조회중 장애가 발생하였습니다.")
+            }
+
+
+            override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<Header>?,
+                    throwable: Throwable,
+                    errorResponse: JSONObject?
+            ) {
+                if (progressDialog != null) {
+                    progressDialog!!.dismiss()
+                }
+                throwable.printStackTrace()
+                error()
+            }
+
+        })
+    }
+
 
     // 프로세스
     fun changeStep() {
@@ -383,6 +453,7 @@ class StackFragment : Fragment() {
 
                         var requestStep = response.getJSONObject("RequestStep")
                         val result_step = Utils.getInt(requestStep, "step")
+                        request_step_id = Utils.getInt(requestStep, "id")
                         member_id = Utils.getInt(requestStep, "member_id")
 
                         if (step != result_step) {

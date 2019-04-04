@@ -47,7 +47,8 @@ class SelectFragment : Fragment() {
     lateinit var myContext: Context
 
     internal lateinit var view: View
-
+    private var splashThread: Thread? = null
+    protected var _splashTime = 5000 // time to display the splash screen in ms
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
     lateinit var threeLL: LinearLayout
@@ -137,6 +138,27 @@ class SelectFragment : Fragment() {
 
         save_point = save_pointTV.text.toString()
         typeTV.text = "조회"
+
+        splashThread = object : Thread() {
+            override fun run() {
+                try {
+                    var waited = 0
+                    while (waited < _splashTime) {
+                        Thread.sleep(100)
+                        waited += 100
+                    }
+                } catch (e: InterruptedException) {
+
+                } finally {
+                    val intent = Intent();
+                    intent.action = "FINISH_ACTIVITY"
+                    myContext.sendBroadcast(intent)
+                }
+            }
+        }
+        (splashThread as Thread).start()
+
+
 
         noticeTV.setOnClickListener {
             val intent = Intent(myContext, Dlg_Agree_Activity::class.java)

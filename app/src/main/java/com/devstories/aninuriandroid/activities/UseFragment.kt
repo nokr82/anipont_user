@@ -43,6 +43,8 @@ class UseFragment : Fragment() {
     lateinit var myContext: Context
 
     internal lateinit var view: View
+    private var splashThread: Thread? = null
+    protected var _splashTime = 5000 // time to display the splash screen in ms
 
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
@@ -134,7 +136,24 @@ class UseFragment : Fragment() {
             val intent = Intent(myContext, Dlg_Agree_Activity::class.java)
             startActivity(intent)
         }
+        splashThread = object : Thread() {
+            override fun run() {
+                try {
+                    var waited = 0
+                    while (waited < _splashTime) {
+                        Thread.sleep(100)
+                        waited += 100
+                    }
+                } catch (e: InterruptedException) {
 
+                } finally {
+                    val intent = Intent();
+                    intent.action = "FINISH_ACTIVITY"
+                    myContext.sendBroadcast(intent)
+                }
+            }
+        }
+        (splashThread as Thread).start()
         oneLL.setOnClickListener {
             phoneTV.setText(phoneTV.getText().toString() + 1)
         }
