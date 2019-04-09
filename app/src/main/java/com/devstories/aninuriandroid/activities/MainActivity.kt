@@ -290,6 +290,9 @@ class MainActivity : RootActivity() {
                         val result_step = Utils.getInt(requestStep, "step")
                         val new_member_yn = Utils.getString(requestStep, "new_member_yn")
 
+
+
+
                         if (step != result_step) {
 
                             step = result_step
@@ -315,6 +318,11 @@ class MainActivity : RootActivity() {
                                 intent.putExtra("type", 4)
                                 intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
                                 startActivityForResult(intent, USE_ACTIVITY)
+                            }else if (result_step == 9) {
+                                val intent = Intent(context, ContractWriteActivity::class.java)
+                                intent.putExtra("contract_id", Utils.getInt(requestStep, "contract_id"))
+                                intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
+                               startActivity(intent)
                             }
 
                         }
