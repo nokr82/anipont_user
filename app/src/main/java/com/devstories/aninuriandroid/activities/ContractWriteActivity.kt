@@ -280,18 +280,13 @@ class ContractWriteActivity : RootActivity() {
             return
         }
 
-
         val params = RequestParams()
-
-
-
         params.put("id", contract_id)
         params.put("company_id", company_id)
         params.put("phone", phone)
         params.put("name", name)
         params.put("memo", memo)
         params.put("email", email)
-
         params.put("confirm_num", confirm_num2)
         params.put("contract_id", category_id)
         params.put("contract_date", contract_date)
