@@ -148,7 +148,7 @@ class UseFragment : Fragment() {
 
                 } finally {
                     val intent = Intent();
-                    intent.action = "FINISH_ACTIVITY"
+                    intent.action = "FINISH_ACTIVITY_REAL"
                     myContext.sendBroadcast(intent)
                 }
             }

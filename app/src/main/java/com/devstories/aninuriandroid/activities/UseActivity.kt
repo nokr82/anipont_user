@@ -75,9 +75,15 @@ class UseActivity : FragmentActivity() {
 
     internal var finishActivityReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            changeStep()
+            finish()
         }
     }
+    internal var finishActivityReal: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+         changeStep()
+        }
+    }
+
 
 
     @SuppressLint("ResourceType")
@@ -120,6 +126,8 @@ class UseActivity : FragmentActivity() {
         val filter2 = IntentFilter("FINISH_ACTIVITY")
         registerReceiver(finishActivityReceiver, filter2)
 
+        val filter3 = IntentFilter("FINISH_ACTIVITY_REAL")
+        registerReceiver(finishActivityReal, filter3)
         intent = getIntent()
         save_point = intent.getStringExtra("save_point")
         type = intent.getIntExtra("type", -1)
@@ -199,7 +207,6 @@ Log.d("타입",type.toString())
         val params = RequestParams()
         params.put("company_id", company_id)
         params.put("step", -1)
-
 
         RequestStepAction.change_step(params, object : JsonHttpResponseHandler() {
 
@@ -308,6 +315,9 @@ Log.d("타입",type.toString())
 
         if (finishActivityReceiver != null) {
             unregisterReceiver(finishActivityReceiver)
+        }
+        if (finishActivityReal != null) {
+            unregisterReceiver(finishActivityReal)
         }
 
     }
