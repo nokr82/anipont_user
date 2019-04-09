@@ -1,15 +1,10 @@
 package com.devstories.aninuriandroid.activities
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -25,15 +20,12 @@ import com.devstories.aninuriandroid.Actions.RequestStepAction
 import com.devstories.aninuriandroid.R
 import com.devstories.aninuriandroid.adapter.CouponListAdapter
 import com.devstories.aninuriandroid.base.CustomProgressDialog
-import com.devstories.aninuriandroid.base.HttpClient
 import com.devstories.aninuriandroid.base.PrefUtils
 import com.devstories.aninuriandroid.base.Utils
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_coupon_use.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fra_use.*
 import me.grantland.widget.AutofitTextView
 import org.json.JSONArray
 import org.json.JSONException
@@ -168,36 +160,47 @@ class StackFragment : Fragment() {
             startActivity(intent)
         }
         oneLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 1)
         }
         twoLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 2)
         }
         threeLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 3)
         }
         fourLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 4)
         }
         fiveLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 5)
         }
         sixLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 6)
         }
         sevenLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 7)
         }
         eightLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 8)
         }
         nineLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 9)
         }
         zeroLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 0)
         }
         backLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             val text = phoneTV.getText().toString()
             if (text.length > 0) {
                 if (text.length==4){

@@ -138,24 +138,6 @@ class Point_Use_Fragment : Fragment() {
 
         companyInfo()
 
-        splashThread = object : Thread() {
-            override fun run() {
-                try {
-                    var waited = 0
-                    while (waited < _splashTime) {
-                        Thread.sleep(100)
-                        waited += 100
-                    }
-                } catch (e: InterruptedException) {
-
-                } finally {
-                    val intent = Intent();
-                    intent.action = "FINISH_ACTIVITY"
-                    myContext.sendBroadcast(intent)
-                }
-            }
-        }
-        (splashThread as Thread).start()
 
         oneLL.setOnClickListener {
             use_pointTV.text = use_pointTV.text.toString() + 1

@@ -155,36 +155,48 @@ class UseFragment : Fragment() {
         }
         (splashThread as Thread).start()
         oneLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 1)
         }
         twoLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 2)
         }
         threeLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 3)
         }
         fourLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 4)
         }
         fiveLL.setOnClickListener {
+            _splashTime=_splashTime+5000
+            Log.d("스픓",_splashTime.toString())
             phoneTV.setText(phoneTV.getText().toString() + 5)
         }
         sixLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 6)
         }
         sevenLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 7)
         }
         eightLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 8)
         }
         nineLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 9)
         }
         zeroLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 0)
         }
         backLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             val text = phoneTV.getText().toString()
             if (text.length > 0) {
                 if (text.length==4){
@@ -227,7 +239,7 @@ class UseFragment : Fragment() {
         })
 
         useLL.setOnClickListener {
-
+            _splashTime=_splashTime+5000
             phone = Utils.getString(phoneTV).replace("-","")
 
             if (phone == "") {
