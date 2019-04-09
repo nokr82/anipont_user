@@ -105,12 +105,16 @@ class ContractWriteActivity : RootActivity() {
         contract_id = intent.getIntExtra("contract_id",-1)
 
         Log.d("계약서",contract_id.toString())
+        if (contract_id != -1){
+            contract_detail()
+        }
+
+
+
         request_step_id = intent.getIntExtra("request_step_id",-1)
         if (request_step_id != -1){
             endStep(request_step_id)
         }
-
-
 
         contractSP.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
@@ -128,20 +132,13 @@ class ContractWriteActivity : RootActivity() {
 
         signRL.setOnClickListener {
             val intent = Intent(context,DlgSignActivity::class.java)
+            intent.putExtra("contract_id",contract_id)
             startActivityForResult(intent,SIGN_UP)
         }
 
-        addimgTV.setOnClickListener {
-            choosePhotoFromGallary()
-        }
         dateLL.setOnClickListener {
             datedlg()
         }
-
-        comecontractTV.setOnClickListener {
-
-        }
-
 
         writeTV.setOnClickListener {
             contract_write()
@@ -170,9 +167,23 @@ class ContractWriteActivity : RootActivity() {
                         val contract_s = response!!.getJSONObject("contract")
                         val contract = contract_s.getJSONObject("Contract")
                         var sign_uri = Utils.getString(contract,"sign_uri")
-                        var image = Config.url + sign_uri
-                        com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image,signIV, Utils.UILoptionsUserProfile)
+                        val contract_imgs = response!!.getJSONArray("contract_imgs")
+                        if (sign_uri != ""){
+                            var image = Config.url + sign_uri
+                            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(image,signIV, Utils.UILoptionsUserProfile)
+                        }
+                        userLL.removeAllViews()
+                        for(i in 0 until contract_imgs.length()) {
+                            val image:JSONObject = contract_imgs[i] as JSONObject
+                            val contractimage = image.getJSONObject("ContractImage")
 
+                            val path = Config.url + Utils.getString(contractimage, "image_uri")
+                            val userView = View.inflate(context, R.layout.item_contract_img, null)
+                            val c_imgIV : ImageView = userView.findViewById(R.id.c_imgIV)
+                            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(path,c_imgIV, Utils.UILoptionsUserProfile)
+                            userLL.addView(userView)
+
+                        }
 
 
                     } else {
@@ -271,25 +282,6 @@ class ContractWriteActivity : RootActivity() {
 
 
         val params = RequestParams()
-        var seq = 0;
-
-        for (i in 0 until userLL.childCount) {
-            val v = userLL.getChildAt(i)
-            Log.d("브이",v.toString())
-            val imagV = v.findViewById<ImageView>(R.id.c_imgIV)
-            if (imagV is ImageView) {
-                val bitmap = imagV.drawable as BitmapDrawable
-                params.put("upload[$i]", ByteArrayInputStream(Utils.getByteArray(bitmap.bitmap)))
-                seq++
-            }
-        }
-      /*  if (contractIV.drawable != null) {
-            bitmap = contractIV.drawable as BitmapDrawable
-            params.put("upload", ByteArrayInputStream(Utils.getByteArray(bitmap!!.bitmap)))
-        }else{
-            Toast.makeText(context,"계약서스캔본을 넣어주세요.",Toast.LENGTH_SHORT).show()
-            return
-        }*/
 
 
 
@@ -474,43 +466,6 @@ class ContractWriteActivity : RootActivity() {
         startActivityForResult(galleryIntent, GALLERY)
 
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == GALLERY) {
-            if (data != null) {
-                val contentURI = data!!.data
-                Log.d("uri", contentURI.toString())
-                //content://media/external/images/media/1200
-
-                try {
-                    var thumbnail = MediaStore.Images.Media.getBitmap(context.contentResolver, contentURI)
-                    thumbnail = Utils.rotate(context.contentResolver, thumbnail, contentURI)
-                    addImages.add(thumbnail)
-                    val userView = View.inflate(context, R.layout.item_contract_img, null)
-                    val c_imgIV : ImageView = userView.findViewById(R.id.c_imgIV)
-                    val delIV : ImageView = userView.findViewById(R.id.delIV)
-                    c_imgIV.setImageBitmap(thumbnail)
-                    userLL.addView(userView)
-                    //배열사이즈값 -해줘서
-                    userView.tag = addImages.size -1
-
-                    delIV.setOnClickListener {
-                        Log.d("태그",userView.tag.toString())
-                        userLL.removeView(userView)
-                    }
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                    Toast.makeText(context, "바꾸기실패", Toast.LENGTH_SHORT).show()
-                }
-
-            }
-        }
-
-
-    }
-
 
     fun datedlg() {
         DatePickerDialog(context, dateSetListener, year, month, day).show()
