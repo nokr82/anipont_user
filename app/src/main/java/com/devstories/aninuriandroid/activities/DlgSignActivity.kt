@@ -68,6 +68,7 @@ class DlgSignActivity : RootActivity() {
 
 
         signDV = DrawingView(context)
+        signDV!!.setBackgroundColor(Color.WHITE)
         signRL.addView(signDV)
         resignTV.setOnClickListener(View.OnClickListener {
             signDV!!.clearCanvas()
