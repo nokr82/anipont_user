@@ -35,7 +35,7 @@ class Point_Use_Fragment : Fragment() {
     lateinit var myContext: Context
     private var progressDialog:  CustomProgressDialog? = null
     private var splashThread: Thread? = null
-    protected var _splashTime = 5000 // time to display the splash screen in ms
+    protected var _splashTime = 9000 // time to display the splash screen in ms
     internal lateinit var view: View
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout

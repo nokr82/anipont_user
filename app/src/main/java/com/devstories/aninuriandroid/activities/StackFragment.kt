@@ -40,7 +40,7 @@ class StackFragment : Fragment() {
 
     internal lateinit var view: View
     private var splashThread: Thread? = null
-    protected var _splashTime = 5000 // time to display the splash screen in ms
+    protected var _splashTime = 9000 // time to display the splash screen in ms
     var request_step_id = -1
 
 
