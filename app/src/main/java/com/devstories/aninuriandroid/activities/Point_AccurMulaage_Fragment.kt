@@ -231,69 +231,6 @@ class Point_AccurMulaage_Fragment : Fragment() {
         })
     }
 
-    /* fun membership_point() {
-         val params = RequestParams()
-         params.put("company_id", company_id)
-         params.put("member_id", member_id)
-
-         MemberAction.membership_point(params, object : JsonHttpResponseHandler() {
-
-             override fun onSuccess(statusCode: Int, headers: Array<Header>?, response: JSONObject?) {
-                 if (progressDialog != null) {
-                     progressDialog!!.dismiss()
-                 }
-
-                 try {
-
-                     val result = response!!.getString("result")
-                     val membership_point  = response!!.getString("membership_point")
-                     Log.d("membership",membership_point)
-                     if ("ok" == result) {
-                         Toast.makeText(myContext,"멤버쉽결제로 인한"+Utils.comma(membership_point)+"P가 적립되었습니다.",Toast.LENGTH_SHORT).show()
-
-                     }
-
-
-
-                 } catch (e: JSONException) {
-                     e.printStackTrace()
-                 }
-
-             }
-
-
-             private fun error() {
-                 Utils.alert(context, "조회중 장애가 발생하였습니다.")
-             }
-
-
-             override fun onFailure(
-                     statusCode: Int,
-                     headers: Array<Header>?,
-                     throwable: Throwable,
-                     errorResponse: JSONObject?
-             ) {
-                 if (progressDialog != null) {
-                     progressDialog!!.dismiss()
-                 }
-                 throwable.printStackTrace()
-                 error()
-             }
-
-             override fun onStart() {
-                 // show dialog
-                 if (progressDialog != null) {
-                     progressDialog!!.show()
-                 }
-             }
-
-             override fun onFinish() {
-                 if (progressDialog != null) {
-                     progressDialog!!.dismiss()
-                 }
-             }
-         })
-     }*/
 
     // 알람톡보내기
     fun send_alram() {
