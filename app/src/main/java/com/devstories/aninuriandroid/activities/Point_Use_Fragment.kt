@@ -82,12 +82,6 @@ class Point_Use_Fragment : Fragment() {
 
     private var timer: Timer? = null
 
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        phoneNumber = activity!!.intent.extras.getString("phone")
-        type = activity!!.intent.extras.getInt("type")
-    }*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
