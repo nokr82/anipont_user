@@ -165,6 +165,7 @@ class Point_AccurMulaage_Fragment : Fragment() {
                             titleTV.text = "사용완료"
                         }
 
+
                         left_pointTV.text = Utils.comma(balance.toString()) + "P"
                         if (point == 0) {
                             pointTV.visibility = View.GONE
@@ -173,6 +174,13 @@ class Point_AccurMulaage_Fragment : Fragment() {
                             pointTV.visibility = View.VISIBLE
                             titleTV.visibility = View.VISIBLE
                         }
+
+                        if (member_id == ""){
+                            pointTV.visibility = View.GONE
+                            ppLL.visibility = View.GONE
+                            titleTV.text = "결제완료"
+                        }
+
 
                         pointTV.text = Utils.comma(point.toString()) + "P"
                         if (membership_per != -1) {

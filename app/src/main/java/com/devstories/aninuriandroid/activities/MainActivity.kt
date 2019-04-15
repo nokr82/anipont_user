@@ -323,6 +323,9 @@ class MainActivity : RootActivity() {
                                 intent.putExtra("contract_id", Utils.getInt(requestStep, "contract_id"))
                                 intent.putExtra("request_step_id", Utils.getInt(requestStep, "id"))
                                startActivity(intent)
+                            }else if (step == 8){
+                                val intent = Intent(context, UseActivity::class.java)
+                                startActivity(intent)
                             }
 
                         }
