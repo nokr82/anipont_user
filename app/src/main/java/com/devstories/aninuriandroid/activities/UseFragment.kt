@@ -133,6 +133,7 @@ class UseFragment : Fragment() {
         save_point = save_pointTV.text.toString()
 
         noticeTV.setOnClickListener {
+            _splashTime=_splashTime+5000
             val intent = Intent(myContext, Dlg_Agree_Activity::class.java)
             startActivity(intent)
         }
@@ -239,7 +240,6 @@ class UseFragment : Fragment() {
         })
 
         useLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phone = Utils.getString(phoneTV).replace("-","")
 
             if (phone == "") {

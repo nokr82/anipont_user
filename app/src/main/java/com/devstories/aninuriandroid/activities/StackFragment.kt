@@ -156,6 +156,7 @@ class StackFragment : Fragment() {
 
 
         noticeTV.setOnClickListener {
+            _splashTime=_splashTime+5000
             val intent = Intent(myContext, Dlg_Agree_Activity::class.java)
             startActivity(intent)
         }

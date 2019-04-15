@@ -161,6 +161,7 @@ class SelectFragment : Fragment() {
 
 
         noticeTV.setOnClickListener {
+            _splashTime=_splashTime+5000
             val intent = Intent(myContext, Dlg_Agree_Activity::class.java)
             startActivity(intent)
         }
@@ -179,6 +180,7 @@ class SelectFragment : Fragment() {
             phoneTV.setText(phoneTV.getText().toString() + 3)
         }
         fourLL.setOnClickListener {
+            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 4)
         }
         fiveLL.setOnClickListener {
@@ -247,7 +249,6 @@ class SelectFragment : Fragment() {
         })
 
         useLL.setOnClickListener {
-            _splashTime=+5000
             phone = Utils.getString(phoneTV).replace("-","")
 
             if (phone == "") {
