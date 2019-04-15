@@ -35,7 +35,6 @@ class Point_Use_Fragment : Fragment() {
     lateinit var myContext: Context
     private var progressDialog:  CustomProgressDialog? = null
     private var splashThread: Thread? = null
-    protected var _splashTime = 9000 // time to display the splash screen in ms
     internal lateinit var view: View
     lateinit var oneLL: LinearLayout
     lateinit var twoLL: LinearLayout
@@ -137,77 +136,48 @@ class Point_Use_Fragment : Fragment() {
         context!!.registerReceiver(getPhoneNumber, filter)*/
 
         companyInfo()
-        splashThread = object : Thread() {
-            override fun run() {
-                try {
-                    var waited = 0
-                    while (waited < _splashTime) {
-                        Thread.sleep(100)
-                        waited += 100
-                    }
-                } catch (e: InterruptedException) {
-
-                } finally {
-                    val intent = Intent();
-                    intent.action = "FINISH_ACTIVITY_REAL"
-                    myContext.sendBroadcast(intent)
-                }
-            }
-        }
-        (splashThread as Thread).start()
 
         oneLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             use_pointTV.text = use_pointTV.text.toString() + 1
             l_point()
         }
         twoLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             use_pointTV.text = use_pointTV.text.toString() + 2
             l_point()
         }
         threeLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             use_pointTV.text = use_pointTV.text.toString() + 3
             l_point()
         }
         fourLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             use_pointTV.text = use_pointTV.text.toString() + 4
             l_point()
         }
         fiveLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             use_pointTV.text = use_pointTV.text.toString() + 5
             l_point()
         }
         sixLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             use_pointTV.text = use_pointTV.text.toString() + 6
             l_point()
         }
         sevenLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             use_pointTV.text = use_pointTV.text.toString() + 7
             l_point()
         }
         eightLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             use_pointTV.text = use_pointTV.text.toString() + 8
             l_point()
         }
         nineLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             use_pointTV.text = use_pointTV.text.toString() + 9
             l_point()
         }
         zeroLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             use_pointTV.text = use_pointTV.text.toString() + 0
             l_point()
         }
         backLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             val text = use_pointTV.text.toString()
             if (use_pointTV.text.toString().length > 0) {
                 use_pointTV.text = text.substring(0, text.length - 1)
