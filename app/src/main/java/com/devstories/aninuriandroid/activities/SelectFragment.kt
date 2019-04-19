@@ -86,6 +86,7 @@ class SelectFragment : Fragment() {
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var couponAdapter : CouponListAdapter
 
+    var splash_end = -1
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
         progressDialog = CustomProgressDialog(context, R.style.progressDialogTheme)
@@ -148,11 +149,13 @@ class SelectFragment : Fragment() {
                         waited += 100
                     }
                 } catch (e: InterruptedException) {
-
+                    splash_end = 1
                 } finally {
-                    val intent = Intent();
-                    intent.action = "FINISH_ACTIVITY_REAL"
-                    myContext.sendBroadcast(intent)
+                    if (splash_end==-1){
+                        val intent = Intent();
+                        intent.action = "FINISH_ACTIVITY_REAL"
+                        myContext.sendBroadcast(intent)
+                    }
                 }
             }
         }
@@ -167,48 +170,37 @@ class SelectFragment : Fragment() {
         }
 
         oneLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 1)
         }
         twoLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             Log.d("asdasd",_splashTime.toString())
             phoneTV.setText(phoneTV.getText().toString() + 2)
         }
         threeLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 3)
         }
         fourLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 4)
         }
         fiveLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 5)
         }
         sixLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 6)
         }
         sevenLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 7)
         }
         eightLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 8)
         }
         nineLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 9)
         }
         zeroLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 0)
         }
         backLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             val text = phoneTV.getText().toString()
             if (text.length > 0) {
                 if (text.length==4){
@@ -235,6 +227,7 @@ class SelectFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                _splashTime=_splashTime+5000
                 if (s.length==3){
                     phoneTV.setText(phoneTV.getText().toString() + "-")
                     Log.d("테스트","3")
@@ -300,13 +293,15 @@ class SelectFragment : Fragment() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
+                        splashThread!!.interrupt()
                         var requestStep = response.getJSONObject("RequestStep")
                         val result_step = Utils.getInt(requestStep, "step")
 
                         if(result_step == 2) {
-                            val intent = Intent();
+                         /*   val intent = Intent();
                             intent.action = "FINISH_ACTIVITY"
-                            myContext.sendBroadcast(intent)
+                            myContext.sendBroadcast(intent)*/
+                            activity!!.finish()
                         } else if (result_step == 5) {
                             val intent = Intent()
                             intent.putExtra("phone", phone)

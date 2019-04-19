@@ -565,9 +565,10 @@ class Point_Use_Fragment : Fragment() {
 //                        }
 
                         if(step == 7) {
-                            var intent = Intent()
+                           /* var intent = Intent()
                             intent.action = "FINISH_ACTIVITY"
-                            myContext.sendBroadcast(intent)
+                            myContext.sendBroadcast(intent)*/
+                            activity!!.finish()
                         }
 
                     }

@@ -73,11 +73,11 @@ class UseActivity : FragmentActivity() {
         }
     }
 
-    internal var finishActivityReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+   /* internal var finishActivityReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             finish()
         }
-    }
+    }*/
     internal var finishActivityReal: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
          changeStep()
@@ -123,8 +123,8 @@ class UseActivity : FragmentActivity() {
         val filter1 = IntentFilter("END_STEP")
         registerReceiver(endRequestStepReceiver, filter1)
 
-        val filter2 = IntentFilter("FINISH_ACTIVITY")
-        registerReceiver(finishActivityReceiver, filter2)
+      /*  val filter2 = IntentFilter("FINISH_ACTIVITY")
+        registerReceiver(finishActivityReceiver, filter2)*/
 
         val filter3 = IntentFilter("FINISH_ACTIVITY_REAL")
         registerReceiver(finishActivityReal, filter3)
@@ -313,9 +313,9 @@ Log.d("타입",type.toString())
             unregisterReceiver(endRequestStepReceiver)
         }
 
-        if (finishActivityReceiver != null) {
+        /*if (finishActivityReceiver != null) {
             unregisterReceiver(finishActivityReceiver)
-        }
+        }*/
         if (finishActivityReal != null) {
             unregisterReceiver(finishActivityReal)
         }

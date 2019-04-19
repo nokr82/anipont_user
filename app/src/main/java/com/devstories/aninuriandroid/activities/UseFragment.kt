@@ -83,6 +83,7 @@ class UseFragment : Fragment() {
     var couponData : ArrayList<JSONObject> = ArrayList<JSONObject>()
     lateinit var couponAdapter : CouponListAdapter
 
+    var splash_end = -1
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.myContext = container!!.context
         progressDialog = CustomProgressDialog(context, R.style.progressDialogTheme)
@@ -146,58 +147,49 @@ class UseFragment : Fragment() {
                         waited += 100
                     }
                 } catch (e: InterruptedException) {
+                    splash_end = 1
 
                 } finally {
-                    val intent = Intent();
-                    intent.action = "FINISH_ACTIVITY_REAL"
-                    myContext.sendBroadcast(intent)
+                    if (splash_end==-1){
+                        val intent = Intent();
+                        intent.action = "FINISH_ACTIVITY_REAL"
+                        myContext.sendBroadcast(intent)
+                    }
                 }
             }
         }
         (splashThread as Thread).start()
         oneLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 1)
         }
         twoLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 2)
         }
         threeLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 3)
         }
         fourLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 4)
         }
         fiveLL.setOnClickListener {
-            _splashTime=_splashTime+5000
-            Log.d("스픓",_splashTime.toString())
             phoneTV.setText(phoneTV.getText().toString() + 5)
         }
         sixLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 6)
         }
         sevenLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 7)
         }
         eightLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 8)
         }
         nineLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 9)
         }
         zeroLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             phoneTV.setText(phoneTV.getText().toString() + 0)
         }
         backLL.setOnClickListener {
-            _splashTime=_splashTime+5000
             val text = phoneTV.getText().toString()
             if (text.length > 0) {
                 if (text.length==4){
@@ -226,7 +218,9 @@ class UseFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-             if (s.length==3){
+                _splashTime=_splashTime+5000
+                Log.d("스픓",_splashTime.toString())
+                if (s.length==3){
                     phoneTV.setText(phoneTV.getText().toString() + "-")
                     Log.d("테스트","3")
                 }
@@ -291,13 +285,14 @@ class UseFragment : Fragment() {
                     val result = response!!.getString("result")
 
                     if ("ok" == result) {
+                        splashThread!!.interrupt()
                         var requestStep = response.getJSONObject("RequestStep")
                         val result_step = Utils.getInt(requestStep, "step")
-
                         if(result_step == 2) {
-                            val intent = Intent();
-                            intent.action = "FINISH_ACTIVITY"
-                            myContext.sendBroadcast(intent)
+                            /*   val intent = Intent();
+                               intent.action = "FINISH_ACTIVITY"
+                               myContext.sendBroadcast(intent)*/
+                            activity!!.finish()
                         } else if (result_step == 5) {
                             val intent = Intent()
                             intent.putExtra("phone", phone)
@@ -306,13 +301,6 @@ class UseFragment : Fragment() {
                             myContext.sendBroadcast(intent)
                         }
 
-//                        if (result_step == 2) {
-//                            val intent = Intent()
-//                            intent.putExtra("phone", phone)
-//                            intent.putExtra("type", 2)
-//                            intent.action = "POINT_USE"
-//                            myContext.sendBroadcast(intent)
-//                        }
 
                     }
 
@@ -692,4 +680,11 @@ class UseFragment : Fragment() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (progressDialog != null) {
+            progressDialog!!.dismiss()
+        }
+
+    }
 }
